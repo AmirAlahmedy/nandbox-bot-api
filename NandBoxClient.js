@@ -1,6 +1,6 @@
 "strict mode";
 import { NandBox, callback, api } from "./NandBox";
-import User from "./ChatClasses/User";
+import User from "./data/User";
 
 class NandBoxClient {
 

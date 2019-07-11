@@ -1,6 +1,6 @@
 "use strict";
-import Button from "../ChatClasses/Button";
-import SetNavigationButtonOutMessage from "../ChatClasses/SetNavigationButtonOutMessage";
+import Button from "../data/Button";
+import SetNavigationButtonOutMessage from "../outmessages/SetNavigationButtonOutMessage";
 import { Api } from "../NandBox";
 
 export default class Utils {
