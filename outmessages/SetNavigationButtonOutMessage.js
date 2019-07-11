@@ -1,6 +1,6 @@
 "use strict";
 import OutMessage from "./OutMessage";
-import Button from "./Button";
+import Button from "../data/Button";
 
 export default class SetNavigationButtonOutMessage extends OutMessage {
 

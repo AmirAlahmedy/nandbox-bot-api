@@ -9,6 +9,8 @@ export default class Menu {
    rows;
 
    constructor(obj) {
+      if(!obj)
+         return;
       rowsArrayObj = obj.KEY_ROWS;
       // TODO: check syntax
       this.rows = new Row[rowsArrayObj.length];

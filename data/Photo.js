@@ -16,6 +16,8 @@ export default class Photo {
 
     constructor(obj) {
 
+        if(!obj)
+            return;
         this.id = obj.KEY_ID;
         this.width = obj.KEY_WIDTH;
         this.height = obj.getKEY_HEIGHT;

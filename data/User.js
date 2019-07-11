@@ -27,6 +27,8 @@ export default class User {
 
     constructor(jsonobj){
 
+        if(!jsonobj)
+            return;
         this.id =  jsonobj.KEY_ID;
 		this.name =  jsonobj.KEY_NAME;
 		this.version =  jsonobj.KEY_VERSION;
