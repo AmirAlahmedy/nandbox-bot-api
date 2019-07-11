@@ -1,0 +1,5 @@
+{
+    "URI": "wss://w1.nandbox.net:5020/nandbox/api//nandbox/api/",
+    "DownloadServer": "https://w1.nandbox.net:5020/nandbox/api//nandbox/download/",
+    "UploadServer": "https://w1.nandbox.net:5020/nandbox/api//nandbox/upload/"
+}
