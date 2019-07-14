@@ -2,6 +2,7 @@
 import Button from "../data/Button";
 import SetNavigationButtonOutMessage from "../outmessages/SetNavigationButtonOutMessage";
 import { Api } from "../NandBox";
+import * as uuid from 'uuid/v4';
 
 export default class Utils {
 
@@ -34,5 +35,6 @@ export default class Utils {
     }
 
     // TODO: complete
+    getUniqueId = () => uuid();
 
 }
