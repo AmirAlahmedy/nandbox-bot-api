@@ -1,4 +1,4 @@
-"strict mode";
+"use strict";
 
 class NandBox {
     constructor() {
@@ -6,7 +6,7 @@ class NandBox {
             throw new Error('Subclassing from NandBox class is not allowed: It is a final class');
     }
 
-    Callback = class Callback{
+    Callback = class Callback {
         onConnect = api => { };
         onReceive = incomingMsg => { };
         onReceiveObj = obj => { };
@@ -14,7 +14,7 @@ class NandBox {
         onError = () => { };
     }
 
-    Api = class Api{
+    Api = class Api {
         send = message => { };
         // TODO: change name if possible -> sendText: (chatId, text) => {},
         sendTextWithBackground = (chatId, text, bgColor) => { };

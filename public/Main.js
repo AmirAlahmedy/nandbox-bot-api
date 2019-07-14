@@ -1,3 +1,4 @@
+"use strict";
 import NandBoxClient from "../src/NandBoxClient";
 import { Api, Callback } from "../src/NandBox";
 import User from "../src/data/User";
@@ -9,7 +10,8 @@ client = new NandBoxClient();
 client = NandBoxClient.get();
 
 // TODO: check new
-client.connect(TOKEN, new Callback = () => {
+nCallBack = new Callback();
+client.connect(TOKEN, nCallBack = () => {
     let api = new Api();
     api = null;
 
