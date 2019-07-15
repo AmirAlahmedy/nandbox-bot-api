@@ -34,7 +34,8 @@ export default class Utils {
         api.send(navMsg);
     }
 
-    // TODO: complete
     getUniqueId = () => uuid();
+    
+    // TODO: complete
 
 }
