@@ -1,5 +1,5 @@
 "use strict";
-import { NandBox, callback, Api, Callback } from "./NandBox";
+import { NandBox} from "./NandBox";
 import User from "./data/User";
 import OutMessage from "./outmessages/OutMessage";
 import TexOutMessage from "./outmessages/TextOutMessage";
@@ -52,7 +52,7 @@ export default class NandBoxClient {
         KEY_NAME = "name";
         KEY_ID = "ID";
 
-        callback = new Callback();
+        callback = new Nandbox.Callback();
         session;
         token;
         api;
@@ -170,7 +170,7 @@ export default class NandBoxClient {
                         message.chatSettings = chatSettings;
 
                 }
-                // TODO: imlplement getUniqueID
+                
                 api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
                     if (chatId && text && !reference && replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
                         let reference = utility.getUniqueID();

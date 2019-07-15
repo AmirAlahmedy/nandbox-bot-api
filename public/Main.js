@@ -1,20 +1,20 @@
 "use strict";
 import NandBoxClient from "../src/NandBoxClient";
-import { Api, Callback } from "../src/NandBox";
+import NandBox from "../src/NandBox";
 import User from "../src/data/User";
 
 
+console.log("hey");
 
-
-TOKEN = "90091905646805157:0:OxOIQggTh93AZWpP9wArWgBbjWJgZD";
+TOKEN = "90091783927225986:0:7Y6TXe7i9PDMSeXIvGw0SQAnmYRB0A";
 
 client = new NandBoxClient().get();
 
 
 // TODO: check new
-nCallBack = new Callback();
+nCallBack = new NandBox.Callback();
 
-let api = new Api();
+let api = new NandBox.Api();
 api = null;
 
 nCallBack.onConnect = (_api) => {
@@ -26,6 +26,7 @@ nCallBack.onConnect = (_api) => {
 // TODO: check incomingMsg type
 nCallBack.onReceive = incomingMsg => {
     console.log("Message Received");
+    console.log(incomingMsg);
 }
 
 // implement other nandbox.Callback() as per your bot need

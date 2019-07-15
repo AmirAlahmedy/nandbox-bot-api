@@ -1,6 +1,6 @@
 "use strict";
 
-class NandBox {
+export default class NandBox {
     constructor() {
         if (new.target !== NandBox)
             throw new Error('Subclassing from NandBox class is not allowed: It is a final class');
@@ -27,8 +27,5 @@ class NandBox {
 
     }
 }
-export {
-    NandBox,
-    Callback,
-    Api
-}
+
+

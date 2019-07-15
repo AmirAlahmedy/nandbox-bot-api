@@ -1,5 +1,5 @@
 "use strict";
-import Menu from "./Menu";
+import Menu from "../data/Menu";
 
 export default class OutMessage {
 
