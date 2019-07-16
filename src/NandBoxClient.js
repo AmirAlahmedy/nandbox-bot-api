@@ -12,6 +12,7 @@ var sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 var nandboxClient = null;
 var connection = null;
+
 export default class NandBoxClient {
     static CONFIG_FILE = "../public/config.json";
     static BOT_ID = null;
@@ -25,11 +26,11 @@ export default class NandBoxClient {
     KEY_ERROR = "error";
     //TODO: check
     //uri = this.getConfigs().URI;
-    uri = "wss://w1.nandbox.net:5020/nandbox/api//nandbox/api/";
+    uri = "wss://d1.nandbox.net:5020/nandbox/api/";
 
 
     constructor() {
-        this.uri = this.getConfigs().URI;
+        // this.uri = this.getConfigs().URI;
         //TODO: check
         connection = new WebSocket(this.uri);
     }
@@ -77,23 +78,20 @@ export default class NandBoxClient {
             this.connect();
         }
 
-
-
         connect = () => {
 
 
-
             // Equivalent to onClose in the Java version
-            connection.onclose = async (statusCode, reason) => {
+            connection.onclose = async () => {
                 console.log("INTERNAL: ONCLOSE");
-                console.log("StatusCode = " + statusCode);
+                console.log("StatusCode = " + connection.readyState);
                 console.log("Reason : " + reason);
 
                 let current_datetime = new Date();
                 let formatted_date = current_datetime.getFullYear() + "/" + (current_datetime.getMonth() + 1) + "/" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
                 console.log(formatted_date);
 
-                authenticated = false;
+                this.authenticated = false;
                 // TODO: implement an alternative to threading
                 //    if(this.pingThread !== null){
                 //        try{
@@ -103,7 +101,6 @@ export default class NandBoxClient {
                 //        }
                 //    }
 
-                pingThread = null;
                 callback.onClose();
 
                 if ((statusCode == 1000 || statusCode == 1006 || statusCode == 1001 || statusCode == 1005)
@@ -140,16 +137,15 @@ export default class NandBoxClient {
 
             // Equivalent to onConnect in the Java version
             connection.onopen = () => {
-                console.log("connection opened");
 
                 //connection = connection;
                 console.log("INTERNAL: ONCONNECT");
+                // connection.send("connection established");
 
                 let authObject = {};
-                authObject.KEY_METHOD = "TOKEN_AUTH";
+                authObject.method = "TOKEN_AUTH";
                 authObject.token = this.token;
                 authObject.rem = true;
-
 
 
 
@@ -157,7 +153,7 @@ export default class NandBoxClient {
                 this.api.send = message => {
 
                     console.log(new Date() + ">>>>>> Sending Message :" + message);
-                    this.send(JSON.stringify(message))
+                    this.send(message);
                 }
 
                 this.api.prepareOutMessage = (message, chatId, reference,
@@ -185,7 +181,7 @@ export default class NandBoxClient {
                 this.api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
                     if (chatId && text && !reference && replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
                         let reference = utility.getUniqueID();
-                        api.sendText(chatId, text, reference, null, null, null, null, null, null);
+                        this.api.sendText(chatId, text, reference, null, null, null, null, null, null);
                         return reference;
 
                     }
@@ -195,13 +191,13 @@ export default class NandBoxClient {
                     else if (chatId && text && reference && bgColor && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
 
                     } else {
-                        message = new TextOutMessage();
-                        api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                        let message = new TextOutMessage();
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, null, chatSettings);
                         message.OutMessageMethod = sendMessage;
                         message.text = text;
                         message.bgColor = bgColor;
-                        api.send();
+                        this.api.send();
                     }
 
                 }
@@ -213,9 +209,10 @@ export default class NandBoxClient {
                 }
 
 
-                console.log("end of onopen");
 
-
+                let strAuthObj = JSON.stringify(authObject);
+                console.log(strAuthObj);
+                this.send(strAuthObj);
             }
 
             // Equivalent to onError inn the Java version
@@ -224,11 +221,12 @@ export default class NandBoxClient {
             // Equivalent to onUpdate inn the Java version
             connection.onmessage = msg => {
                 let user = new User();
-                lastMessage = (new Date()).getUTCMilliseconds();
+                this.lastMessage = (new Date()).getUTCMilliseconds();
                 console.log("INTERNAL: ONMESSAGE");
-                let obj = JSON.parse(msg);
-                console.log(new Date() + " >>>>>>>>> Update Obj : " + obj);
-                let method = obj.KEY_METHOD;
+                let obj = msg;
+                console.log(new Date() + " >>>>>>>>> Update Obj : ", obj);
+                let method = obj.method;
+                console.log(msg.data);
                 if (method) {
                     console.log("method: " + method);
                     switch (method) {

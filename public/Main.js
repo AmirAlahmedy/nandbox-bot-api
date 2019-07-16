@@ -4,7 +4,7 @@ import NandBox from "../src/NandBox";
 import User from "../src/data/User";
 
 
-const TOKEN = "90091783927225986:0:5wM5LJHJDvr42z2JnHItVGDLeMcPPY";
+const TOKEN = "90091783927225986:0:Ob3j8BXOaTiAWxFngXMi5hQzMpMrHJ";
 
 
 var client = (new NandBoxClient()).get();
@@ -20,18 +20,18 @@ nCallBack.onConnect = (_api) => {
     _api = nandbox.Api;
     api = _api;
     console.log("Authenticated");
+    api.send("api sent this message");
 }
 
 // TODO: check incomingMsg type
 nCallBack.onReceive = incomingMsg => {
     console.log("Message Received");
     console.log(incomingMsg);
-    
 }
 
 // implement other nandbox.Callback() as per your bot need
 nCallBack.onReceiveObj = obj => {
-
+    console.log("received object: ", obj);
 }
 
 nCallBack.onClose = () => {
