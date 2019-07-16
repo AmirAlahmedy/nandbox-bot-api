@@ -1,40 +1,48 @@
 "use strict";
-import { NandBox} from "./NandBox";
+import NandBox from "./NandBox";
 import User from "./data/User";
 import OutMessage from "./outmessages/OutMessage";
 import TexOutMessage from "./outmessages/TextOutMessage";
 import TextOutMessage from "./outmessages/TextOutMessage";
 import utility from "./util/Utility";
 import IncomingMessage from "./inmessages/IncomingMessage";
+import "@babel/polyfill";
 
-sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+var sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-
+var nandboxClient = null;
+var connection = null;
 export default class NandBoxClient {
-
-    static CONFIG_FILE = "./Public/config.json";
+    static CONFIG_FILE = "../public/config.json";
     static BOT_ID = null;
-    static nandboxClient;
-    webSocketClient;
+    //static nandboxClient = null;
+
     closingCounter = 0;
     timeOutCounter = 0;
     connRefusedCounter = 0;
-    uri;
+
     KEY_METHOD = "method";
     KEY_ERROR = "error";
+    //TODO: check
+    //uri = this.getConfigs().URI;
+    uri = "wss://w1.nandbox.net:5020/nandbox/api//nandbox/api/";
 
 
     constructor() {
         this.uri = this.getConfigs().URI;
-        this.connection = new WebSocket(this.uri);
+        //TODO: check
+        connection = new WebSocket(this.uri);
     }
 
     getConfigs = () => {
+        //TODO: check problem
+        console.log(this.CONFIG_FILE);
         try {
-            let configs = require(this.CONFIG_FILE);
+            let configs = require("../public/config.json");
             return configs;
         } catch (error) {
             // TODO: handle config error
+            console.log("config error");
         }
 
     }
@@ -52,29 +60,31 @@ export default class NandBoxClient {
         KEY_NAME = "name";
         KEY_ID = "ID";
 
-        callback = new Nandbox.Callback();
+        tNandBox = new NandBox();
+        callback = this.tNandBox.Callback;
+        api = this.tNandBox.Api;
+
         session;
         token;
-        api;
         authenticated = false;
         echo = false;
         lastMessage = 0;
-        connection = null;
+
 
         constructor(token, callback) {
-                this.token = token;
-                this.callback = callback;
-                this.connect();
+            this.token = token;
+            this.callback = callback;
+            this.connect();
         }
 
-        //TODO: check
-        //uri = NandBoxClient.getConfigs();
-        uri = "wss://w1.nandbox.net:5020/nandbox/api//nandbox/api/";
+
 
         connect = () => {
 
+
+
             // Equivalent to onClose in the Java version
-            this.connection.onclose = async (statusCode, reason) => {
+            connection.onclose = async (statusCode, reason) => {
                 console.log("INTERNAL: ONCLOSE");
                 console.log("StatusCode = " + statusCode);
                 console.log("Reason : " + reason);
@@ -129,10 +139,10 @@ export default class NandBoxClient {
             this.pingpong();
 
             // Equivalent to onConnect in the Java version
-            this.connection.onopen = () => {
+            connection.onopen = () => {
                 console.log("connection opened");
 
-                this.connection = connection;
+                //connection = connection;
                 console.log("INTERNAL: ONCONNECT");
 
                 let authObject = {};
@@ -140,16 +150,17 @@ export default class NandBoxClient {
                 authObject.token = this.token;
                 authObject.rem = true;
 
-                let api = new Api();
+
+
 
                 //TODO: check
-                api.send = message => {
+                this.api.send = message => {
 
                     console.log(new Date() + ">>>>>> Sending Message :" + message);
                     this.send(JSON.stringify(message))
                 }
 
-                api.prepareOutMessage = (message, chatId, reference,
+                this.api.prepareOutMessage = (message, chatId, reference,
                     replyToMessageId, toUserId, webPagePreview, disableNotification,
                     caption, chatSettings) => {
 
@@ -170,8 +181,8 @@ export default class NandBoxClient {
                         message.chatSettings = chatSettings;
 
                 }
-                
-                api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
+
+                this.api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
                     if (chatId && text && !reference && replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
                         let reference = utility.getUniqueID();
                         api.sendText(chatId, text, reference, null, null, null, null, null, null);
@@ -195,23 +206,23 @@ export default class NandBoxClient {
 
                 }
 
-                api.sendTextWithBackground = (chatId, text, bgcolor) => {
+                this.api.sendTextWithBackground = (chatId, text, bgcolor) => {
                     let reference = utility.getUniqueID();
                     api.sendText(chatId, text, reference, null, null, null, null, null, bgColor);
                     return reference;
                 }
 
 
-
+                console.log("end of onopen");
 
 
             }
 
             // Equivalent to onError inn the Java version
-            this.connection.onerror = error => { console.log(error); }
+            connection.onerror = error => { console.log("ONERROR: " + error); }
 
             // Equivalent to onUpdate inn the Java version
-            this.connection.onmessage = msg => {
+            connection.onmessage = msg => {
                 let user = new User();
                 lastMessage = (new Date()).getUTCMilliseconds();
                 console.log("INTERNAL: ONMESSAGE");
@@ -228,77 +239,78 @@ export default class NandBoxClient {
                             console.log("====> Your Bot Id is : " + BOT_ID);
                             console.log("====> Your Bot Name is : " + obj.KEY_NAME);
                             //TODO: check missing code
+                            this.callback.onConnect(this.api);
                             return;
                         case "message":
                             incomingMessage = new IncomingMessage(obj);
                             // TODO: check 
-                            callback.onReceive(incomingMessage);
+                            this.callback.onReceive(incomingMessage);
                             return;
                         case "chatMenuCallback":
                             // TODO: write class
                             chatMenuCallback = new ChatMenuCallback(obj);
-                            callback.onChatMenuCallBack(chatMenuCallback);
+                            this.callback.onChatMenuCallBack(chatMenuCallback);
                             return;
                         case "inlineMessageCallback":
                             // TODO: write class
                             inlineMsgCallback = new InlineMessageCallback(obj);
-                            callback.onInlineMessageCallback(inlineMsgCallback);
+                            this.callback.onInlineMessageCallback(inlineMsgCallback);
                             return;
                         case "inlineSearch":
                             // TODO: write class
                             inlineSearch = new InlineSearch(obj);
-                            callback.onInlineSearh(inlineSearch);
+                            this.callback.onInlineSearh(inlineSearch);
                             return;
                         case "messageAck":
                             // TODO: write class
                             msgAck = new MessageAck(obj);
-                            callback.onMessagAckCallback(msgAck);
+                            this.callback.onMessagAckCallback(msgAck);
                             return;
                         case "userJoinedBot":
                             user = new User(obj.KEY_USER);
-                            callback.onUserJoinedBot(user);
+                            this.callback.onUserJoinedBot(user);
                             return;
                         case "chatMember":
                             // TODO: write class
                             chatMember = new ChatMember(obj);
-                            callback.onChatMember(chatMember);
+                            this.callback.onChatMember(chatMember);
                             return;
                         case "myProfile":
                             user = new User(obj.KEY_USER);
-                            callback.onMyProfile(user);
+                            this.callback.onMyProfile(user);
                             return;
                         case "userDetails":
                             user = new User(obj.KEY_USER);
-                            callback.onUserDetails(user);
+                            this.callback.onUserDetails(user);
                             return;
                         case "chatDetails":
                             let chat = new Chat(obj.KEY_CHAT);
-                            callback.onChatDetails(chat);
+                            this.callback.onChatDetails(chat);
                             return;
                         case "chatAdministrators":
                             // TODO: write class
                             let chatAdministrators = new ChatAdministrators(obj);
-                            callback.onChatAdministrators(chatAdministrators);
+                            this.callback.onChatAdministrators(chatAdministrators);
                             return;
                         case "userStartedBot":
                             user = new User(obj.KEY_USER);
-                            callback.userStartedBot(user);
+                            this.callback.userStartedBot(user);
                             return;
                         case "userStoppedBot":
                             user = new User(obj.KEY_USER);
-                            callback.userStoppedBot(user);
+                            this.callback.userStoppedBot(user);
                             return;
                         case "userLeftBot":
                             user = new User(obj.KEY_USER);
-                            callback.userLeftBot(user);
+                            this.callback.userLeftBot(user);
                             return;
                         case "userLeftBot":
                             // TODO: write class
                             let permenantURL = new PermanentUrl(obj);
-                            callback.permanentUrl(permenantURL);
+                            this.callback.permanentUrl(permenantURL);
                             return;
                         default:
-                            callback.onReceive(obj);
+                            this.callback.onReceive(obj);
                             return;
                     }
                 } else {
@@ -311,18 +323,15 @@ export default class NandBoxClient {
         }
 
         pingpong = () => {
-            if (!this.connection) return;
-            if (this.connection.readyState !== 1) return;
-            this.connection.send("ping");
+            if (!connection) return;
+            if (connection.readyState !== 1) return;
+            connection.send("ping");
             setTimeout(this.pingpong, 30000);
         }
 
         reconnectWebSocketClient = () => {
             console.log("Creating new webSocketClient");
-
-
-            this.connection = new WebSocket(this.uri);
-
+            connection = new WebSocket(this.uri);
             console.log("webSocketClient started");
             console.log("Getting NandboxClient Instance");
             nandboxClient = NandBoxClient.get();
@@ -333,7 +342,7 @@ export default class NandBoxClient {
         send = s => {
             try {
                 if (connection)
-                    this.connection.send(s);
+                    connection.send(s);
 
             }
             catch (e) {
@@ -345,7 +354,7 @@ export default class NandBoxClient {
             console.log("Stopping Websocket");
             try {
                 if (this)
-                    this.connection.close();
+                    connection.close();
             }
             catch (e) {
                 console.log("Exception: " + e + " while closing websocket");
@@ -353,23 +362,36 @@ export default class NandBoxClient {
         }
     }
 
-    init = () => {
-        if (nandboxClient != null) return;
-        this.nandboxClient = new NandboxClient();
-    }
+    // init = () => {
+    //     if (this.nandboxClient != null) return;
+    //     this.nandboxClient = new NandboxClient();
+    // }
 
     get = () => {
-        if (this.nandboxClient == null)
-            this.init();
-        return this.nandboxClient;
+        if (nandboxClient == null)
+            nandboxClient = init();
+        return nandboxClient;
     }
 
     connect = (token, callback) => {
-        internalWebSocket = new this.InternalWebSocket(token, callback);
-        this.connection = new WebSocket(this.uri);
+        connection = new WebSocket(this.uri);
+        new this.InternalWebSocket(token, callback);
     }
 
 
 }
 
+
+//var nandboxClient = new NandBoxClient();
+var init = () => {
+    if (nandboxClient != null) return;
+    nandboxClient = new NandBoxClient();
+    return nandboxClient;
+}
+
+// var get = () => {
+//     if (nandboxClient == null)
+//         init();
+//     return nandboxClient;
+// }
 
