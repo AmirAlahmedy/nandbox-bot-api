@@ -3,17 +3,6 @@ import Photo from "./Photo";
 
 export default class User {
 
-    static KEY_ID = "id";
-    static KEY_NAME =  "name";
-    static KEY_TERMINAL =  "terminal";
-    static KEY_TYPE = "type";
-    static KEY_IS_BOT = "is_bot";
-    static KEY_VERSION = "version";
-    static KEY_LAST_SEEN = "last_seen";
-    static KEY_STATUS =  "status";
-    static KEY_PHOTO = "photo";
-    static KEY_PROFILE = "profile";
-
     id;
 	name;
 	version;
@@ -29,33 +18,33 @@ export default class User {
 
         if(!jsonobj)
             return;
-        this.id =  jsonobj.KEY_ID;
-		this.name =  jsonobj.KEY_NAME;
-		this.version =  jsonobj.KEY_VERSION;
-		this.terminal =  jsonobj.KEY_TERMINAL;
-		this.type =  jsonobj.KEY_TYPE;		
-		this.isBot =  jsonobj.KEY_IS_BOT;
-		this.lastSeen =  jsonobj.KEY_LAST_SEEN;
-		this.status =  jsonobj.KEY_STATUS;
-		this.profile =  jsonobj.KEY_PROFILE;
+        this.id =  jsonobj.id;
+		this.name =  jsonobj.name;
+		this.version =  jsonobj.version;
+		this.terminal =  jsonobj.terminal;
+		this.type =  jsonobj.type;		
+		this.isBot =  jsonobj.is_bot;
+		this.lastSeen =  jsonobj.last_seen;
+		this.status =  jsonobj.status;
+		this.profile =  jsonobj.profile;
 
 
-		this.photo = jsonobj.KEY_PHOTO != null ? new Photo(jsonobj.KEY_PHOTO) : null;
+		this.photo = jsonobj.photo != null ? new Photo(jsonobj.photo) : null;
     }
 
     toJsonObject = () => {
         let obj = {};
 
-        if(this.id) obj.KEY_ID = this.id;
-        if(this.name) obj.KEY_NAME = this.name;
-        if(this.version) obj.KEY_VERSION = this.version;
-        if(this.terminal) obj.KEY_TERMINAL = this.terminal;
-        if(this.type) obj.KEY_TYPE = this.type;
-        if(this.isBot) obj.KEY_IS_BOT = this.isBot;
-        if(this.lastSeen) obj.KEY_LAST_SEEN = this.lastSeen;
-        if(this.status) obj.KEY_STATUS = this.status;
-        if(this.profile) obj.KEY_PROFILE = this.profile;
-        if(this.photo) obj.KEY_PHOTO = this.photo;
+        if(this.id) obj.id = this.id;
+        if(this.name) obj.name = this.name;
+        if(this.version) obj.version = this.version;
+        if(this.terminal) obj.terminal = this.terminal;
+        if(this.type) obj.type = this.type;
+        if(this.isBot) obj.is_bot = this.isBot;
+        if(this.lastSeen) obj.last_seen = this.lastSeen;
+        if(this.status) obj.status = this.status;
+        if(this.profile) obj.profile = this.profile;
+        if(this.photo) obj.photo = this.photo;
 
         return obj;
         
