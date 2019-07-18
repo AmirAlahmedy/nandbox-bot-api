@@ -4,7 +4,7 @@ import NandBox from "../src/NandBox";
 import User from "../src/data/User";
 
 
-const TOKEN = "90091783927225986:0:tozpuVQHwPhJNNZ4adwpxlzVSuWmIN";
+const TOKEN = "90091783927225986:0:GgME91XA5zEgpDaCviJm24uY8eXVfo";
 
 
 var client = (new NandBoxClient()).get();
@@ -16,21 +16,23 @@ var nCallBack = nandbox.Callback;
 var api = null;
 
 nCallBack.onConnect = (_api) => {
-    // it will go here if the bot connected to server successfuly 
-    _api = nandbox.Api;
+    // it will go here if the bot connected to the server successfuly 
+    //_api = nandbox.Api;
     api = _api;
     console.log("Authenticated");
     //console.log(_api);
     //api.send("api sent this message");
 }
 
+console.log(api);
+
 // TODO: check incomingMsg type
 nCallBack.onReceive = incomingMsg => {
     console.log("Message Received");
 
     if (incomingMsg.isTextMsg()) {
-        let chatId = incomingMsg.getChat().getId(); // get your chat Id
-        let text = incomingMsg.getText(); // get your text message
+        let chatId = incomingMsg.chat.id; // get your chat Id
+        let text = incomingMsg.text; // get your text message
         api.sendText(chatId, text); // Sending message back as an Echo
     }
     

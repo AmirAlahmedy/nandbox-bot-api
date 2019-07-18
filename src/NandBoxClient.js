@@ -17,18 +17,19 @@ var BOT_ID = null;
 var closingCounter = 0;
 var timeOutCounter = 0;
 var connRefusedCounter = 0;
+var ping = null;
+
 
 export default class NandBoxClient {
 
     //TODO: check
     //uri = this.getConfigs().URI;
-    uri = "wss://d1.nandbox.net:5020/nandbox/api/";
-
+    static uri = "wss://d1.nandbox.net:5020/nandbox/api/";
 
     constructor() {
-        // this.uri = this.getConfigs().URI;
+        // NandBoxClient.uri = this.getConfigs().URI;
         //TODO: check
-        connection = new WebSocket(this.uri);
+        connection = new WebSocket(NandBoxClient.uri);
     }
 
     getConfigs = () => {
@@ -59,8 +60,8 @@ export default class NandBoxClient {
 
         token;
         authenticated = false;
-        echo = false;
         lastMessage = 0;
+        sending = false;
 
 
         constructor(token, callback) {
@@ -83,13 +84,14 @@ export default class NandBoxClient {
                 console.log(formatted_date);
 
                 this.authenticated = false;
+
                 // TODO: pingpong here
-              
+                clearInterval(ping);
 
                 this.callback.onClose();
 
                 if ((status.code == 1000 || status.code == 1006 || status.code == 1001 || status.code == 1005)
-                    && closingCounter < NO_OF_RETRIES_IF_CONN_CLOSED) {
+                    && closingCounter < this.NO_OF_RETRIES_IF_CONN_CLOSED) {
                     try {
 
                         console.log("Please wait 10 seconds for Reconnecting ");
@@ -131,11 +133,10 @@ export default class NandBoxClient {
                 authObject.rem = true;
 
 
-
                 //TODO: check
                 this.api.send = message => {
 
-                    console.log(new Date() + ">>>>>> Sending Message :" + message);
+                    console.log(new Date() + ">>>>>> Sending Message :", message);
                     this.send(message);
                 }
 
@@ -146,7 +147,7 @@ export default class NandBoxClient {
                     message.chatId = chatId;
                     message.reference = reference;
 
-                    if (toUSerID)
+                    if (toUserId)
                         message.toUSerID = toUserId;
                     if (replyToMessageId)
                         message.replyToMessageId = replyToMessageId;
@@ -177,10 +178,10 @@ export default class NandBoxClient {
                         let message = new TextOutMessage();
                         this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, null, chatSettings);
-                        message.OutMessageMethod = sendMessage;
+                        message.method = message.OutMessageMethod.sendMessage;
                         message.text = text;
                         message.bgColor = bgColor;
-                        this.api.send();
+                        this.api.send(message);
                     }
 
                 }
@@ -220,10 +221,11 @@ export default class NandBoxClient {
                             BOT_ID = obj.ID;
                             console.log("====> Your Bot Id is : " + BOT_ID);
                             console.log("====> Your Bot Name is : " + obj.name);
-                            this.callback.onConnect(this.api);
 
                             //TODO: pingpong here
                             this.pingpong(this.lastMessage);
+                            this.callback.onConnect(this.api);
+
                             return;
                         case "message":
                             let incomingMessage = new IncomingMessage(obj);
@@ -307,24 +309,30 @@ export default class NandBoxClient {
         }
 
         pingpong = lastMessage => {
-            // let currentTimeMs = (new Date()).getUTCMilliseconds();
-            // let interval = currentTimeMs - lastMessage;
+
             if (!connection) return;
             if (connection.readyState !== 1) return;
+
+            let currentTimeMs = (new Date()).getUTCMilliseconds();
+            let interval = currentTimeMs - lastMessage;
             let obj = {};
-            // if (interval)
-            setTimeout(() => {
+
+
+            ping = setInterval(() => {
                 obj.method = "PING";
                 connection.send(JSON.stringify(obj));
+
             }, 30000);
+
+
         }
 
         reconnectWebSocketClient = () => {
             console.log("Creating new webSocketClient");
-            connection = new WebSocket(this.uri);
+            connection = new WebSocket(NandBoxClient.uri);
             console.log("webSocketClient started");
             console.log("Getting NandboxClient Instance");
-            nandboxClient = NandBoxClient.get();
+            nandboxClient = NandBoxClient.get();                // TODO: fix
             console.log("Calling NandboxClient connect");
             nandboxClient.connect(token, callback);
         }
@@ -350,12 +358,8 @@ export default class NandBoxClient {
                 console.log("Exception: " + e + " while closing websocket");
             }
         }
-    }
 
-    // init = () => {
-    //     if (this.nandboxClient != null) return;
-    //     this.nandboxClient = new NandboxClient();
-    // }
+    }
 
     get = () => {
         if (nandboxClient == null)
@@ -364,24 +368,17 @@ export default class NandBoxClient {
     }
 
     connect = (token, callback) => {
-        connection = new WebSocket(this.uri);
+        connection = new WebSocket(NandBoxClient.uri);
         new this.InternalWebSocket(token, callback);
     }
-
 
 }
 
 
-//var nandboxClient = new NandBoxClient();
 var init = () => {
     if (nandboxClient != null) return;
     nandboxClient = new NandBoxClient();
     return nandboxClient;
 }
 
-// var get = () => {
-//     if (nandboxClient == null)
-//         init();
-//     return nandboxClient;
-// }
 

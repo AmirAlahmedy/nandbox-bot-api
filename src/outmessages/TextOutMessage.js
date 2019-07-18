@@ -2,21 +2,21 @@
 import OutMessage from "./OutMessage";
 
 export default class TextOutMessage extends OutMessage {
-    static KEY_TEXT = "text";
-    static KEY_BG_COLOR = "bg_color";
+
     text;
     bgColor;
 
     constructor() {
+        super();
         this.method = this.OutMessageMethod.sendMessage;
     }
 
     toJsonObject = () => {
         let obj = super.toJsonObject();
         if (this.text)
-            obj.KEY_TEXT = this.text;
+            obj.text = this.text;
         if (this.bgColor)
-            obj.KEY_BG_COLOR = this.bgColor;
+            obj.bg_color = this.bgColor;
         return obj;
     }
 }

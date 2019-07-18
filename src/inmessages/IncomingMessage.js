@@ -9,8 +9,6 @@ import Photo from "../data/Photo";
 */
 export default class IncomingMessage {
 
-    MessageType = Object.freeze({ text: 0, photo: 1, video: 2, audio: 3, voice: 4, contact: 5, location: 6, gif: 7, document: 8, text_file: 9, sticker: 10 });
-
     messageId;
     type;
     date;
@@ -110,17 +108,17 @@ export default class IncomingMessage {
 
     isMsgWithType = (msgType) => (msgType == this.type);
     
-    isVideoMsg = () => this.isMsgWithType(this.MessageType.video);
-    isTextMsg = () => this.isMsgWithType(this.MessageType.text);
-    isPhotoMsg = () => this.isMsgWithType(this.MessageType.photo);
-    isAudioMsg = () => this.isMsgWithType(this.MessageType.audio);
-    isLocationMsg = () => this.isMsgWithType(this.MessageType.location);
-    isVoiceMsg = () => this.isMsgWithType(this.MessageType.voice);
-    isGifMsg = () => this.isMsgWithType(this.MessageType.gif);
-    isStickerMsg = () => this.isMsgWithType(this.MessageType.sticker);
-    isTextFileMsg = () => this.isMsgWithType(this.MessageType.text_file);
-    isDocumentMsg = () => this.isMsgWithType(this.MessageType.document);
-    isContactMsg = () => this.isMsgWithType(this.MessageType.contact);
+    isVideoMsg = () => this.isMsgWithType("video");
+    isTextMsg = () => this.isMsgWithType("text");
+    isPhotoMsg = () => this.isMsgWithType("photo");
+    isAudioMsg = () => this.isMsgWithType("audio");
+    isLocationMsg = () => this.isMsgWithType("location");
+    isVoiceMsg = () => this.isMsgWithType("voice");
+    isGifMsg = () => this.isMsgWithType("gif");
+    isStickerMsg = () => this.isMsgWithType("sticker");
+    isTextFileMsg = () => this.isMsgWithType("text_file");
+    isDocumentMsg = () => this.isMsgWithType("document");
+    isContactMsg = () => this.isMsgWithType("contact");
     
 
 }

@@ -11,23 +11,11 @@ export default class OutMessage {
     static WEB_PREVIEW_INSTANCE_VIEW = 3;
     static WEB_PREVIEW_INSTANCE_WITHOUT_LINK = 4;
 
-    static KEY_METHOD = "method";
-    static KEY_CHAT_ID = "chat_id";
-    static KEY_REFERENCE = "reference";
-    static KEY_TO_USER_ID = "to_user_id";
-    static KEY_REPLAY_TO_MESSAGE_ID = "reply_to_message_id";
-    static KEY_WEB_PAGE_PREVIEW = "web_page_preview";
-    static KEY_DISABLE_NOTIFICATION = "disable_notification";
-    static KEY_CAPTION = "caption";
-    static KEY_ECHO = "echo";
-    static KEY_MENU_REF = "menu_ref";
-    static KEY_INLINE_MENU = "inline_menu";
-    static KEY_CHAT_SETTINGS = "chat_settings";
-    static KEY_STYLE = "style";
+    //static KEY_STYLE = "style";
 
 
     // TODO: check syntax
-    method = new this.OutMessageMethod();
+    method;
     chatId;
     reference;
     toUserId;
@@ -43,16 +31,16 @@ export default class OutMessage {
     toJsonObject = () => {
         let obj = {};
 
-        if (this.method) obj.KEY_METHOD = this.method;
-        if (this.chatId) obj.KEY_CHAT_ID = this.chatId;
-        if (this.reference) obj.KEY_REFERENCE = this.reference;
-        if (this.toUserId) obj.KEY_TO_USER_ID = this.toUserId;
-        if (this.replyToMessageId) obj.KEY_REPLAY_TO_MESSAGE_ID = this.replyToMessageId;
-        if (this.webPagePreview) obj.KEY_WEB_PAGE_PREVIEW = this.webPagePreview;
-        if (this.disableNotification) obj.KEY_DISABLE_NOTIFICATION = this.disableNotification;
-        if (this.caption) obj.KEY_CAPTION = this.caption;
-        if (this.echo) obj.KEY_ECHO = this.echo;
-        if (this.menuRef) obj.KEY_MENU_REF = this.menuRef;
+        if (this.method) obj.method = this.method;
+        if (this.chatId) obj.chat_id = this.chatId;
+        if (this.reference) obj.reference = this.reference;
+        if (this.toUserId) obj.to_user_id = this.toUserId;
+        if (this.replyToMessageId) obj.reply_to_message_id = this.replyToMessageId;
+        if (this.webPagePreview) obj.web_page_preview = this.webPagePreview;
+        if (this.disableNotification) obj.disable_notification = this.disableNotification;
+        if (this.caption) obj.caption = this.caption;
+        if (this.echo) obj.echo = this.echo;
+        if (this.menuRef) obj.menu_ref = this.menuRef;
         if (this.inlineMenus) {
             let inlineMenusArrayObj = [];
             for (let i = 0; i < inlineMenus.length; i++) {
@@ -60,8 +48,8 @@ export default class OutMessage {
                 inlineMenusArrayObj[i] = inlineMenus[i].toJsonObject();
             }
 
-            obj.KEY_INLINE_MENU = this.inlineMenus;
+            obj.inline_menu = this.inlineMenus;
         }
-        if (this.chatSettings) obj.KEY_CHAT_SETTINGS = this.chatSettings;
+        if (this.chatSettings) obj.chat_settings = this.chatSettings;
     }
 }
