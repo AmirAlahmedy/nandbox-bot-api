@@ -32,19 +32,11 @@ var getConfigs = () => {
 
 export default class NandBoxClient {
 
-    //TODO: check
-    //uri = this.getConfigs().URI;
-    static uri = getConfigs().URI;  //"wss://d1.nandbox.net:5020/nandbox/api/";
+    static uri = getConfigs().URI;  
 
     constructor() {
-        // NandBoxClient.uri = this.getConfigs().URI;
-        //TODO: check
         connection = new WebSocket(NandBoxClient.uri);
     }
-
-
-
-
 
     maxTextMessageSize = 1e5; // TODO: check usefulness
     InternalWebSocket = class InternalWebSocket {
@@ -79,7 +71,10 @@ export default class NandBoxClient {
                 console.log("Reason : " + status.reason);
 
                 let current_datetime = new Date();
-                let formatted_date = current_datetime.getFullYear() + "/" + (current_datetime.getMonth() + 1) + "/" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
+                let formatted_date = current_datetime.getFullYear() + "/" + (current_datetime.getMonth() + 1) + "/" +
+                current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" +
+                current_datetime.getSeconds();
+        
                 console.log(formatted_date);
 
                 this.authenticated = false;
@@ -160,8 +155,10 @@ export default class NandBoxClient {
 
                 }
 
-                this.api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
-                    if (chatId && text && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
+                this.api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification,
+                    chatSettings, bgColor) => {
+                    if (chatId && text && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification &&
+                        !chatSettings && !bgColor) {
 
                         const reference = Id();
 
@@ -169,7 +166,8 @@ export default class NandBoxClient {
                         return reference;
 
                     }
-                    else if (chatId && text && reference && !bgColor && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
+                    else if (chatId && text && reference && !bgColor && !replyToMessageId && !toUserId && !webPagePreview &&
+                        !disableNotification && !chatSettings) {
                         let message = new TextOutMessage();
                         this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, null, chatSettings);
@@ -178,7 +176,8 @@ export default class NandBoxClient {
                         message.reference = reference;
                         this.api.send(JSON.stringify(message));
                     }
-                    else if (chatId && text && reference && bgColor && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
+                    else if (chatId && text && reference && bgColor && !replyToMessageId && !toUserId && !webPagePreview &&
+                        !disableNotification && !chatSettings) {
 
                     } else {
                         /*  let message = new TextOutMessage();
