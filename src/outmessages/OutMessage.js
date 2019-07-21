@@ -4,7 +4,7 @@ import Menu from "../data/Menu";
 export default class OutMessage {
 
     // enum
-    OutMessageMethod = Object.freeze({ sendMessage: 0, sendPhoto: 1, sendVideo: 2, sendAudio: 3, sendVoice: 4, sendLocation: 5, sendGif: 6, sendDocument: 7, sendContact: 8, editMessage: 9, updateMessage: 10, setChatMenu: 11, setNavigationButton: 12, inlineSearchAnswer: 13, setMyProfile: 14, getUser: 15, getChat: 16, getChatAdministrators: 17, getChatMember: 18, banChatMember: 19, unbanChatMember: 20, removeChatMember: 21, setChat: 22, recallMessage: 23, getMyProfiles: 24, generatePermanentUrl: 25 });
+/*     OutMessageMethod = Object.freeze({ sendMessage: 0, sendPhoto: 1, sendVideo: 2, sendAudio: 3, sendVoice: 4, sendLocation: 5, sendGif: 6, sendDocument: 7, sendContact: 8, editMessage: 9, updateMessage: 10, setChatMenu: 11, setNavigationButton: 12, inlineSearchAnswer: 13, setMyProfile: 14, getUser: 15, getChat: 16, getChatAdministrators: 17, getChatMember: 18, banChatMember: 19, unbanChatMember: 20, removeChatMember: 21, setChat: 22, recallMessage: 23, getMyProfiles: 24, generatePermanentUrl: 25 }); */
 
     static WEB_PREVIEW_DISABLE = 1;
     static WEB_PREVIEW_HIDE_LINK = 2;
@@ -25,7 +25,7 @@ export default class OutMessage {
     caption;
     echo;
     menuRef;
-    inlineMenus = [];
+    inlineMenus;
     chatSettings;
 
     toJsonObject = () => {
@@ -47,9 +47,10 @@ export default class OutMessage {
                 this.inlineMenus[i] = new Menu();
                 inlineMenusArrayObj[i] = inlineMenus[i].toJsonObject();
             }
-
             obj.inline_menu = this.inlineMenus;
         }
         if (this.chatSettings) obj.chat_settings = this.chatSettings;
+
+        return obj;
     }
 }

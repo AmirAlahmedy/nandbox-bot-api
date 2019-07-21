@@ -4,9 +4,11 @@ import User from "./data/User";
 import OutMessage from "./outmessages/OutMessage";
 import TexOutMessage from "./outmessages/TextOutMessage";
 import TextOutMessage from "./outmessages/TextOutMessage";
-import utility from "./util/Utility";
+import { uniqueId, Id } from "./util/Utility";
 import IncomingMessage from "./inmessages/IncomingMessage";
+import MessageAck from "./inmessages/MessageAck";
 import "@babel/polyfill";
+
 
 var sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -133,7 +135,6 @@ export default class NandBoxClient {
                 authObject.rem = true;
 
 
-                //TODO: check
                 this.api.send = message => {
 
                     console.log(new Date() + ">>>>>> Sending Message :", message);
@@ -144,7 +145,7 @@ export default class NandBoxClient {
                     replyToMessageId, toUserId, webPagePreview, disableNotification,
                     caption, chatSettings) => {
 
-                    message.chatId = chatId;
+                    message.chat_id = chatId;
                     message.reference = reference;
 
                     if (toUserId)
@@ -163,25 +164,33 @@ export default class NandBoxClient {
                 }
 
                 this.api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
-                    if (chatId && text && !reference && replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
-                        let reference = utility.getUniqueID();
+                    if (chatId && text && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
+                        
+                        const reference = Id(); 
+
                         this.api.sendText(chatId, text, reference, null, null, null, null, null, null);
                         return reference;
 
                     }
-                    else if (chatId && text && reference && !bgColor) {
-
+                    else if (chatId && text && reference && !bgColor && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
+                        let message = new TextOutMessage();
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, null, chatSettings);
+                        message.method = "sendMessage";
+                        message.text = text;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
                     }
                     else if (chatId && text && reference && bgColor && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
 
                     } else {
-                        let message = new TextOutMessage();
-                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
-                            disableNotification, null, chatSettings);
-                        message.method = message.OutMessageMethod.sendMessage;
-                        message.text = text;
-                        message.bgColor = bgColor;
-                        this.api.send(message);
+                        /*  let message = new TextOutMessage();
+                         this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                             disableNotification, null, chatSettings);
+                         message.method = "sendMessage";
+                         message.text = text;
+                         message.reference = reference;
+                         this.api.send(JSON.stringify(message)); */
                     }
 
                 }
@@ -222,14 +231,13 @@ export default class NandBoxClient {
                             console.log("====> Your Bot Id is : " + BOT_ID);
                             console.log("====> Your Bot Name is : " + obj.name);
 
-                            //TODO: pingpong here
+                            //TODO: check pingpong here
                             this.pingpong(this.lastMessage);
                             this.callback.onConnect(this.api);
 
                             return;
                         case "message":
                             let incomingMessage = new IncomingMessage(obj);
-                            // TODO: check 
                             this.callback.onReceive(incomingMessage);
                             return;
                         case "chatMenuCallback":
@@ -248,7 +256,6 @@ export default class NandBoxClient {
                             this.callback.onInlineSearh(inlineSearch);
                             return;
                         case "messageAck":
-                            // TODO: write class
                             let msgAck = new MessageAck(obj);
                             this.callback.onMessagAckCallback(msgAck);
                             return;
@@ -332,9 +339,9 @@ export default class NandBoxClient {
             connection = new WebSocket(NandBoxClient.uri);
             console.log("webSocketClient started");
             console.log("Getting NandboxClient Instance");
-            nandboxClient = NandBoxClient.get();                // TODO: fix
+            nandboxClient = NandBoxClient.get();                
             console.log("Calling NandboxClient connect");
-            nandboxClient.connect(token, callback);
+            nandboxClient.connect(this.token, this.callback);
         }
 
         send = s => {
@@ -361,7 +368,7 @@ export default class NandBoxClient {
 
     }
 
-    get = () => {
+    static get = () => {
         if (nandboxClient == null)
             nandboxClient = init();
         return nandboxClient;

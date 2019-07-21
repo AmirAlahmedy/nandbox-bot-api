@@ -3,13 +3,12 @@ import Button from "../data/Button";
 import SetNavigationButtonOutMessage from "../outmessages/SetNavigationButtonOutMessage";
 import { Api } from "../NandBox";
 import * as uuid from 'uuid/v4';
-
-export default class Utils {
+const uuidv4 = require('uuid/v4');
+class Utils {
 
     // enum
     MediaType = Object.freeze({ text: 0, image: 1, video: 2, audio: 3, file: 4, voice: 5, textFile: 6, contact: 7, location: 8, gif_video: 9, gif_image: 10, sticker: 11, article: 12 });
 
-    // TODO: alternative to atomic integer
 
     static formatDurationInMinsAndSeconds = duration => {
         durationInMinsAndSeconds = null;
@@ -34,8 +33,39 @@ export default class Utils {
         api.send(navMsg);
     }
 
-    getUniqueId = () => uuid();
-    
+
     // TODO: complete
 
+}
+
+const getUniqueId = () => uuidv4();
+
+
+
+var length = 14;
+var timestamp = +new Date;
+
+var _getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var generate = () => {
+    var ts = timestamp.toString();
+    var parts = ts.split("").reverse();
+    var id = "";
+
+    for (var i = 0; i < length; ++i) {
+        var index = _getRandomInt(0, parts.length - 1);
+        id += parts[index];
+    }
+
+    return id;
+}
+
+
+
+export {
+    Utils as Utility,
+    getUniqueId as uniqueId,
+    generate as Id
 }

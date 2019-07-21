@@ -8,7 +8,7 @@ export default class TextOutMessage extends OutMessage {
 
     constructor() {
         super();
-        this.method = this.OutMessageMethod.sendMessage;
+        this.method = "sendMessage"; //this.OutMessageMethod.sendMessage;
     }
 
     toJsonObject = () => {
