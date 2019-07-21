@@ -8,25 +8,33 @@ import { uniqueId, Id } from "./util/Utility";
 import IncomingMessage from "./inmessages/IncomingMessage";
 import MessageAck from "./inmessages/MessageAck";
 import "@babel/polyfill";
-
+import fs from "fs";
 
 var sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 var nandboxClient = null;
 var connection = null;
-var CONFIG_FILE = "../public/config.json";
 var BOT_ID = null;
 var closingCounter = 0;
 var timeOutCounter = 0;
 var connRefusedCounter = 0;
 var ping = null;
 
+var getConfigs = () => {
+    try {
+    let CONFIG_FILE = require('../public/config.json');
+    return CONFIG_FILE;
+    } catch (error) {
+        // TODO: handle config error
+        console.log("config error");
+    }
+}
 
 export default class NandBoxClient {
 
     //TODO: check
     //uri = this.getConfigs().URI;
-    static uri = "wss://d1.nandbox.net:5020/nandbox/api/";
+    static uri = getConfigs().URI;  //"wss://d1.nandbox.net:5020/nandbox/api/";
 
     constructor() {
         // NandBoxClient.uri = this.getConfigs().URI;
@@ -34,18 +42,7 @@ export default class NandBoxClient {
         connection = new WebSocket(NandBoxClient.uri);
     }
 
-    getConfigs = () => {
-        //TODO: check problem
-        console.log(this.CONFIG_FILE);
-        try {
-            let configs = require("../public/config.json");
-            return configs;
-        } catch (error) {
-            // TODO: handle config error
-            console.log("config error");
-        }
 
-    }
 
 
 
@@ -165,8 +162,8 @@ export default class NandBoxClient {
 
                 this.api.sendText = (chatId, text, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, chatSettings, bgColor) => {
                     if (chatId && text && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings && !bgColor) {
-                        
-                        const reference = Id(); 
+
+                        const reference = Id();
 
                         this.api.sendText(chatId, text, reference, null, null, null, null, null, null);
                         return reference;
@@ -339,7 +336,7 @@ export default class NandBoxClient {
             connection = new WebSocket(NandBoxClient.uri);
             console.log("webSocketClient started");
             console.log("Getting NandboxClient Instance");
-            nandboxClient = NandBoxClient.get();                
+            nandboxClient = NandBoxClient.get();
             console.log("Calling NandboxClient connect");
             nandboxClient.connect(this.token, this.callback);
         }
