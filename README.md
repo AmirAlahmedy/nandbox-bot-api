@@ -4,13 +4,13 @@
 Node.js library to interact with official Nandbox Bot API. A bot token is **required** and can be obtained [this way](https://www.youtube.com/watch?v=FXb6tjOuxSc).
 
 ## Install
-Just run the following command in your CLI
+After you download the library, Just run the following command in your CLI
 ```bash
 npm install
 ```
 
 ## Build your first bot
-After you download the library, you can easily build your bot by following the below steps:
+You can easily build your bot by following the below steps:
 
 **1.Setup your configuration file** once you get your bot configuration data from nandbox app , copy it to `config.JSON` in the            `public` folder.
 
