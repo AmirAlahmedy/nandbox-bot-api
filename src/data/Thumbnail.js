@@ -1,28 +1,21 @@
 "use strict";
 export default class Thumbnail {
-
-    static KEY_ID = "id";
-	static KEY_WIDTH = "width";
-	static KEY_HEIGHT = "height";
-
 	id;
 	width;
 	height;
 
-    constructor(jsonobj){
-
-        this.id = obj.KEY_ID;
-		this.width = obj.KEY_WIDTH;
-        this.height = obj.KEY_HEIGHT;
-        
+    constructor(obj){
+        this.id = obj.id;
+		this.width = obj.width;
+        this.height = obj.height;
     }
 
     toJsonObject = () => {
         let obj = {};
 
-        if(this.id) obj.KEY_ID = this.id;
-        if(this.width) obj.KEY_WIDTH = this.width;
-        if(this.height) obj.KEY_HEIGHT = this.height;
+        if(this.id) obj.id = this.id;
+        if(this.width) obj.width = this.width;
+        if(this.height) obj.height = this.height;
 
         return obj;
     }
