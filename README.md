@@ -20,14 +20,14 @@ If you don't know how to get bot configuration data and token from nandbox
 
 
 You will get data like this:
-``` JSON
+``` 
 token:90091783784280234234WBBPmJAnSD5ILIkc6N6QjY3ZzeY
 url:wss://<SERVER>:<PORT>/nandbox/api/  
 download:https://<SERVER>:<PORT>/nandbox/download/  
 upload:https://<SERVER>:<PORT>/nandbox/upload/
 ```
 save your token you will use it later and add other data to  `config.JSON` in the following format :
-``` 
+```JSON 
 {
     "URI" = "wss://<SERVER>:<PORT>/nandbox/api/"
     "DownloadServer" = "https://<SERVER>:<PORT>/nandbox/download/"  
