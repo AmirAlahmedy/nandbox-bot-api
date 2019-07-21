@@ -20,7 +20,7 @@ If you don't know how to get bot configuration data and token from nandbox
 
 
 You will get data like this:
-``` 
+``` JSON
 token:90091783784280234234WBBPmJAnSD5ILIkc6N6QjY3ZzeY
 url:wss://<SERVER>:<PORT>/nandbox/api/  
 download:https://<SERVER>:<PORT>/nandbox/download/  
