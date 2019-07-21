@@ -27,7 +27,7 @@ download:https://<SERVER>:<PORT>/nandbox/download/
 upload:https://<SERVER>:<PORT>/nandbox/upload/
 ```
 save your token you will use it later and add other data to  `config.JSON` in the following format :
-```JSON 
+```js
 {
     "URI" = "wss://<SERVER>:<PORT>/nandbox/api/"
     "DownloadServer" = "https://<SERVER>:<PORT>/nandbox/download/"  
