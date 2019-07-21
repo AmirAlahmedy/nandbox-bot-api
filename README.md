@@ -73,9 +73,9 @@ nCallBack.onReceive = incomingMsg => {
 
 client.connect(TOKEN, nCallBack);
 ```
-`client.connect(TOKEN, nCallBack);` : this method to connect to server please add your bot token  instead of `TOKEN`
+`client.connect(TOKEN, nCallBack);` : this method connects to the server, please add your bot token  instead of `TOKEN`
 
-**3.Creating Simple Echo Bot** : below is a sample code that creating a simple echo bot that echos everything sent to it.
+**3.Creating a simple echo bot** : below is a sample code that creates a simple echo bot that echoes everything sent to it.
 ```js
 "use strict";
 import NandBoxClient from "../src/NandBoxClient";
