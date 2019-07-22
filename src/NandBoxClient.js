@@ -4,6 +4,11 @@ import User from "./data/User";
 import OutMessage from "./outmessages/OutMessage";
 import TexOutMessage from "./outmessages/TextOutMessage";
 import TextOutMessage from "./outmessages/TextOutMessage";
+import PhotoOutMessage from "./outmessages/PhotoOutMessage";
+import ContactOutMessage from "./outmessages/ContactOutMessage";
+import AudioOutMessage from "./outmessages/AudioOutMessage";
+import VoiceOutMessage from "./outmessages/VoiceOutMessage";
+import DocumentOutMessage from "./outmessages/DocumentOutMessage";
 import { uniqueId, Id } from "./util/Utility";
 import IncomingMessage from "./inmessages/IncomingMessage";
 import MessageAck from "./inmessages/MessageAck";
@@ -22,8 +27,8 @@ var ping = null;
 
 var getConfigs = () => {
     try {
-    let CONFIG_FILE = require('../public/config.json');
-    return CONFIG_FILE;
+        let CONFIG_FILE = require('../public/config.json');
+        return CONFIG_FILE;
     } catch (error) {
         // TODO: handle config error
         console.log("config error");
@@ -32,7 +37,7 @@ var getConfigs = () => {
 
 export default class NandBoxClient {
 
-    static uri = getConfigs().URI;  
+    static uri = getConfigs().URI;
 
     constructor() {
         connection = new WebSocket(NandBoxClient.uri);
@@ -64,7 +69,7 @@ export default class NandBoxClient {
         connect = () => {
 
 
-            // Equivalent to onClose in the Java version
+
             connection.onclose = async status => {
                 console.log("INTERNAL: ONCLOSE");
                 console.log("StatusCode = " + status.code);
@@ -72,9 +77,9 @@ export default class NandBoxClient {
 
                 let current_datetime = new Date();
                 let formatted_date = current_datetime.getFullYear() + "/" + (current_datetime.getMonth() + 1) + "/" +
-                current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" +
-                current_datetime.getSeconds();
-        
+                    current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" +
+                    current_datetime.getSeconds();
+
                 console.log(formatted_date);
 
                 this.authenticated = false;
@@ -114,7 +119,7 @@ export default class NandBoxClient {
 
             };
 
-            // Equivalent to onConnect in the Java version
+
             connection.onopen = () => {
 
                 //connection = connection;
@@ -191,12 +196,135 @@ export default class NandBoxClient {
 
                 }
 
-                this.api.sendTextWithBackground = (chatId, text, bgcolor) => {
-                    let reference = utility.getUniqueID();
-                    api.sendText(chatId, text, reference, null, null, null, null, null, bgColor);
+                this.api.sendTextWithBackground = (chatId, text, bgColor) => {
+                    const reference = Id();
+                    this.api.sendText(chatId, text, reference, null, null, null, null, null, bgColor);
                     return reference;
                 }
 
+                this.api.sendPhoto = (chatId, photoFileId, reference, replyToMessageId,
+                    toUserId, webPagePreview, disableNotification, caption,
+                    chatSettings) => {
+
+                    if (chatId && photoFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
+
+                        const reference = Id();
+                        this.api.sendPhoto(chatId, photoFileId, reference, null, null, null, null, caption, null);
+
+                    } else {
+                        let message = new PhotoOutMessage();
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendPhoto";
+                        message.photo = photoFileId;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+
+                }
+
+                this.api.sendContact = (chatId, phoneNumber, name, reference,
+                    replyToMessageId, toUserId, webPagePreview, disableNotification,
+                    chatSettings) => {
+                    if (chatId && phoneNumber && name && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
+
+                        const reference = Id();
+                        this.api.sendContact(chatId, phoneNumber, name, reference, null, null, null, null, null);
+
+                    } else {
+
+                        let contactOutMessage = new ContactOutMessage();
+                        this.api.prepareOutMessage(contactOutMessage, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, null, chatSettings);
+
+                        contactOutMessage.method = "sendContact";
+                        contactOutMessage.phone_number = phoneNumber;
+                        contactOutMessage.name = name;
+                        contactOutMessage.reference = reference;
+                        this.api.send(JSON.stringify(contactOutMessage));
+
+
+                    }
+                }
+
+                this.api.sendVideo = (chatId, videoFileId, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, caption, chatSettings) => {
+                    if (chatId && videoFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !chatSettings) {
+
+                        const reference = Id();
+                        this.api.sendVideo(chatId, videoFileId, reference, null, null, null, null, caption, null);
+
+                    } else {
+                        let message = new VideoOutMessage();
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendVideo";
+                        message.video = videoFileId;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
+
+                this.api.sendAudio = (chatId, audioFileId, reference, replyToMessageId,
+                    toUserId, webPagePreview, disableNotification, caption,
+                    performer, title, chatSettings) => {
+
+                    if (chatId && audioFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !performer && !title && !chatSettings) {
+
+                        const reference = Id();
+                        this.api.sendAudio(chatId, audioFileId, reference, null, null, null, null, caption, null, null, null);
+                    } else {
+                        let message = new AudioOutMessage();
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendAudio";
+                        message.performer = performer;
+                        message.title = title;
+                        message.audio = audioFileId;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
+
+                this.api.sendVoice = (chatId, voiceFileId, reference, replyToMessageId,
+                toUserId, webPagePreview, disableNotification, caption, size, chatSettings) => {
+                    
+                    if (chatId && voiceFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !size && !chatSettings) {
+                        
+                        const reference = Id();
+                        this.api.sendVoice(chatId, voiceFileId, reference, null, null, null, null, caption, null, null);
+
+                    } else {
+                        let message = new VoiceOutMessage();
+                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendVoice";
+                        message.size = size;
+                        message.voice = voiceFileId;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
+
+                this.api.sendDocument = (chatId, documentFileId, reference, replyToMessageId, toUserId, webPagePreview,
+                    disableNotification, caption, name, size, chatSettings) => {
+                        
+                    if (chatId && documentFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !name && !size && chatSettings) {
+                        
+                        const reference = Id();
+                        this.api.sendDocument(chatId, documentFileId, reference, null, null, null, null, caption, null, null, null);
+
+                    } else {
+                        let message = new DocumentOutMessage();
+                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendDocument";
+                        message.document = documentFileId;
+                        message.name = name;
+                        message.size = size;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
 
 
                 let strAuthObj = JSON.stringify(authObject);
@@ -204,10 +332,10 @@ export default class NandBoxClient {
                 this.send(strAuthObj);
             }
 
-            // Equivalent to onError inn the Java version
+
             connection.onerror = error => { console.log("ONERROR: " + error); }
 
-            // Equivalent to onUpdate inn the Java version
+
             connection.onmessage = msg => {
                 let user = new User();
                 this.lastMessage = (new Date()).getUTCMilliseconds();
