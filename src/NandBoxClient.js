@@ -9,6 +9,20 @@ import ContactOutMessage from "./outmessages/ContactOutMessage";
 import AudioOutMessage from "./outmessages/AudioOutMessage";
 import VoiceOutMessage from "./outmessages/VoiceOutMessage";
 import DocumentOutMessage from "./outmessages/DocumentOutMessage";
+import LocationOutMessage from "./outmessages/LocationOutMessage";
+import UpdateOutMessage from "./outmessages/UpdateOutMessage";
+import GetChatMemberOutMessage from "./outmessages/GetChatMemberOutMessage";
+import GetUserOutMessage from "./outmessages/GetUserOutMessage";
+import GetChatOutMessage from "./outmessages/GetChatOutMessage";
+import GetChatAdministratorsOutMessage from "./outmessages/GetChatAdministratorsOutMessage";
+import BanChatMemberOutMessage from "./outmessages/BanChatMemberOutMessage";
+import UnbanChatMember from "./outmessages/UnbanChatMember";
+import RemoveChatMemberOutMessage from "./outmessages/RemoveChatMemberOutMessage";
+import RecallOutMessage from "./outmessages/RecallOutMessage";
+import SetMyProfileOutMessage from "./outmessages/SetMyProfileOutMessage";
+import SetChatOutMessage from "./outmessages/SetChatOutMessage";
+import GetMyProfiles from "./outmessages/GetMyProfiles";
+import GeneratePermanentUrl from "./outmessages/GeneratePermanentUrl";
 import { uniqueId, Id } from "./util/Utility";
 import IncomingMessage from "./inmessages/IncomingMessage";
 import MessageAck from "./inmessages/MessageAck";
@@ -31,7 +45,7 @@ var getConfigs = () => {
         return CONFIG_FILE;
     } catch (error) {
         // TODO: handle config error
-        console.log("config error");
+        console.log(error);
     }
 }
 
@@ -286,10 +300,10 @@ export default class NandBoxClient {
                 }
 
                 this.api.sendVoice = (chatId, voiceFileId, reference, replyToMessageId,
-                toUserId, webPagePreview, disableNotification, caption, size, chatSettings) => {
-                    
+                    toUserId, webPagePreview, disableNotification, caption, size, chatSettings) => {
+
                     if (chatId && voiceFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !size && !chatSettings) {
-                        
+
                         const reference = Id();
                         this.api.sendVoice(chatId, voiceFileId, reference, null, null, null, null, caption, null, null);
 
@@ -307,9 +321,9 @@ export default class NandBoxClient {
 
                 this.api.sendDocument = (chatId, documentFileId, reference, replyToMessageId, toUserId, webPagePreview,
                     disableNotification, caption, name, size, chatSettings) => {
-                        
+
                     if (chatId && documentFileId && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !name && !size && chatSettings) {
-                        
+
                         const reference = Id();
                         this.api.sendDocument(chatId, documentFileId, reference, null, null, null, null, caption, null, null, null);
 
@@ -324,6 +338,177 @@ export default class NandBoxClient {
                         message.reference = reference;
                         this.api.send(JSON.stringify(message));
                     }
+                }
+
+                this.api.sendlocation = (chatId, latitude, longitude, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, name, details, chatSettings) => {
+
+                    if (chatId && latitude && longitude && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !name && !details && !chatSettings) {
+
+                        const reference = Id();
+                        this.api.endlocation(chatId, latitude, longitude, reference, null, null, null, null, null, null, null);
+                    } else {
+                        let message = new LocationOutMessage();
+                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, null, chatSettings);
+                        message.method = "sendLocation";
+                        message.name = name;
+                        message.details = details;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
+
+                this.api.sendGIF = (chatId, gif, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, caption,
+                    chatSettings) => {
+
+                    if (chatId && gif && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview &&
+                        !disableNotification && !chatSettings) {
+
+                        const reference = Id();
+                        this.api.sendPhoto(chatId, gif, reference, null, null, null, null, caption, null);
+                    } else {
+                        let message = new PhotoOutMessage();
+                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendPhoto";
+                        message.photo = gif;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
+
+                this.api.sendGIFVideo = (chatId, gif, reference, replyToMessageId, toUserId, webPagePreview, disableNotification, caption,
+                    chatSettings) => {
+                    if (chatId && gif && caption && !reference && !replyToMessageId && !toUserId && !webPagePreview &&
+                        !disableNotification && !chatSettings) {
+
+                        this.api.sendVideo(chatId, gif, reference, null, null, null, null, caption, null);
+
+                    } else {
+                        let message = new VideoOutMessage();
+                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, caption, chatSettings);
+                        message.method = "sendVideo";
+                        message.video = gif;
+                        message.reference = reference;
+                        this.api.send(JSON.stringify(message));
+                    }
+                }
+
+                this.api.updateMessage = (messageId, text, caption, toUserId, chatId) => {
+
+                    let updateMessage = new UpdateOutMessage();
+
+                    updateMessage.message_id = messageId;
+                    updateMessage.text = text;
+                    updateMessage.caption = caption;
+                    updateMessage.to_user_id = toUserId;
+                    updateMessage.chat_id = chatId;
+
+                    this.api.send(JSON.stringify(updateMessage));
+
+                }
+
+                this.api.updateTextMsg = (messageId, text, toUserId) => {
+
+                    updateMessage(messageId, text, null, toUserId, null);
+                }
+
+                this.api.updateMediaCaption = (messageId, caption, toUserId) => {
+
+                    updateMessage(messageId, null, caption, toUserId, null);
+                }
+
+                this.api.updateChatMsg = (messageId, text, chatId) => {
+
+                    updateMessage(messageId, text, null, null, chatId);
+                }
+
+                this.api.updateChatMediaCaption = (messageId, caption, chatId) => {
+
+                    updateMessage(messageId, null, caption, null, chatId);
+                }
+
+                this.api.getChatMember = (chatId, userId) => {
+                    let getChatMemberOutMessage = new GetChatMemberOutMessage();
+                    getChatMemberOutMessage.chat_id = chatId;
+                    getChatMemberOutMessage.user_id = userId;
+                    this.api.send(JSON.stringify(getChatMemberOutMessage));
+                }
+
+                this.api.getUser = userId => {
+                    let getUserOutMessage = new GetUserOutMessage();
+                    getUserOutMessage.user_id = userId;
+                    this.api.send(JSON.stringify(getUserOutMessage));
+                }
+
+                this.api.getChat = chatId => {
+                    let chatOutMessage = new GetChatOutMessage();
+                    chatOutMessage.chat_id = chatId;
+                    this.api.send(JSON.stringify(chatOutMessage));
+                }
+
+                this.api.getChatAdministrators = chatId => {
+                    let getChatAdministratorsOutMessage = new GetChatAdministratorsOutMessage();
+                    getChatAdministratorsOutMessage.chat_id = chatId;
+                    this.api.send(JSON.stringify(getChatAdministratorsOutMessage));
+                }
+
+                this.api.banChatMember = (chatId, userId) => {
+                    let banChatMemberOutMessage = new BanChatMemberOutMessage();
+                    banChatMemberOutMessage.chat_id = chatId;
+                    banChatMemberOutMessage.user_id = userId;
+                    this.api.send(JSON.stringify(banChatMemberOutMessage));
+                }
+
+                this.api.unbanChatMember = (chatId, userId) => {
+                    let unbanChatMember = new UnbanChatMember();
+                    unbanChatMember.chat_id = chatId;
+                    unbanChatMember.user_id = userId;
+                    this.api.send(JSON.stringify(unbanChatMember));
+                }
+
+                this.api.removeChatMember = (chatId, userId) => {
+                    let removeChatMemberOutMessage = new RemoveChatMemberOutMessage();
+                    removeChatMemberOutMessage.chat_id = chatId;
+                    removeChatMemberOutMessage.user_id = userId;
+                    this.api.send(JSON.stringify(removeChatMemberOutMessage));
+                }
+
+                this.api.recallMessage = (chatId, messageId, toUserId, reference) => {
+                    let recallOutMessage = new RecallOutMessage();
+                    recallOutMessage.chat_id = chatId;
+                    recallOutMessage.message_id = messageId;
+                    recallOutMessage.to_user_id = toUserId;
+                    recallOutMessage.reference = reference;
+                    this.api.send(JSON.stringify(recallOutMessage));
+                }
+
+                this.api.setMyProifle = user => {
+                    let setMyProfileOutMessage = new SetMyProfileOutMessage();
+                    setMyProfileOutMessage.user = user;
+                    this.api.send(JSON.stringify(setMyProfileOutMessage));
+                }
+
+                this.api.setChat = chat => {
+                    let setChatOutMessage = new SetChatOutMessage();
+                    setChatOutMessage.chat = chat;
+                    this.api.send(JSON.stringify(setChatOutMessage));
+                }
+
+
+                this.api.getMyProfiles = () => {
+                    let getMyProfiles = new GetMyProfiles();
+                    this.api.send(JSON.stringify(getMyProfiles));
+                }
+
+
+                this.api.generatePermanentUrl = (file, param1) => {
+                    // TODO
+                    let generatePermanentUrl = new GeneratePermanentUrl();
+                    generatePermanentUrl.file = file;
+                    generatePermanentUrl.param1 = param1;
+                    this.api.send(JSON.stringify(generatePermanentUrl));
                 }
 
 
