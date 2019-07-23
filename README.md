@@ -9,13 +9,13 @@ After you download the library, just run the following commands in your CLI.
 npm install
 ```
 ```bash
-npm run dev
+node index
 ```
 
 ## Build your first bot
 You can easily build your bot by following the below steps:
 
-**1.Setup your configuration file** once you get your bot configuration data from nandbox app , copy it to `config.JSON` in the            `public` folder.
+**1.Setup your configuration file** once you get your bot configuration data from nandbox app , copy it to `config.json`
 
 If you don't know how to get bot configuration data and token from nandbox 
 
@@ -29,7 +29,7 @@ url:wss://<SERVER>:<PORT>/nandbox/api/
 download:https://<SERVER>:<PORT>/nandbox/download/  
 upload:https://<SERVER>:<PORT>/nandbox/upload/
 ```
-save your token you will use it later and add other data to  `config.JSON` in the following format :
+save your token you will use it later and add other data to  `config.json` in the following format :
 ```json
 {
     "URI": "wss://<SERVER>:<PORT>/nandbox/api/",
@@ -43,7 +43,7 @@ save your token you will use it later and add other data to  `config.JSON` in th
 2- Implement the `nCallBack.onConnect` function.
 3- Implement the rest of the functions as your application requires.
 
-You will find the below code snippet already written in the `public/Main.js`, implement the necessary functions.
+You will find the below code snippet already written in the `main.js`, implement the necessary functions.
 ```js
 "use strict";
 import NandBoxClient from "../src/NandBoxClient";
@@ -83,7 +83,6 @@ client.connect(TOKEN, nCallBack);
 "use strict";
 import NandBoxClient from "../src/NandBoxClient";
 import NandBox from "../src/NandBox";
-import User from "../src/data/User";
 
 
 const TOKEN = "90091783927225986:0:h9nXD54yoFiOW0IFaqSxcupixjgWbl";
