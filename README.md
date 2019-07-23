@@ -9,7 +9,7 @@ After you download the library, just run the following commands in your CLI.
 npm install
 ```
 ```bash
-node index
+npm run nand
 ```
 
 ## Build your first bot

@@ -6,7 +6,8 @@
   "module": "main.js",
   "scripts": {
     "dev": "parcel ./public/Main.html",
-    "build": "parcel build ./public/Main.html"
+    "build": "parcel build ./public/Main.html",
+    "nand": "node index"
   },
   "repository": {
     "type": "git",
