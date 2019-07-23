@@ -1,8 +1,6 @@
 "use strict";
 import NandBox from "./NandBox";
 import User from "./data/User";
-import OutMessage from "./outmessages/OutMessage";
-import TexOutMessage from "./outmessages/TextOutMessage";
 import TextOutMessage from "./outmessages/TextOutMessage";
 import PhotoOutMessage from "./outmessages/PhotoOutMessage";
 import ContactOutMessage from "./outmessages/ContactOutMessage";
@@ -23,11 +21,11 @@ import SetMyProfileOutMessage from "./outmessages/SetMyProfileOutMessage";
 import SetChatOutMessage from "./outmessages/SetChatOutMessage";
 import GetMyProfiles from "./outmessages/GetMyProfiles";
 import GeneratePermanentUrl from "./outmessages/GeneratePermanentUrl";
-import { uniqueId, Id } from "./util/Utility";
+import { Id } from "./util/Utility";
 import IncomingMessage from "./inmessages/IncomingMessage";
 import MessageAck from "./inmessages/MessageAck";
 import "@babel/polyfill";
-import fs from "fs";
+import WebSocket from "ws";
 
 var sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -41,7 +39,8 @@ var ping = null;
 
 var getConfigs = () => {
     try {
-        let CONFIG_FILE = require('../public/config.json');
+        let CONFIG_FILE = require('../config.json');
+        console.log(CONFIG_FILE);
         return CONFIG_FILE;
     } catch (error) {
         // TODO: handle config error
@@ -54,7 +53,7 @@ export default class NandBoxClient {
     static uri = getConfigs().URI;
 
     constructor() {
-        connection = new WebSocket(NandBoxClient.uri);
+        connection = new WebSocket.Server({ port: 8080 });
     }
 
     maxTextMessageSize = 1e5; // TODO: check usefulness
@@ -136,9 +135,7 @@ export default class NandBoxClient {
 
             connection.onopen = () => {
 
-                //connection = connection;
                 console.log("INTERNAL: ONCONNECT");
-                // connection.send("connection established");
 
                 let authObject = {};
                 authObject.method = "TOKEN_AUTH";
@@ -496,15 +493,12 @@ export default class NandBoxClient {
                     this.api.send(JSON.stringify(setChatOutMessage));
                 }
 
-
                 this.api.getMyProfiles = () => {
                     let getMyProfiles = new GetMyProfiles();
                     this.api.send(JSON.stringify(getMyProfiles));
                 }
 
-
                 this.api.generatePermanentUrl = (file, param1) => {
-                    // TODO
                     let generatePermanentUrl = new GeneratePermanentUrl();
                     generatePermanentUrl.file = file;
                     generatePermanentUrl.param1 = param1;
@@ -696,5 +690,3 @@ var init = () => {
     nandboxClient = new NandBoxClient();
     return nandboxClient;
 }
-
-

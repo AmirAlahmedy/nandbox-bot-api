@@ -2,7 +2,8 @@
   "name": "nandboxwebsocketlibrary",
   "version": "1.0.0",
   "description": "A JavaScript library for creating bots in NandBox",
-  "main": "./public/Main.js",
+  "main": "index.js",
+  "module": "main.js",
   "scripts": {
     "dev": "parcel ./public/Main.html",
     "build": "parcel build ./public/Main.html"
@@ -19,19 +20,19 @@
   "homepage": "https://github.com/AmirAlahmedy/nandboxbotsapi#readme",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "f": "^1.4.0",
-    "fs": "0.0.1-security",
+    "esm": "^3.2.25",
     "jsdoc": "^3.6.2",
-    "uuid": "^3.3.2"
+    "ws": "^7.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
+    "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.0",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/plugin-proposal-function-bind": "^7.2.0",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-stage-0": "^7.0.0",
+    "@babel/register": "^7.5.5",
     "parcel-bundler": "^1.12.3"
   }
 }

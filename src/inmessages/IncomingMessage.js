@@ -17,7 +17,7 @@ import TextFile from "../data/TextFile";
  * @author Ahmed A. El-Malatawy @author Amir
  * 
 */
-export default class IncomingMessage {
+export default  class IncomingMessage {
 
     messageId;
     type;
@@ -84,7 +84,7 @@ export default class IncomingMessage {
 
         if (this.type) obj.type = this.type;
         if (this.date) obj.date = this.date;
-        if (this.from) obj.from = this.from.toJsonObject();
+        if (this.from) obj.from= this.from.toJsonObject();
         if (this.chat) obj.chat = this.chat.toJsonObject();
         if (this.messageId) obj.message_id = this.messageId;
         if (this.fromAdmin) obj.from_admin = this.fromAdmin;

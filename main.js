@@ -1,6 +1,6 @@
 "use strict";
-import NandBoxClient from "../src/NandBoxClient";
-import NandBox from "../src/NandBox";
+import NandBoxClient  from "./src/NandBoxClient";
+import NandBox from "./src/NandBox";
 
 
 const TOKEN = "90091783927225986:0:h9nXD54yoFiOW0IFaqSxcupixjgWbl";

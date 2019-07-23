@@ -1,6 +1,6 @@
 import OutMessage from "./OutMessage";
 
-export default class GeneratePermanentUrl extends OutMessage {
+export default  class GeneratePermanentUrl extends OutMessage {
     file;
     param1;
 

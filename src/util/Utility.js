@@ -2,8 +2,7 @@
 import Button from "../data/Button";
 import SetNavigationButtonOutMessage from "../outmessages/SetNavigationButtonOutMessage";
 import { Api } from "../NandBox";
-import * as uuid from 'uuid/v4';
-const uuidv4 = require('uuid/v4');
+
 class Utils {
 
     // enum
@@ -38,7 +37,6 @@ class Utils {
 
 }
 
-const getUniqueId = () => uuidv4();
 
 
 
@@ -66,6 +64,5 @@ var generate = () => {
 
 export {
     Utils as Utility,
-    getUniqueId as uniqueId,
     generate as Id
 }
