@@ -40,7 +40,6 @@ var ping = null;
 var getConfigs = () => {
     try {
         let CONFIG_FILE = require('../config.json');
-        console.log(CONFIG_FILE);
         return CONFIG_FILE;
     } catch (error) {
         // TODO: handle config error
@@ -147,6 +146,7 @@ export default class NandBoxClient {
 
                     console.log(new Date() + ">>>>>> Sending Message :", message);
                     this.send(message);
+                    clearInterval(ping);
                 }
 
                 this.api.prepareOutMessage = (message, chatId, reference,
@@ -649,8 +649,10 @@ export default class NandBoxClient {
 
         send = s => {
             try {
-                if (connection)
+                if (connection) {
                     connection.send(s);
+                    clearInterval(ping);
+                }
 
             }
             catch (e) {
