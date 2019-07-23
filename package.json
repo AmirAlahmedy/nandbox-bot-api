@@ -1,14 +1,19 @@
 {
-  "name": "nandboxwebsocketlibrary",
+  "name": "nandbox-bot-api",
   "version": "1.0.0",
-  "description": "A JavaScript library for creating bots in NandBox",
+  "description": "A Node.js library for creating bots in NandBox",
   "main": "index.js",
-  "module": "main.js",
   "scripts": {
     "dev": "parcel ./public/Main.html",
     "build": "parcel build ./public/Main.html",
     "nand": "node index"
   },
+  "keywords": [
+    "Nandbox",
+    "node",
+    "Web Sockets",
+    "bots"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AmirAlahmedy/nandboxbotsapi.git"
@@ -21,7 +26,6 @@
   "homepage": "https://github.com/AmirAlahmedy/nandboxbotsapi#readme",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "esm": "^3.2.25",
     "jsdoc": "^3.6.2",
     "ws": "^7.1.1"
   },
