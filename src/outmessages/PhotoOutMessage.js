@@ -10,6 +10,7 @@ export default class PhotoOutMessage extends OutMessage{
     photo;
 
     constructor() {
+        super();
         this.method = "sendPhoto";
     }
 

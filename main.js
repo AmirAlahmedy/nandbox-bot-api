@@ -1,9 +1,9 @@
 "use strict";
-import NandBoxClient  from "./src/NandBoxClient";
 import NandBox from "./src/NandBox";
+import { NandBoxClient } from "./src/NandBoxClient";
 
 
-const TOKEN = "90091783927225986:0:h9nXD54yoFiOW0IFaqSxcupixjgWbl";
+const TOKEN = "90091783927225986:0:PjAudagHdpEDxpIJOGKdNB1X6Og4WA";
 
 
 var client = NandBoxClient.get();
@@ -16,10 +16,8 @@ var api = null;
 
 nCallBack.onConnect = (_api) => {
     // it will go here if the bot connected to the server successfuly 
-    
     api = _api;
     console.log("Authenticated");
-   
 }
 
 
@@ -36,89 +34,23 @@ nCallBack.onReceive = incomingMsg => {
 }
 
 // implement other nandbox.Callback() as per your bot need
-nCallBack.onReceiveObj = obj => {
-    console.log("received object: ", obj);
-}
+nCallBack.onReceiveObj = obj => console.log("received object: ", obj);
 
-nCallBack.onClose = () => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onError = () => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatMenuCallBack = chatMenuCallback => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onInlineMessageCallback = inlineMsgCallback => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onMessagAckCallback = msgAck => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onUserJoinedBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatMember = chatMember => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatAdministrators = chatAdministrators => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.userStartedBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onMyProfile = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onUserDetails = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.userStoppedBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.userLeftBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.permanentUrl = permenantUrl => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatDetails = chat => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onInlineSearh = inlineSearch => {
-    // TODO Auto-generated method stub
-
-}
-
+nCallBack.onClose = () => console.log("ONCLOSE");
+nCallBack.onError = () => console.log("ONERROR");
+nCallBack.onChatMenuCallBack = chatMenuCallback => { }
+nCallBack.onInlineMessageCallback = inlineMsgCallback => { }
+nCallBack.onMessagAckCallback = msgAck => { }
+nCallBack.onUserJoinedBot = user => { }
+nCallBack.onChatMember = chatMember => { }
+nCallBack.onChatAdministrators = chatAdministrators => { }
+nCallBack.userStartedBot = user => { }
+nCallBack.onMyProfile = user => { }
+nCallBack.onUserDetails = user => { }
+nCallBack.userStoppedBot = user => { }
+nCallBack.userLeftBot = user => { }
+nCallBack.permanentUrl = permenantUrl => { }
+nCallBack.onChatDetails = chat => { }
+nCallBack.onInlineSearh = inlineSearch => { }
 
 client.connect(TOKEN, nCallBack);

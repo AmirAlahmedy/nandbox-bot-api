@@ -1,10 +1,12 @@
 import OutMessage from "./OutMessage";
 
 export default class RecallOutMessage extends OutMessage {
+
     messageId;
     fromUserId;
 
     constructor() {
+        super();
         this.method = "recallMessage";
     }
 

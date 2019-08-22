@@ -2,34 +2,32 @@
 import Row from "./Row";
 
 export default class Menu {
-   static KEY_MENU_REF = "menu_ref";
-   static KEY_ROWS = "rows";
 
    menuRef;
-   rows;
+   rows = [];
 
    constructor(obj) {
       if(!obj)
          return;
-      rowsArrayObj = obj.KEY_ROWS;
+      rowsArrayObj = obj.rows;
       // TODO: check syntax
-      this.rows = new Row[rowsArrayObj.length];
+      //this.rows = new Row[rowsArrayObj.length];
       for (let i = 0; i < rowsArrayObj.length; i++)
          rows[i] = new Row(rowsArrayObj[i], 3);
 
-      this.menuRef = obj.KEY_MENU_REF;   
+      this.menuRef = obj.menu_ref;   
    }
 
    toJsonObject = () => {
       let obj = {};
 
-      if(this.menuRef)  obj.KEY_MENU_REF = this.menuRef;
+      if (this.menuRef) obj.menu_ref = this.menuRef;
       if(rows){
          let rowsArrayObj = [];
          for (let i = 0; i < rows.length; i++) {
 				rowsArrayObj[i] = rows[i].toJsonObject();
 			}
-			obj.KEY_ROWS = rowsArrayObj;
+			obj.rows = rowsArrayObj;
       }
    }
 

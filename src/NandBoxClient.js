@@ -1,11 +1,13 @@
 "use strict";
 import NandBox from "./NandBox";
 import User from "./data/User";
+import Chat from "./data/Chat";
 import TextOutMessage from "./outmessages/TextOutMessage";
 import PhotoOutMessage from "./outmessages/PhotoOutMessage";
 import ContactOutMessage from "./outmessages/ContactOutMessage";
 import AudioOutMessage from "./outmessages/AudioOutMessage";
 import VoiceOutMessage from "./outmessages/VoiceOutMessage";
+import VideoOutMessage from "./outmessages/VideoOutMessage";
 import DocumentOutMessage from "./outmessages/DocumentOutMessage";
 import LocationOutMessage from "./outmessages/LocationOutMessage";
 import UpdateOutMessage from "./outmessages/UpdateOutMessage";
@@ -47,7 +49,7 @@ var getConfigs = () => {
     }
 }
 
-export default class NandBoxClient {
+class NandBoxClient {
 
     static uri = getConfigs().URI;
 
@@ -146,7 +148,7 @@ export default class NandBoxClient {
 
                     console.log(new Date() + ">>>>>> Sending Message :", message);
                     this.send(message);
-                    clearInterval(ping);
+                    //clearInterval(ping);
                 }
 
                 this.api.prepareOutMessage = (message, chatId, reference,
@@ -194,7 +196,14 @@ export default class NandBoxClient {
                     }
                     else if (chatId && text && reference && bgColor && !replyToMessageId && !toUserId && !webPagePreview &&
                         !disableNotification && !chatSettings) {
-
+                        let message = new TextOutMessage();
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                            disableNotification, null, chatSettings);
+                        message.method = "sendMessage";
+                        message.text = text;
+                        message.reference = reference;
+                        message.bgColor = bgColor;
+                        this.api.send(JSON.stringify(message));
                     } else {
                         /*  let message = new TextOutMessage();
                          this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
@@ -399,7 +408,7 @@ export default class NandBoxClient {
                     updateMessage.message_id = messageId;
                     updateMessage.text = text;
                     updateMessage.caption = caption;
-                    updateMessage.to_user_id = toUserId;
+                    updateMessage.toUser_id = toUserId;
                     updateMessage.chat_id = chatId;
 
                     this.api.send(JSON.stringify(updateMessage));
@@ -516,7 +525,7 @@ export default class NandBoxClient {
 
 
             connection.onmessage = msg => {
-                let user = new User();
+                let user;
                 this.lastMessage = (new Date()).getUTCMilliseconds();
                 console.log("INTERNAL: ONMESSAGE");
                 let obj = msg.data;
@@ -544,17 +553,14 @@ export default class NandBoxClient {
                             this.callback.onReceive(incomingMessage);
                             return;
                         case "chatMenuCallback":
-                            // TODO: write class
                             let chatMenuCallback = new ChatMenuCallback(obj);
                             this.callback.onChatMenuCallBack(chatMenuCallback);
                             return;
                         case "inlineMessageCallback":
-                            // TODO: write class
                             let inlineMsgCallback = new InlineMessageCallback(obj);
                             this.callback.onInlineMessageCallback(inlineMsgCallback);
                             return;
                         case "inlineSearch":
-                            // TODO: write class
                             let inlineSearch = new InlineSearch(obj);
                             this.callback.onInlineSearh(inlineSearch);
                             return;
@@ -563,45 +569,42 @@ export default class NandBoxClient {
                             this.callback.onMessagAckCallback(msgAck);
                             return;
                         case "userJoinedBot":
-                            let user = new User(obj.KEY_USER);
+                            user = new User(obj.user);
                             this.callback.onUserJoinedBot(user);
                             return;
                         case "chatMember":
-                            // TODO: write class
                             let chatMember = new ChatMember(obj);
                             this.callback.onChatMember(chatMember);
                             return;
                         case "myProfile":
-                            user = new User(obj.KEY_USER);
+                            user = new User(obj.user);
                             this.callback.onMyProfile(user);
                             return;
                         case "userDetails":
-                            user = new User(obj.KEY_USER);
+                            user = new User(obj.user);
                             this.callback.onUserDetails(user);
                             return;
                         case "chatDetails":
-                            let chat = new Chat(obj.KEY_CHAT);
+                            let chat = new Chat(obj.chat);
                             this.callback.onChatDetails(chat);
                             return;
                         case "chatAdministrators":
-                            // TODO: write class
                             let chatAdministrators = new ChatAdministrators(obj);
                             this.callback.onChatAdministrators(chatAdministrators);
                             return;
                         case "userStartedBot":
-                            user = new User(obj.KEY_USER);
+                            user = new User(obj.user);
                             this.callback.userStartedBot(user);
                             return;
                         case "userStoppedBot":
-                            user = new User(obj.KEY_USER);
+                            user = new User(obj.user);
                             this.callback.userStoppedBot(user);
                             return;
                         case "userLeftBot":
-                            user = new User(obj.KEY_USER);
+                            user = new User(obj.user);
                             this.callback.userLeftBot(user);
                             return;
                         case "userLeftBot":
-                            // TODO: write class
                             let permenantURL = new PermanentUrl(obj);
                             this.callback.permanentUrl(permenantURL);
                             return;
@@ -656,6 +659,7 @@ export default class NandBoxClient {
 
             }
             catch (e) {
+                console.log(new Error().stack)
                 console.log(e);
             }
         }
@@ -691,4 +695,9 @@ var init = () => {
     if (nandboxClient != null) return;
     nandboxClient = new NandBoxClient();
     return nandboxClient;
+}
+
+export {
+    NandBoxClient,
+    getConfigs
 }

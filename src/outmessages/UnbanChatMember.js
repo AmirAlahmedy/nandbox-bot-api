@@ -6,6 +6,7 @@ export default class UnbanChatMember extends OutMessage {
     userId;
 
     constructor() {
+        super();
         this.method = "unbanChatMember";
     }
 

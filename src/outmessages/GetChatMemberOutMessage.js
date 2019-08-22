@@ -6,6 +6,7 @@ export default class GetChatMemberOutMessage extends OutMessage {
     userId;
 
     constructor() {
+        super();
         this.method = "getChatMember";
     }
 

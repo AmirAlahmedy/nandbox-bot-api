@@ -49,14 +49,14 @@ export default  class IncomingMessage {
 
         obj = jsonObj.message;
 
-        let fromUser = new User(obj.from);
+        /* let fromUser = new User(obj.from);
         console.log(obj.sent_to);
         let sentToUser = obj.sent_to ? new User(obj.sent_to) : null;
-        console.log(sentToUser);
+        console.log(sentToUser); */
         this.chat = obj.chat == null ? null : new Chat(obj.chat);
         this.location = obj.location ? new Location(obj.location) : null;
         this.contact = obj.contact ? new Contact(obj.contact) : null;
-        this.document = obj.document ? new Document(obj.document) : null;
+        this._document = obj.document ? new Document(obj.document) : null;
         this.photo = obj.photo ? new Photo(obj.photo) : null;
         this.gif = obj.gif ? new Gif(obj.gif) : null;
         this.voice = obj.voice ? new Voice(obj.voice) : null;
@@ -68,7 +68,7 @@ export default  class IncomingMessage {
         this.messageId = obj.message_id;
         this.date = obj.date;
         this.reference = obj.reference;
-        this.from = obj.from_user;
+        this.from = obj.from;
         this.sentTo = obj.sent_to_user;
         this.fromAdmin = obj.from_admin;
         this.type = obj.type;

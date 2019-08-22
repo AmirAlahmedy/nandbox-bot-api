@@ -12,9 +12,8 @@ export default class OutMessage {
     static WEB_PREVIEW_INSTANCE_WITHOUT_LINK = 4;
 
     //static KEY_STYLE = "style";
+    
 
-
-    // TODO: check syntax
     method;
     chatId;
     reference;

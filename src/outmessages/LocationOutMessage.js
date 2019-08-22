@@ -9,6 +9,7 @@ export default class LocationOutMessage extends OutMessage {
     details;
 
     constructor() {
+        super();
         this.method = "sendLocation";
     }
 

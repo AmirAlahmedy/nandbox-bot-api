@@ -6,6 +6,7 @@ export default class BanChatMemberOutMessage extends OutMessage {
     userId;
 
     constructor() {
+        super();
         this.method = "banChatMember";
     }
 

@@ -5,6 +5,7 @@ export default class SetMyProfileOutMessage extends OutMessage {
     user = new User();
 
     constructor() {
+        super();
         this.method = "setMyProfile";
     }
 

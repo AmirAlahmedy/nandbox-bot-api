@@ -5,6 +5,7 @@ export default class SetChatOutMessage extends OutMessage {
     chat = new Chat();
 
     constructor() {
+        super();
         this.method = "setChat";
     }
 

@@ -13,6 +13,7 @@ export default class DocumentOutMessage extends OutMessage {
     size;
 
     constructor() {
+        super();
         this.method = "sendDocument";
     }
 

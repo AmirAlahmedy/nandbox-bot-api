@@ -14,6 +14,7 @@ export default class ContactOutMessage extends OutMessage {
     phoneNumber;
 
     constructor() {
+        super();
         this.method = "sendContact";
     }
 

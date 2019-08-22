@@ -4,7 +4,6 @@ import Button from "../data/Button";
 
 export default class SetNavigationButtonOutMessage extends OutMessage {
 
-    static KEY_NAVIGATION_BUTTON = "navigation_button";
     navigationButton = new Button();
 
     constructor() {
@@ -14,7 +13,7 @@ export default class SetNavigationButtonOutMessage extends OutMessage {
     toJsonObject = () => {
         let obj = super.toJsonObject();
         if (navigationButton)
-            obj.KEY_NAVIGATION_BUTTON = navigationButton.toJsonObject();
+            obj.navigation_button= navigationButton.toJsonObject();
 
         return obj;
     }

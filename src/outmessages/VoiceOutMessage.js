@@ -12,6 +12,7 @@ export default class VoiceOutMessage extends OutMessage {
     size;
 
     constructor() {
+        super();
         this.method = "sendVoice";
     }
 

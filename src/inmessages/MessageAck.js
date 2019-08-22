@@ -7,7 +7,7 @@ export default class MessageAck {
     constructor(jsonObj) {
         let obj = {};
 
-        obj.ack = jsonObj.ack;
+        obj = jsonObj.ack;
         this.messageId = obj.message_id;
         this.reference = obj.reference;
         //TODO:  Utils.getLong(obj.date)

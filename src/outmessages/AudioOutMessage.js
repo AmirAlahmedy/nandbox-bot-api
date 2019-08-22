@@ -13,6 +13,7 @@ export default class AudioOutMessage extends OutMessage {
     title;
 
     constructor() {
+        super();
         this.method = "sendAudio";
     }
 

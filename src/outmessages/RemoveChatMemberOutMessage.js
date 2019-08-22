@@ -4,6 +4,7 @@ export default class RemoveChatMemberOutMessage extends OutMessage {
     userId;
 
     constructor() {
+        super();
         this.method = "removeChatMember";
     }
 

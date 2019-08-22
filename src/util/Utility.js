@@ -32,7 +32,7 @@ class Utils {
         api.send(navMsg);
     }
 
-
+    isNotEmpty = string => !("" === string);
     // TODO: complete
 
 }
@@ -62,7 +62,8 @@ var generate = () => {
 
 
 
+
 export {
     Utils as Utility,
-    generate as Id
+    generate as Id,
 }

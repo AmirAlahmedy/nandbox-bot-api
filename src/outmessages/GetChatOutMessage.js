@@ -5,6 +5,7 @@ import OutMessage from "./OutMessage";
 export default class GetChatOutMessage extends OutMessage {
 
     constructor() {
+        super();
         this.method = "getChat";
     }
 

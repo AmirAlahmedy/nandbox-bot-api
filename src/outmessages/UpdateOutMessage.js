@@ -7,6 +7,7 @@ export default class UpdateOutMessage extends OutMessage {
     text;
 
     constructor() {
+        super();
         this.method = "updateMessage";
     }
 

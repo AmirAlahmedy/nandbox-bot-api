@@ -5,6 +5,7 @@ export default  class GeneratePermanentUrl extends OutMessage {
     param1;
 
     constructor() {
+        super();
         this.method = "generatePermanentUrl";
     }
 

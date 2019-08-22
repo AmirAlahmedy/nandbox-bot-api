@@ -1,20 +1,18 @@
-"use strict";
-
 import OutMessage from "./OutMessage";
 
-export default class GetUserOutMessage extends OutMessage {
-    userId;
+export default class VideoOutMessage extends OutMessage {
+    video;
 
     constructor() {
         super();
-        this.method = "getUser";
+        this.method = "sendVideo";
     }
 
     toJsonObject = () => {
         let obj = super.toJsonObject();
-
-        if (this.userId) obj.user_id = this.userId;
-
+        if (video != null) {
+            obj.video = video;
+        }
         return obj;
     }
 }
