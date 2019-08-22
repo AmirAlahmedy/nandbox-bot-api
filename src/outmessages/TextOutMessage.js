@@ -4,19 +4,19 @@ import OutMessage from "./OutMessage";
 export default class TextOutMessage extends OutMessage {
 
     text;
-    bgColor;
+    bg_color;
 
     constructor() {
         super();
-        this.method = "sendMessage"; //this.OutMessageMethod.sendMessage;
+        this.method = "sendMessage"; 
     }
 
     toJsonObject = () => {
         let obj = super.toJsonObject();
         if (this.text)
             obj.text = this.text;
-        if (this.bgColor)
-            obj.bg_color = this.bgColor;
+        if (this.bg_color)
+            obj.bg_color = this.bg_color;
         return obj;
     }
 }

@@ -22,17 +22,17 @@ class Utils {
     }
 
     setNavigationButton = (chatId, nextMenu, api) => {
-        fb = new Button();
-        fb.nextMenu = nextMenu;
-        navMsg = new SetNavigationButtonOutMessage();
-        navMsg.chatId = chatId;
-        navMsg.navigationButton = fb;
+        let fb = new Button();
+        fb.next_menu = nextMenu;
+        let navMsg = new SetNavigationButtonOutMessage();
+        navMsg.chat_id = chatId;
+        navMsg.navigation_button = fb;
 
-        api = new Api();
-        api.send(navMsg);
+        api.send(JSON.stringify(navMsg));
     }
 
     isNotEmpty = string => !("" === string);
+    
     // TODO: complete
 
 }
@@ -57,7 +57,7 @@ var generate = () => {
         id += parts[index];
     }
 
-    return id;
+    return Number(id);
 }
 
 

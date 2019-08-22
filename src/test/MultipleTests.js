@@ -87,95 +87,117 @@ nCallBack.onReceive = incomingMsg => {
             } else if ("1bc" == incomingMsg.text.toLowerCase()) {
                 let outmsg = new TextOutMessage();
                 const reference = Id();
-                outmsg.chatId = incomingMsg.chat.id;
+                outmsg.chat_id = incomingMsg.chat.id;
                 outmsg.reference = reference;
                 outmsg.text = "https://edition.cnn.com/";
-                outmsg.webPagePrevie = OutMessage.WEB_PREVIEW_INSTANCE_VIEW;
+                outmsg.web_page_preview = OutMessage.WEB_PREVIEW_INSTANCE_VIEW;
                 outmsg.echo = 1;
 
                 let menuRef = MAIN_MENU_001;
                 let oneBtn = createButton("", "oneBtnCBInWebView", 1, "RED", "White", null, null);
-                oneBtn.buttonIcon = "ic_ball_ic_24dp";
-                oneBtn.buttonIconBgColor = "#FFFF44";
+                oneBtn.button_icon = "ic_ball_ic_24dp";
+                oneBtn.button_icon_bgcolor = "#FFFF44";
 
-                let firstRow = new Row();
-                firstRow.rowOrder = 1;
-                firstRow.buttons[0] = new Button(oneBtn, 2);
+                let buttons = [];
+                buttons.push(oneBtn);
 
-                let inlineMenu = new Menu();
-                inlineMenu.menuRef = menuRef;
-                inlineMenu.rows[0] = new Row(firstRow, 3);
-                outmsg.menuRef = menuRef;
-                outmsg.inlineMenus = new Menu(inlineMenu);
+                let rowOrder = 1;
+                let firstRow = new Row(buttons, rowOrder);
+                let rows = [];
+                rows.push(firstRow);
+               
 
-                api.send(outmsg);
+                let inlineMenu = [];
+                let firstInlineMenu = new Menu(rows, menuRef);
+                inlineMenu.push(firstInlineMenu);
+               
+                outmsg.menu_ref = menuRef;
+                outmsg.inline_menu = inlineMenu;
+
+                api.send(JSON.stringify(outmsg));
 
             } else if ("3bc" == incomingMsg.text.toLowerCase()) {
                 let outmsg = new TextOutMessage();
                 let reference = Id();
-                outmsg.chatId = incomingMsg.chat.id;
+                outmsg.chat_id = incomingMsg.chat.id;
                 outmsg.reference = reference;
                 outmsg.text = "https://edition.cnn.com/";
-                outmsg.webPagePreview = OutMessage.WEB_PREVIEW_INSTANCE_VIEW;
+                outmsg.web_page_preview = OutMessage.WEB_PREVIEW_INSTANCE_VIEW;
                 outmsg.echo = 1;
 
                 let menuRef = MAIN_MENU_001;
                 let oneBtn = createButton("Visit a Milestone", "oneBtnCBInWebView", 1, "RED", "White", null, null);
                 let secondBtn = createButton("Cairo Porto Mall", "secondBtn", 1, "RED", "White", null, null);
                 let thirdButton = createButton("Seven Stars Mall", "thirdBtn", 1, "RED", "White", null, null);
-                oneBtn.buttonURL = "https://edition.cnn.com/";
+                oneBtn.button_url = "https://edition.cnn.com/";
 
-                let firstRow = new Row();
-                firstRow.rowOrder = 1;
-                firstRow.buttons[0] = new Button(oneBtn, 2);
-                firstRow.buttons[1] = new Button(secondBtn, 2);
-                firstRow.buttons[3] = new Button(thirdButton, 2);
+                let buttons = [];
+                buttons.push(oneBtn.toJsonObject()); // called toJsonObject to remove null values.
+                buttons.push(secondBtn.toJsonObject());
+                buttons.push(thirdButton.toJsonObject());
+                
+                let rowOrder = 1;
+                let firstRow = new Row(buttons, rowOrder);
+                let rows = [];
+                rows.push(firstRow);
 
-                let inlineMenu = new Menu();
-                inlineMenu.menuRef = menuRef;
-                inlineMenu.rows[0] = new Row(firstRow, 3);
-                outmsg.menuRef = menuRef;
-                outmsg.inlineMenus = new Menu(inlineMenu);
+                let inlineMenu = [];
+                let firstInlineMenu = new Menu(rows, menuRef);
+                inlineMenu.push(firstInlineMenu);
 
-                api.send(outmsg);
+                outmsg.menu_ref = menuRef;
+                outmsg.inline_menu = inlineMenu;
 
-            } else if ("buttonIcon".toLocaleLowerCase() == incomingMsg.text.toLowerCase()) {
+                api.send(JSON.stringify(outmsg));
+
+            } else if ("button_icon".toLocaleLowerCase() == incomingMsg.text.toLowerCase()) {
                 let outmsg = new TextOutMessage();
                 let reference = Id();
-                outmsg.chatId = incomingMsg.chat.id;
+                outmsg.chat_id = incomingMsg.chat.id;
                 outmsg.reference = reference;
                 outmsg.text = "https://edition.cnn.com/";
-                outmsg.webPagePreview = OutMessage.WEB_PREVIEW_INSTANCE_VIEW;
+                outmsg.web_page_preview = OutMessage.WEB_PREVIEW_INSTANCE_VIEW;
                 outmsg.echo = 1;
 
                 let menuRef = MAIN_MENU_001;
+                
                 let oneBtn = createButton("RSS", "oneBtnCBInWebView", 1, "RED", "White", null, null);
-                oneBtn.buttonIcon("ic_mood_bad_24dp");
-                oneBtn.buttonIconBgColor("#FFFF44");
+                oneBtn.button_icon = "ic_mood_bad_24dp";
+                oneBtn.button_icon_bgcolor = "#FFFF44";
+                
                 let secondBtn = createButton("Calendar", "secondBtn", 1, "RED", "White", null, null);
-                secondBtn.buttonIcon("ic_hourglass_full_24dp");
-                secondBtn.buttonIconBgColor("White");
+                secondBtn.button_icon = "ic_hourglass_full_24dp";
+                secondBtn.button_icon_bgcolor = "White";
+                
                 let thirdButton = createButton("Feed", "thirdBtn", 1, "RED", "White", null, null);
-                thirdButton.buttonIcon("ic_credit_card_24dp");
-                thirdButton.buttonIconBgColor("Yellow");
-                thirdButton.buttonURL("https://edition.cnn.com/");
+                thirdButton.button_icon = "ic_credit_card_24dp";
+                thirdButton.button_icon_bgcolor = "Yellow";
+                thirdButton.button_url  = "https://edition.cnn.com/";
 
-                let firstRow = new Row();
-                firstRow.rowOrder = 1;
-                firstRow.buttons[0] = new Button(oneBtn, 2);
-                firstRow.buttons[1] = new Button(secondBtn, 2);
-                firstRow.buttons[3] = new Button(thirdButton, 2);
+                let buttons = [];
+                buttons.push(oneBtn);
+                buttons.push(secondBtn);
+                buttons.push(thirdButton);
 
-                let inlineMenu = new Menu();
-                inlineMenu.menuRef = menuRef;
-                inlineMenu.rows[0] = new Row(firstRow, 3);
-                outmsg.menuRef = menuRef;
-                outmsg.inlineMenus = new Menu(inlineMenu);
+                let rowOrder = 1;
+                let firstRow = new Row(buttons, rowOrder);
 
-                api.send(outmsg);
+            
+                let rows = [];
+                rows.push(firstRow);
+
+                let inlineMenu = [];
+                let firstInlineMenu = new Menu(rows, menuRef);
+                inlineMenu.push(firstInlineMenu);
+
+                outmsg.menu_ref = menuRef;
+                outmsg.inline_menu = inlineMenu;
+
+                api.send(JSON.stringify(outmsg));
 
             } else if ("3m" == incomingMsg.text) {
 
+                let outmsg = new SetChatMenuOutMessage();
 
                 let chatId = incomingMsg.chat.id;
 
@@ -183,31 +205,36 @@ nCallBack.onReceive = incomingMsg => {
                 utility.setNavigationButton(chatId, "mainMenu", api);
 
                 let menuBtn1 = createButton("Ù…ØµØ±Ø§ÙˆÙŠ", "mainCB", 1, "Gray", "Red", null, null);
-                menuBtn1.buttonIcon("ic_smoke_free_24dp");
-                menuBtn1.buttonIconBgColor("#00FFFF");
+                menuBtn1.button_icon = "ic_smoke_free_24dp";
+                menuBtn1.button_icon_bgcolor = "#00FFFF";
+                
                 let menuBtn2 = createButton("Funny", "funnyCB", 1, "Gray", "Red", null, null);
-                menuBtn2.buttonIcon("ic_timeline_24dp");
+                menuBtn2.button_icon = "ic_timeline_24dp";
+                
                 let menuBtn3 = createButton("Option", "optionCB", 1, "Gray", "Red", null, null);
-                menuBtn3.buttonIcon("ic_pregnant_woman_24dp");
-                menuBtn3.buttonIconBgColor("orange");
+                menuBtn3.button_icon = "ic_pregnant_woman_24dp";
+                menuBtn3.button_icon_bgcolor = "orange";
 
-                let outmsg = new SetChatMenuOutMessage();
+                let buttons = [];
+                buttons.push(menuBtn1);
+                buttons.push(menuBtn2);
+                buttons.push(menuBtn3);
 
-                let firstRow = new Row();
-                firstRow.rowOrder = 1;
-                firstRow.buttons[0] = new Button(menuBtn1, 2);
-                firstRow.buttons[1] = new Button(menuBtn2, 2);
-                firstRow.buttons[2] = new Button(menuBtn3, 2);
+                let rowOrder = 1;
+                let firstRow = new Row(buttons, rowOrder);
+                
+                let rows = [];
+                rows.push(firstRow);
 
-                let chatMenu = new Menu();
                 let menuRef = "mainMenu";
-                chatMenu.menuRef = menuRef;
-                chatMenu.rows[0] = new Row(firstRow, 3);
+                let chatMenu = new Menu(rows, menuRef);
+                let menus = [];
+                menus.push(chatMenu);
 
-                outmsg.chatId(incomingMsg.chat.id);
-                outmsg.menus[0] = new Menu(chatMenu);
+                outmsg.chat_id = incomingMsg.chat.id;
+                outmsg.menus = menus;
 
-                api.send(outmsg);
+                api.send(JSON.stringify(outmsg));
 
             } else {
                 api.sendText(incomingMsg.chat.id, incomingMsg.text);
@@ -660,13 +687,13 @@ let createButton = (label, callback, order, bgColor, txtColor, buttonQuery, next
 
     let btn = new Button();
 
-    btn.buttonLabel = label;
-    btn.buttonOrder = order;
-    btn.buttonCallBack = callback;
-    btn.buttonBgColor = bgColor;
-    btn.buttonTextColor = txtColor;
-    btn.buttonQuery = buttonQuery;
-    btn.nextMenu = nextMenuRef;
+    btn.button_label = label;
+    btn.button_order = order;
+    btn.button_callback = callback;
+    btn.button_bgcolor = bgColor;
+    btn.button_textcolor = txtColor;
+    btn.button_query = buttonQuery;
+    btn.next_menu = nextMenuRef;
 
     return btn;
 }

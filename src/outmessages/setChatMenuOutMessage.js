@@ -12,6 +12,7 @@ export default class SetChatMenuOutMessage extends OutMessage {
     menus = [];
 
     constructor() {
+        super();
         this.method = "setChatMenu";
     }
 
