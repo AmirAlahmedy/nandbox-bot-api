@@ -7,7 +7,7 @@ export default class InlineSearch {
     method;
     from;
     chat;
-    searchId;
+    search_id;
     offset;
     keywords;
 
@@ -20,7 +20,7 @@ export default class InlineSearch {
         this.method = obj.method;
         this.from = fromUser;
         this.date = obj.date;
-        this.searchId = obj.search_id;
+        this.search_id = obj.search_id;
         this.offset = obj.offset;
         this.keywords = obj.keywords;		
     }
@@ -33,7 +33,7 @@ export default class InlineSearch {
         if (from) obj.from =  from.toJsonObject();
         if (chat) obj.chat =  chat.toJsonObject();
         if (method) obj.method =  method;
-        if (searchId) obj.search_id =  searchId;
+        if (search_id) obj.search_id =  search_id;
         if (offset) obj.offset =  offset;
         if (keywords) obj.keywords =  keywords;
 

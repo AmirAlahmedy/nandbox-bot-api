@@ -57,7 +57,7 @@ export default class NandBox {
 		 *
 		 * @param chatMenuCallback
 		 *            This object represents an incoming callback query from a callback
-		 *
+		 */
         onChatMenuCallBack = chatMenuCallback => { };
         /**
          * This event should be used to handle Inline menu keypad button pressed

@@ -18,7 +18,7 @@ import VideoOutMessage from "../outmessages/VideoOutMessage";
 import PhotoOutMessage from "../outmessages/PhotoOutMessage";
 import Button from "../data/Button";
 
-let TOKEN = "90091783927225986:0:PjAudagHdpEDxpIJOGKdNB1X6Og4WA"; // you can put your own bot token
+let TOKEN = "90091783927225986:0:ymJORgQkQcboixXrbCqaDVYb5BuHeB"; // you can put your own bot token
 let MAIN_MENU_001 = "MAIN_MENU_001";
 let outMsgsListener = new Map();
 
@@ -55,7 +55,7 @@ nCallBack.onReceive = incomingMsg => {
         }
     } else {
         console.log("=========>> " + incomingMsg.type + " Message Received =========>>");
-        console.log("incomingMsg.messageId : " + incomingMsg.messageId);
+        console.log("incomingMsg.message_id : " + incomingMsg.message_id);
         console.log("incomingMsg.date : " + incomingMsg.date);
         console.log("incomingMsg.reference : " + incomingMsg.reference);
         console.log("incomingMsg.caption: " + incomingMsg.caption);
@@ -199,10 +199,10 @@ nCallBack.onReceive = incomingMsg => {
 
                 let outmsg = new SetChatMenuOutMessage();
 
-                let chatId = incomingMsg.chat.id;
+                let chat_id = incomingMsg.chat.id;
 
                 let utility = new Utility();
-                utility.setNavigationButton(chatId, "mainMenu", api);
+                utility.setNavigationButton(chat_id, "mainMenu", api);
 
                 let menuBtn1 = createButton("Ù…ØµØ±Ø§ÙˆÙŠ", "mainCB", 1, "Gray", "Red", null, null);
                 menuBtn1.button_icon = "ic_smoke_free_24dp";
@@ -341,18 +341,18 @@ client.connect(TOKEN, nCallBack);
 let handleIncomingDocumentMsg = incomingMsg => {
 
     console.log("================start of Document Object ===================");
-    console.log("incomingMsg._document.id : " + incomingMsg._document.id);
-    console.log("incomingMsg._document.name : " + incomingMsg._document.name);
-    console.log("incomingMsg._document.size : " + incomingMsg._document.size);
+    console.log("incomingMsg.document.id : " + incomingMsg.document.id);
+    console.log("incomingMsg.document.name : " + incomingMsg.document.name);
+    console.log("incomingMsg.document.size : " + incomingMsg.document.size);
 
     let documentOutMsg = new DocumentOutMessage();
-    documentOutMsg.chatId = incomingMsg.chat.id;
+    documentOutMsg.chat_id = incomingMsg.chat.id;
     documentOutMsg.reference = Id();
-    documentOutMsg._document = incomingMsg._document.id;
+    documentOutMsg.document = incomingMsg.document.id;
     documentOutMsg.name = "Document renamed inside Bot";
     documentOutMsg.caption = "Document From Bot";
 
-    api.send(documentOutMsg);
+    api.send(JSON.stringify(documentOutMsg));
 
     // send Document using sendDocument
 
@@ -365,10 +365,10 @@ let handleIncomingDocumentMsg = incomingMsg => {
     api.sendDocument(incomingMsg.chat.id, uploadedDocumentId, Id(), null, null, null,
         null, "from all option send", null, null, null);
     api.sendText(incomingMsg.chat.id,
-        "Document size : " + incomingMsg._document.size
+        "Document size : " + incomingMsg.document.size
         + " , Document File Name is : "
-        + incomingMsg._document.name + " , Document File ID is : "
-        + incomingMsg._document.id);
+        + incomingMsg.document.name + " , Document File ID is : "
+        + incomingMsg.document.id);
 
 }
 
@@ -380,12 +380,12 @@ let handleIncomingContactMsg = incomingMsg => {
 
     // send contatc using ContactOutMessage object
     let contactOutMsg = new ContactOutMessage();
-    contactOutMsg.chatId = incomingMsg.chat.id;
+    contactOutMsg.chat_id = incomingMsg.chat.id;
     contactOutMsg.reference = Id;
     contactOutMsg.name = incomingMsg.contact.name;
     contactOutMsg.phoneNumber = incomingMsg.contact.phoneNumber;
 
-    api.send(contactOutMsg);
+    api.send(JSON.stringify(contactOutMsg));
 
     // send contatc using sendContact
     api.sendContact(incomingMsg.chat.id,
@@ -438,7 +438,7 @@ let handleIncomingLocationMsg = incomingMsg => {
     console.log("incomingMsg.location.longitude : " + incomingMsg.location.longitude);
 
     let locationOutMsg = new LocationOutMessage();
-    locationOutMsg.chatId = incomingMsg.chat.id;
+    locationOutMsg.chat_id = incomingMsg.chat.id;
     locationOutMsg.reference = Id();
     locationOutMsg.name = incomingMsg.location.name;
     locationOutMsg.details = incomingMsg.location.details;
@@ -446,7 +446,7 @@ let handleIncomingLocationMsg = incomingMsg => {
     locationOutMsg.longitude = incomingMsg.location.longitude;
     locationOutMsg.caption = "Location From Bot";
 
-    api.send(locationOutMsg);
+    api.send(JSON.stringify(locationOutMsg));
 
     // send location using sendlocation
 
@@ -500,13 +500,13 @@ let handleIncomingGifMsg = incomingMsg => {
         if (uploadedGifPhotoId) {
 
             let gifMsg = new GifOutMessage("Photo")
-            gifMsg.chatId = incomingMsg.chat.id;
+            gifMsg.chat_id = incomingMsg.chat.id;
             gifMsg.reference = Id();
             gifMsg.gif = uploadedGifPhotoId;
             gifMsg.caption = "Gif From Bot";
             gifMsg.echo = 0;
 
-            api.send(gifMsg);
+            api.send(JSON.stringify(gifMsg));
 
             // send GIF using sendGIF
 
@@ -524,13 +524,13 @@ let handleIncomingGifMsg = incomingMsg => {
         if (uploadedGifVideoId) {
 
             let gifMsg = new GifOutMessage("Video");
-            gifMsg.chatId(incomingMsg.chat.id);
+            gifMsg.chat_id = incomingMsg.chat.id;
             gifMsg.reference = Id();
             gifMsg.gif = uploadedGifVideoId;
             gifMsg.caption = "Gif From Bot";
             gifMsg.echo = 0;
 
-            api.send(gifMsg);
+            api.send(JSON.stringify(gifMsg));
 
             // send GIF using sendGIF
 
@@ -559,14 +559,14 @@ let handleIncomingAudioMsg = incomingMsg => {
     console.log("================start of Photo Thumbinil  Object ===================");
 
     let audioOutMsg = new AudioOutMessage();
-    audioOutMsg.chatId = incomingMsg.chat.id;
+    audioOutMsg.chat_id = incomingMsg.chat.id;
     audioOutMsg.reference = Id();
     audioOutMsg.audio = incomingMsg.audio.id;
     audioOutMsg.performer = "Perfomer Man";
     audioOutMsg.title = " Song";
     audioOutMsg.caption = "Audio From Bot";
 
-    api.send(audioOutMsg);
+    api.send(JSON.stringify(audioOutMsg));
     api.sendText(incomingMsg.chat.id, "Audio Title : "
         + incomingMsg.audio.title + " ,Audio Performer is : "
         + incomingMsg.audio.performer + ", Audio Size is : "
@@ -584,16 +584,16 @@ let handleIncomingVoiceMsg = incomingMsg => {
     console.log("================start of Photo Thumbinil  Object ===================");
 
     let voiceOutMsg = new VoiceOutMessage();
-    voiceOutMsg.chatId = incomingMsg.chat.id;
+    voiceOutMsg.chat_id = incomingMsg.chat.id;
     voiceOutMsg.reference = Id();
     voiceOutMsg.voice = incomingMsg.voice.id;
     voiceOutMsg.size = 700;
     voiceOutMsg.caption = "Vocie From Bot";
 
-    api.send(voiceOutMsg);
+    api.send(JSON.stringify(voiceOutMsg));
     api.sendText(incomingMsg.chat.id, "Voice Size is : "
         + incomingMsg.voice.size + " and Voice Duration is :"
-        + formatDurationInMinsAndSeconds(incomingMsg.voice.duration));
+        + Utility.formatDurationInMinsAndSeconds(incomingMsg.voice.duration));
 
 }
 
@@ -605,16 +605,16 @@ let handleIncomingVideoMsg = incomingMsg => {
     console.log("incomingMsg.video.height : " + incomingMsg.video.height);
     console.log("incomingMsg.video.size : " + incomingMsg.video.size);
     console.log("incomingMsg.video.duration : " + incomingMsg.video.duration);
-    console.log("================start of Video Thumbinil  Object ===================");
+    console.log("================start of Video Thumbnail  Object ===================");
 
     if (incomingMsg.video.thumbnail) {
-        console.log("================End of Photo Thumbinil Object ===================");
+        console.log("================End of Video Thumbnail Object ===================");
         console.log("incomingMsg.video.thumbnail.id " + incomingMsg.video.thumbnail.id);
         console.log("incomingMsg.video.thumbnail.width: " + incomingMsg.video.thumbnail.width);
         console.log("incomingMsg.video.thumbnail.height: " + incomingMsg.video.thumbnail.height);
-        console.log("================End of Photo Object ===================");
+        console.log("================End of Video Object ===================");
     } else
-        console.log("================No Thumbinil Object in this Phot ===================");
+        console.log("================No Thumbnail Object in this Video ===================");
 
 
     let uploadedVideoId = (new MediaTransfer()).uploadFile(TOKEN, "./upload/recallTest.mp4");
@@ -622,13 +622,13 @@ let handleIncomingVideoMsg = incomingMsg => {
     if (uploadedVideoId) {
 
         let vidoMsg = new VideoOutMessage();
-        vidoMsg.chatId(incomingMsg.chat.id);
+        vidoMsg.chat_id = incomingMsg.chat.id;
         vidoMsg.reference = Id();
         vidoMsg.video = uploadedVideoId;
         vidoMsg.caption = "Video From Bot";
         vidoMsg.echo = 0;
 
-        api.send(vidoMsg);
+        api.send(JSON.stringify(vidoMsg));
 
     }
 
@@ -637,7 +637,7 @@ let handleIncomingVideoMsg = incomingMsg => {
         + " and Video width is :" + incomingMsg.video.width
         + " and Video height is :" + incomingMsg.video.height
         + " and Video duration is :"
-        + formatDurationInMinsAndSeconds(incomingMsg.video.duration)
+        + Utility.formatDurationInMinsAndSeconds(incomingMsg.video.duration)
         + " and caption is : " + incomingMsg.caption);
 
 }
@@ -661,7 +661,7 @@ let handleIncomingPhotoMsg = incomingMsg => {
 
     api.generatePermanentUrl(incomingMsg.photo.id, "Any Reference");
 
-    (new MediaTransfer()).downloadFile(TOKEN, incomingMsg.photo.id, "./download", null);
+    (new MediaTransfer()).downloadFile(TOKEN, incomingMsg.photo.id, "./download", "download.jpeg");
 
     api.sendText(incomingMsg.chat.id,
         "Photo Size is : " + incomingMsg.photo.size
@@ -673,13 +673,13 @@ let handleIncomingPhotoMsg = incomingMsg => {
     let uploadedPhotId = (new MediaTransfer()).uploadFile(TOKEN, "./upload/welcome.jpg");
     if (uploadedPhotId) {
         let photoMsg = new PhotoOutMessage();
-        photoMsg.chatId = incomingMsg.chat.id;
+        photoMsg.chat_id = incomingMsg.chat.id;
         photoMsg.reference = Id();
         photoMsg.photo = uploadedPhotId;
         photoMsg.caption = "Photo From Bot";
         photoMsg.echo = 1;
 
-        api.send(photoMsg);
+        api.send(JSON.stringify(photoMsg));
     }
 }
 

@@ -2,6 +2,12 @@
 import NandBox from "./NandBox";
 import User from "./data/User";
 import Chat from "./data/Chat";
+import ChatMenuCallback from "./inmessages/ChatMenuCallback";
+import ChatAdministrators from "./inmessages/ChatAdministrators";
+import PermanentUrl from "./inmessages/PermanentUrl";
+import InlineMessageCallback from "./inmessages/InlineMessageCallback";
+import InlineSearch from "./inmessages/InlineSearch";
+import ChatMember from "./inmessages/ChatMember";
 import TextOutMessage from "./outmessages/TextOutMessage";
 import PhotoOutMessage from "./outmessages/PhotoOutMessage";
 import ContactOutMessage from "./outmessages/ContactOutMessage";
@@ -128,7 +134,6 @@ class NandBoxClient {
                     console.log("End nandbox client");
                     // TODO: equivalent in JS?
                     // System.exit(0)
-
                 }
 
             };
@@ -315,7 +320,7 @@ class NandBoxClient {
 
                     } else {
                         let message = new VoiceOutMessage();
-                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, caption, chatSettings);
                         message.method = "sendVoice";
                         message.size = size;
@@ -335,7 +340,7 @@ class NandBoxClient {
 
                     } else {
                         let message = new DocumentOutMessage();
-                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, caption, chatSettings);
                         message.method = "sendDocument";
                         message.document = documentFileId;
@@ -351,10 +356,10 @@ class NandBoxClient {
                     if (chatId && latitude && longitude && !reference && !replyToMessageId && !toUserId && !webPagePreview && !disableNotification && !name && !details && !chatSettings) {
 
                         const reference = Id();
-                        this.api.endlocation(chatId, latitude, longitude, reference, null, null, null, null, null, null, null);
+                        this.api.sendlocation(chatId, latitude, longitude, reference, null, null, null, null, null, null, null);
                     } else {
                         let message = new LocationOutMessage();
-                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, null, chatSettings);
                         message.method = "sendLocation";
                         message.name = name;
@@ -374,7 +379,7 @@ class NandBoxClient {
                         this.api.sendPhoto(chatId, gif, reference, null, null, null, null, caption, null);
                     } else {
                         let message = new PhotoOutMessage();
-                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, caption, chatSettings);
                         message.method = "sendPhoto";
                         message.photo = gif;
@@ -392,7 +397,7 @@ class NandBoxClient {
 
                     } else {
                         let message = new VideoOutMessage();
-                        prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
+                        this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
                             disableNotification, caption, chatSettings);
                         message.method = "sendVideo";
                         message.video = gif;
@@ -544,7 +549,7 @@ class NandBoxClient {
                             console.log("====> Your Bot Name is : " + obj.name);
 
                             //TODO: check pingpong here
-                            this.pingpong(this.lastMessage);
+                            //this.pingpong();
                             this.callback.onConnect(this.api);
 
                             return;
@@ -621,24 +626,23 @@ class NandBoxClient {
 
         }
 
-        pingpong = lastMessage => {
+        // pingpong = () => {
 
-            if (!connection) return;
-            if (connection.readyState !== 1) return;
+        //     if (!connection) return;
+        //     if (connection.readyState !== 1) return;
 
-            let currentTimeMs = (new Date()).getUTCMilliseconds();
-            let interval = currentTimeMs - lastMessage;
-            let obj = {};
+        //     let obj = {};
 
 
             ping = setInterval(() => {
+                let obj = {};
                 obj.method = "PING";
                 connection.send(JSON.stringify(obj));
 
             }, 30000);
 
 
-        }
+        //}
 
         reconnectWebSocketClient = () => {
             console.log("Creating new webSocketClient");

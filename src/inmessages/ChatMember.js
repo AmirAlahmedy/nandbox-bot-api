@@ -3,7 +3,7 @@ export default class ChatMember {
  user;
  chat;
  type;
- memberSince;
+ member_since;
  status;
  
     constructor(jsonObj) {
@@ -12,7 +12,7 @@ export default class ChatMember {
         this.chat = obj.chat == null ? null : new Chat(obj.chat);
 
         this.type = obj.type;
-        this.memberSince = obj.member_since;
+        this.member_since = obj.member_since;
         this.status = obj.status;
     }
     
@@ -22,7 +22,7 @@ export default class ChatMember {
         if (user) obj.user = user.toJsonObject();
         if (chat) obj.chat = chat.toJsonObject();
         if (type) obj.type = type;
-        if (memberSince) obj.member_since = memberSince;
+        if (member_since) obj.member_since = member_since;
         if (status) obj.status = status;
 
         return obj;

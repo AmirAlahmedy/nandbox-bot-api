@@ -19,30 +19,30 @@ import TextFile from "../data/TextFile";
 */
 export default  class IncomingMessage {
 
-    messageId;
+    message_id;
     type;
     date;
     reference;
     from = new User();
-    replyToMessageId;
+    reply_to_message_id;
     caption;
-    fromAdmin;
+    from_admin;
     chat = new Chat();
     text;
     location;
     contact;
-    sentTo = new User();
+    sent_to = new User();
     photo = new Photo();
     gif;
     voice;
     video;
     audio;
-    _document;
+    document;
     sticker;
-    textFile;
+    text_file;
     status;
-    chatSettings;
-    bgColor;
+    chat_settings;
+    bg_color;
 
     constructor(jsonObj) {
         let obj = {};
@@ -51,32 +51,32 @@ export default  class IncomingMessage {
 
         /* let fromUser = new User(obj.from);
         console.log(obj.sent_to);
-        let sentToUser = obj.sent_to ? new User(obj.sent_to) : null;
-        console.log(sentToUser); */
+        let sent_toUser = obj.sent_to ? new User(obj.sent_to) : null;
+        console.log(sent_toUser); */
         this.chat = obj.chat == null ? null : new Chat(obj.chat);
         this.location = obj.location ? new Location(obj.location) : null;
         this.contact = obj.contact ? new Contact(obj.contact) : null;
-        this._document = obj.document ? new Document(obj.document) : null;
+        this.document = obj.document ? new Document(obj.document) : null;
         this.photo = obj.photo ? new Photo(obj.photo) : null;
         this.gif = obj.gif ? new Gif(obj.gif) : null;
         this.voice = obj.voice ? new Voice(obj.voice) : null;
         this.video = obj.video ? new Video(obj.video) : null;
         this.audio = obj.audio ? new Audio(obj.audio) : null;
         this.sticker = obj.sticker ? new Sticker(obj.sticker) : null;
-        this.textFile = obj.text_file ? new TextFile(obj.text_file) : null;
+        this.text_file = obj.text_file ? new TextFile(obj.text_file) : null;
         this.text = obj.text;
-        this.messageId = obj.message_id;
+        this.message_id = obj.message_id;
         this.date = obj.date;
         this.reference = obj.reference;
         this.from = obj.from;
-        this.sentTo = obj.sent_to_user;
-        this.fromAdmin = obj.from_admin;
+        this.sent_to = obj.sent_to_user;
+        this.from_admin = obj.from_admin;
         this.type = obj.type;
         this.caption = obj.caption;
-        this.replyToMessageId = obj.reply_to_message_id;
+        this.reply_to_message_id = obj.reply_to_message_id;
         this.status = obj.status;
-        this.chatSettings = obj.chat_settings;
-        this.bgColor = obj.bg_color;
+        this.chat_settings = obj.chat_settings;
+        this.bg_color = obj.bg_color;
     }
 
     toJsonObject = () => {
@@ -86,25 +86,25 @@ export default  class IncomingMessage {
         if (this.date) obj.date = this.date;
         if (this.from) obj.from= this.from.toJsonObject();
         if (this.chat) obj.chat = this.chat.toJsonObject();
-        if (this.messageId) obj.message_id = this.messageId;
-        if (this.fromAdmin) obj.from_admin = this.fromAdmin;
+        if (this.message_id) obj.message_id = this.message_id;
+        if (this.from_admin) obj.from_admin = this.from_admin;
         if (this.status) obj.status = this.status;
-        if (this.sentTo) obj.sent_to = this.sentTo;
+        if (this.sent_to) obj.sent_to = this.sent_to;
         if (this.reference) obj.reference = this.reference;
         if (this.caption) obj.caption = this.caption;
-        if (this.replyToMessageId) obj.reply_to_message_id = this.replyToMessageId;
+        if (this.reply_to_message_id) obj.reply_to_message_id = this.reply_to_message_id;
         if (this.text) obj.text = this.text;
         if (this.location) obj.location = this.location;
         if (this.contact) obj.contact = this.contact;
-        if (this._document) obj.document = this._document;
+        if (this.document) obj.document = this.document;
         if (this.photo) obj.photo = this.photo.toJsonObject();
         if (this.gif) obj.gif = this.gif.toJsonObject();
         if (voice) obj.voice = voice.toJsonObject();
         if (this.video) obj.video = this.video.toJsonObject();
         if (audio) obj.audio = audio.toJsonObject();
         if (this.sticker) obj.sticker = this.sticker.toJsonObject();
-        if (textFile) obj.text_file = textFile.toJsonObject();
-        if (this.bgColor) obj.bg_color = this.bgColor;
+        if (text_file) obj.text_file = text_file.toJsonObject();
+        if (this.bg_color) obj.bg_color = this.bg_color;
 
         console.log("to " + JSON.stringify(obj));
         return obj;
@@ -123,6 +123,5 @@ export default  class IncomingMessage {
     isTextFileMsg = () => this.isMsgWithType("text_file");
     isDocumentMsg = () => this.isMsgWithType("document");
     isContactMsg = () => this.isMsgWithType("contact");
-
 
 }

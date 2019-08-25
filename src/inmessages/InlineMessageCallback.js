@@ -3,14 +3,14 @@ import Chat from "../data/Chat";
 
 export default class InlineMessageCallback {
 
-    messageId;
-    menuRef;
+    message_id;
+    menu_ref;
     date;
     reference;
     from;
     chat;
-    buttonCallback;
-    buttonQueryResult;
+    button_callback;
+    button_query_result;
 
     constructor(jsonObj) {
         let obj = jsonObj.inlineMessageCallback;
@@ -19,12 +19,12 @@ export default class InlineMessageCallback {
         this.chat = obj.chat == null ? null : new Chat(obj.chat);
         let btnqueryResults = obj.button_query_result == null ? null
             : new ButtonQueryResult(obj.button_query_result);
-        this.messageId = obj.message_id;
-        this.menuRef = obj.menu_ref;
+        this.message_id = obj.message_id;
+        this.menu_ref = obj.menu_ref;
         this.reference = obj.reference;
         this.from = fromUser;
-        this.buttonQueryResult = btnqueryResults;
-        this.buttonCallback = obj.button_callback;
+        this.button_query_result = btnqueryResults;
+        this.button_callback = obj.button_callback;
         this.date = obj.date;
     }
 
@@ -34,11 +34,11 @@ export default class InlineMessageCallback {
         if (date) obj.date = date;
         if (from) obj.from = from.toJsonObject();
         if (chat) obj.chat = chat.toJsonObject();
-        if (messageId) obj.message_id = messageId;
-        if (menuRef) obj.menu_ref = menuRef;
+        if (message_id) obj.message_id = message_id;
+        if (menu_ref) obj.menu_ref = menu_ref;
         if (reference) obj.reference = reference;
-        if (buttonCallback) obj.button_callback =  buttonCallback;
-        if (buttonQueryResult) obj.button_query_result = buttonQueryResult;
+        if (button_callback) obj.button_callback =  button_callback;
+        if (button_query_result) obj.button_query_result = button_query_result;
 
         return obj;
 

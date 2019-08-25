@@ -13,14 +13,10 @@ export default class Gif {
     thumbnail;
 
     constructor(obj) {
-        this.id = obj.id;           
-                                    // TODO: check
-                                    Utils.getInteger(obj.get(KEY_WIDTH));
-                                    Utils.getInteger(obj.get(KEY_HEIGHT));
-                                    Utils.getLong(obj.get(KEY_SIZE));
-        this.width = obj.width;
-        this.height = obj.height;
-        this.size = obj.size;
+        this.id = obj.id;
+        this.width = Number(obj.width);
+        this.height = Number(obj.height);
+        this.size = Number(obj.size);
         this.thumbnail = obj.thumbnail ? new Thumbnail(obj.thumbnail) : null;
     }
 

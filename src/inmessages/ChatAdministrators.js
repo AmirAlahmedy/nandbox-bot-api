@@ -1,8 +1,5 @@
 export default class ChatAdministrators {
-    static KEY_CHAT_ADMINISTRATORS = "chatAdministrators";
-    static KEY_ADMINISTRATORS = "administrators";
-    static KEY_CHAT = "chat";
-
+    
     administrators = [];
     chat;
 

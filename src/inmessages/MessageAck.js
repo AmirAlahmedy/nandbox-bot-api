@@ -1,6 +1,6 @@
 export default class MessageAck {
 
-    messageId;
+    message_id;
     date;
     reference;
 
@@ -8,7 +8,7 @@ export default class MessageAck {
         let obj = {};
 
         obj = jsonObj.ack;
-        this.messageId = obj.message_id;
+        this.message_id = obj.message_id;
         this.reference = obj.reference;
         //TODO:  Utils.getLong(obj.date)
         this.date = obj.date;
@@ -20,9 +20,9 @@ export default class MessageAck {
         if (date) {
             obj.date = this.date
         }
-        if (messageId) {
+        if (message_id) {
 
-            obj.message_id = this.messageId;
+            obj.message_id = this.message_id;
         }
         if (reference)
             obj.reference = this.reference;

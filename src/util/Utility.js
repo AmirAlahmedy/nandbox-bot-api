@@ -10,11 +10,11 @@ class Utils {
 
 
     static formatDurationInMinsAndSeconds = duration => {
-        durationInMinsAndSeconds = null;
+        let durationInMinsAndSeconds = null;
 
         if (duration != null) {
-            seconds = duration / 1000;
-            minutes = seconds / 60;
+            let seconds = duration / 1000;
+            let minutes = seconds / 60;
             durationInMinsAndSeconds = minutes + " min, " + seconds + "sec";
         }
 

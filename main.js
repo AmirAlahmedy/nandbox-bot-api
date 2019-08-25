@@ -3,7 +3,7 @@ import NandBox from "./src/NandBox";
 import { NandBoxClient } from "./src/NandBoxClient";
 
 
-const TOKEN = "90091783927225986:0:PjAudagHdpEDxpIJOGKdNB1X6Og4WA";
+const TOKEN = "90091783927225986:0:ymJORgQkQcboixXrbCqaDVYb5BuHeB";
 
 
 var client = NandBoxClient.get();

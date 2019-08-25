@@ -1,18 +1,20 @@
 import ButtonQueryResult from "../data/ButtonQueryResult";
+import User from "../data/User";
+import Chat from "../data/Chat";
 
 export default class ChatMenuCallback {
 
     date;
-    nextMenu;
+    next_menu;
     method;
     from;
     chat;
-    buttonCallback;
-    menuRef;
-    buttonQueryResult;
+    button_callback;
+    menu_ref;
+    button_query_result;
 
     constructor(jsonObj) {
-       console.log("json " + jsonObj.toJSONString());
+       console.log("json " + JSON.stringify(jsonObj));
         let obj = jsonObj.chatMenuCallback;
 
         let fromUser = new User(obj.from);
@@ -20,11 +22,11 @@ export default class ChatMenuCallback {
         let btnqueryResults = obj.button_query_result == null ? null
             : new ButtonQueryResult( obj.button_query_result);
         this.method = obj.method;
-        this.menuRef = obj.menu_ref;
+        this.menu_ref = obj.menu_ref;
         this.from = fromUser;
-        this.buttonQueryResult = btnqueryResults;
-        this.buttonCallback = obj.button_callback;
-        this.nextMenu = obj.next_menu;
+        this.button_query_result = btnqueryResults;
+        this.button_callback = obj.button_callback;
+        this.next_menu = obj.next_menu;
         this.date = obj.date;
     }
 
@@ -36,10 +38,10 @@ export default class ChatMenuCallback {
         if (from) obj.from = from.toJsonObject();
         if (chat) obj.chat = chat.toJsonObject();
         if (method) obj.method = method;
-        if (menuRef) obj.menu_ref = menuRef;
-        if (buttonCallback) obj.button_callback = buttonCallback;
-        if (buttonQueryResult) obj.button_query_result = buttonQueryResult;
-        if (nextMenu) obj.next_menu = nextMenu;
+        if (menuRef) obj.menu_ref = menu_ref;
+         if (buttonCallback) obj.button_callback = button_callback;
+         if (buttonQueryResult) obj.button_query_result = button_query_result;
+        if (nextMenu) obj.next_menu = next_menu;
 
         console.log("to " + JSON.stringify(obj));
         return obj;

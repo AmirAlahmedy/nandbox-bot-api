@@ -30,11 +30,11 @@ export default class MediaTransfer {
      * @return 0 in success case , -1: if failed to download the media
      */
     downloadFile(token, mediaFileId, savingDirPath, savingFileName) {
-        let result = -1;
+        var result = -1;
 
         try {
 
-            downloadServerURL = getConfigs().DownloadServer;
+            const downloadServerURL = getConfigs().DownloadServer;
             const downloadStartTime = (new Date()).getTime();
             savingDirPath = savingDirPath != null ? savingDirPath : "./"; // If savingDirPath is null , assuming current Directory
             const mediaFileFullPath = savingDirPath + '/' + savingFileName;
@@ -54,27 +54,24 @@ export default class MediaTransfer {
 
                 response.data.pipe(file);
                 const downloadEndTime = (new Date()).getTime();
-                console.log("Download File : " + mediaFileId + " took around "
-                    + (downloadEndTime - downloadStartTime) / 1000 + " Seconds");
-                console.log("File Saved Locally Successfully");
-                result = 0;
-            });
+                
+                file.on('finish', resolve => {
+                    console.log("Download File : " + mediaFileId + " took around "
+                        + (downloadEndTime - downloadStartTime) / 1000 + " Seconds");
+                    console.log("File Saved Locally Successfully");
+                    result = 0;
+                });
+
+
+            }).catch(e => console.log(e));
 
         } catch (e) {
 
-            //TODO: e.printStackTrace();
+            console.log(new Error().stack);
             console.log(e);
-            result = -1;
 
         } finally {
-
-            try {
-                file.end();
-            } catch (e) {
-                //TODO: e.printstacktrace
-                console.log(e);
-            }
-
+            
             console.log("Result = " + result);
             return result;
         }
@@ -102,14 +99,14 @@ export default class MediaTransfer {
             }
             catch (e) {
 
-                // TODO: e.printstacktrace
+                console.log(new Error().stack);
                 console.log(e);
 
             }
 
             console.log("fileContentType " + fileContentType);
 
-            uploadServerURL = getConfigs().UploadServer;
+            const uploadServerURL = getConfigs().UploadServer;
             const uploadStartTime = (new Date()).getTime();
 
             axios({
@@ -163,16 +160,16 @@ export default class MediaTransfer {
 
                     console.log("Uploaded Media File ID is : " + media);
                 }
-            });
+            }).catch(e => console.log(e));
 
         } catch (e) {
-            //TODO: e.printstacktrace
+            console.log(new Error().stack);
             console.log(e);
         } finally {
             try {
                 // TODO: close httpclient
             } catch (e) {
-                //e.printStackTrace();
+                console.log(new Error().stack);
                 console.log(e);
             }
         }
