@@ -7,12 +7,4 @@ export default class GetChatAdministratorsOutMessage extends OutMessage {
         super();
         this.method = "getChatAdministrators";
     }
-
-    toJsonObject = () => {
-        let obj = super.toJsonObject();
-
-        if (this.chatId) obj.chat_id = this.chatId;
-
-        return obj;
-    }
 }

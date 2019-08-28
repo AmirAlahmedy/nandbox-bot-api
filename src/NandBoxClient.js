@@ -41,8 +41,6 @@ var nandboxClient = null;
 var connection = null;
 var BOT_ID = null;
 var closingCounter = 0;
-var timeOutCounter = 0;
-var connRefusedCounter = 0;
 var ping = null;
 
 var getConfigs = () => {
@@ -50,8 +48,7 @@ var getConfigs = () => {
         let CONFIG_FILE = require('../config.json');
         return CONFIG_FILE;
     } catch (error) {
-        // TODO: handle config error
-        console.log(error);
+        console.log("Add your configuration correctly in ./config.json", error);
     }
 }
 
@@ -63,7 +60,6 @@ class NandBoxClient {
         connection = new WebSocket.Server({ port: 8080 });
     }
 
-    maxTextMessageSize = 1e5; // TODO: check usefulness
     InternalWebSocket = class InternalWebSocket {
 
         NO_OF_RETRIES_IF_CONN_TO_SERVER_REFUSED = 20;
@@ -87,7 +83,6 @@ class NandBoxClient {
         }
 
         connect = () => {
-
 
 
             connection.onclose = async status => {
@@ -153,7 +148,7 @@ class NandBoxClient {
 
                     console.log(new Date() + ">>>>>> Sending Message :", message);
                     this.send(message);
-                    //clearInterval(ping);
+
                 }
 
                 this.api.prepareOutMessage = (message, chatId, reference,
@@ -209,16 +204,7 @@ class NandBoxClient {
                         message.reference = reference;
                         message.bgColor = bgColor;
                         this.api.send(JSON.stringify(message));
-                    } else {
-                        /*  let message = new TextOutMessage();
-                         this.api.prepareOutMessage(message, chatId, reference, replyToMessageId, toUserId, webPagePreview,
-                             disableNotification, null, chatSettings);
-                         message.method = "sendMessage";
-                         message.text = text;
-                         message.reference = reference;
-                         this.api.send(JSON.stringify(message)); */
                     }
-
                 }
 
                 this.api.sendTextWithBackground = (chatId, text, bgColor) => {
@@ -462,6 +448,8 @@ class NandBoxClient {
                 this.api.getChatAdministrators = chatId => {
                     let getChatAdministratorsOutMessage = new GetChatAdministratorsOutMessage();
                     getChatAdministratorsOutMessage.chat_id = chatId;
+                    /* api.sendText(getChatAdministratorsOutMessage.chat_id,
+                        "Chat admins: " + getChatAdministratorsOutMessage); */
                     this.api.send(JSON.stringify(getChatAdministratorsOutMessage));
                 }
 
@@ -548,8 +536,6 @@ class NandBoxClient {
                             console.log("====> Your Bot Id is : " + BOT_ID);
                             console.log("====> Your Bot Name is : " + obj.name);
 
-                            //TODO: check pingpong here
-                            //this.pingpong();
                             this.callback.onConnect(this.api);
 
                             return;
@@ -626,23 +612,15 @@ class NandBoxClient {
 
         }
 
-        // pingpong = () => {
 
-        //     if (!connection) return;
-        //     if (connection.readyState !== 1) return;
+        ping = setInterval(() => {
+            let obj = {};
+            obj.method = "PING";
+            connection.send(JSON.stringify(obj));
 
-        //     let obj = {};
-
-
-            ping = setInterval(() => {
-                let obj = {};
-                obj.method = "PING";
-                connection.send(JSON.stringify(obj));
-
-            }, 30000);
+        }, 30000);
 
 
-        //}
 
         reconnectWebSocketClient = () => {
             console.log("Creating new webSocketClient");

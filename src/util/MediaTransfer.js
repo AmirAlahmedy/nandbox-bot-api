@@ -86,13 +86,7 @@ export default class MediaTransfer {
     */
     static uploadFile = (token, mediaFileFullPath) => {
         let media = null;
-        let output = null;
-        let sb = new String();
-
-        /* let arrabuff = null; 
-        fs.readFile(mediaFileFullPath, (err, data) => {
-            arrabuff = Utility.toArrayBuffer(data);
-        });*/
+    
         const file = fs.createReadStream(mediaFileFullPath);
         const { size } = fs.statSync(mediaFileFullPath);
         const fileContentType = mime.getType(mediaFileFullPath);
@@ -124,44 +118,16 @@ export default class MediaTransfer {
             .then(response => {
                 
                 media = response.data.file;
-                //file.pipe(response.data);
                 const uploadEndTime = (new Date()).getTime();
                 console.log("Upload File : " + media + " took around "
                     + (uploadEndTime - uploadStartTime) / 1000 + " Seconds");
                 console.log("File Saved Locally Successfully");
-               
-
-                // TODO: check
-                /* let bufferedReader = fs.createReadStream(response.data.file);
-                 console.log("Output from Server ...." + response.status + "\n");
-
-                 bufferedReader.on('end', () => {
-
-                     const rl = readline.createInterface({
-                         input: bufferedReader
-                     });
-
-                     rl.on('line', line => {
-                         output = line;
-                         console.log("output " + output);
-                         sb.append(output);
-                     });
-
-                 });
-                 console.log(response.status);
-
-                 if (Utility.isNotEmpty(sb)) {
-                     let obj = JSON.parse(sb);
-                     media = (obj.file).toString;
-                 } */
                 console.log("Uploaded Media File ID is : " + media);
                 return media;
+
             })
             .catch(e => console.log(e));
             
-        /* return new Promise((resolve, reject) => {
-            setTimeout(() => resolve(media), 1000);
-        }); */
         return storemedia;
     }
 }

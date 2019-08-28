@@ -1,3 +1,6 @@
+import Chat from "../data/Chat";
+import User from "../data/User";
+
 export default class ChatAdministrators {
     
     administrators = [];
@@ -7,15 +10,17 @@ export default class ChatAdministrators {
         let obj = jsonObj.chatAdministrators;
         this.chat = obj.chat == null ? null : new Chat( obj.chat);
 
-        let adminArrayObj = obj.administrators;
+         let adminArrayObj = obj.administrators;
         if (adminArrayObj != null) {
 
             let admin = [];
-            for (let i = 0; i < adminArrayObj.size(); i++)
+            for (let i = 0; i < adminArrayObj.length; i++)
                 admin[i] = new User(adminArrayObj[i]);
 
-            this.administrators = admin;
+            this.administrators = admin; 
+            
         }
+        
     }
 
     toJsonObject = () => {

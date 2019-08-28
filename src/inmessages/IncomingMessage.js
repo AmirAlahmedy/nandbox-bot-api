@@ -49,10 +49,6 @@ export default  class IncomingMessage {
 
         obj = jsonObj.message;
 
-        /* let fromUser = new User(obj.from);
-        console.log(obj.sent_to);
-        let sent_toUser = obj.sent_to ? new User(obj.sent_to) : null;
-        console.log(sent_toUser); */
         this.chat = obj.chat == null ? null : new Chat(obj.chat);
         this.location = obj.location ? new Location(obj.location) : null;
         this.contact = obj.contact ? new Contact(obj.contact) : null;
