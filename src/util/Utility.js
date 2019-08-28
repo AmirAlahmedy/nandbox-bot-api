@@ -31,8 +31,16 @@ class Utils {
         api.send(JSON.stringify(navMsg));
     }
 
-    isNotEmpty = string => !("" === string);
-    
+    static isNotEmpty = string => !("" === string);
+
+    static toArrayBuffer = buffer => {
+        let ab = new ArrayBuffer(buffer.length);
+        let view = new Uint8Array(ab);
+        for (let i = 0; i < buffer.length; ++i) {
+            view[i] = buffer[i];
+        }
+        return ab;
+    }
     // TODO: complete
 
 }

@@ -1,11 +1,11 @@
 import { getConfigs } from "../NandBoxClient";
-import http from "http";
 import fs from "fs";
 import axios from "axios";
-import fileType from "file-type";
-import path from 'path';
+import path, { resolve } from 'path';
 import readline from 'readline';
-import Utils from "./Utility";
+import { Utility } from "./Utility";
+import mime from "mime";
+import { Stream } from "stream";
 
 export default class MediaTransfer {
     constructor() {
@@ -29,7 +29,7 @@ export default class MediaTransfer {
      *            used to save the downloaded media .
      * @return 0 in success case , -1: if failed to download the media
      */
-    downloadFile(token, mediaFileId, savingDirPath, savingFileName) {
+    static downloadFile(token, mediaFileId, savingDirPath, savingFileName) {
         var result = -1;
 
         try {
@@ -54,7 +54,7 @@ export default class MediaTransfer {
 
                 response.data.pipe(file);
                 const downloadEndTime = (new Date()).getTime();
-                
+
                 file.on('finish', resolve => {
                     console.log("Download File : " + mediaFileId + " took around "
                         + (downloadEndTime - downloadStartTime) / 1000 + " Seconds");
@@ -71,7 +71,7 @@ export default class MediaTransfer {
             console.log(e);
 
         } finally {
-            
+
             console.log("Result = " + result);
             return result;
         }
@@ -84,96 +84,84 @@ export default class MediaTransfer {
     *            local directory path to upload the file
     * @return Upload File it will return Attachment as string
     */
-    async uploadFile(token, mediaFileFullPath) {
+    static uploadFile = (token, mediaFileFullPath) => {
         let media = null;
         let output = null;
         let sb = new String();
 
-        try {
-            const file = fs.createReadStream(mediaFileFullPath);
-            let fileContentType = null;
-            try {
-                const stream = await fileType.stream(file)
-                fileContentType = stream.fileType.mime;
+        /* let arrabuff = null; 
+        fs.readFile(mediaFileFullPath, (err, data) => {
+            arrabuff = Utility.toArrayBuffer(data);
+        });*/
+        const file = fs.createReadStream(mediaFileFullPath);
+        const { size } = fs.statSync(mediaFileFullPath);
+        const fileContentType = mime.getType(mediaFileFullPath);
+        const uploadServerURL = getConfigs().UploadServer;
+        const reqCon = {
+            url: uploadServerURL + path.basename(mediaFileFullPath),
+            method: 'PUT',
+            timeout: 40000,
+            // TODO: socket timeout?
+            headers: {
+                'Content-Type': fileContentType,
+                'Content-Length': size,
+                'X-TOKEN': token,
+                //'Authorization': 'Bearer ' + token,
+            },
+            transformRequest: [(data, headers) => {
+                // Do whatever you want to transform the data
 
-            }
-            catch (e) {
-
-                console.log(new Error().stack);
-                console.log(e);
-
-            }
-
-            console.log("fileContentType " + fileContentType);
-
-            const uploadServerURL = getConfigs().UploadServer;
-            const uploadStartTime = (new Date()).getTime();
-
-            axios({
-                url: uploadServerURL + path.basename(mediaFileFullPath),
-                method: 'PUT',
-                timeout: 40000,
-                // TODO: socket timeout?
-                headers: {
-                    'Content-Type': fileContentType,
-                    'X-TOKEN': token,
-                    //'Authorization': 'Bearer ' + token,
-                },
-                data: file
-            }).then(response => {
+                return data;
+            }],
+            onUploadProgress: progressEvent => {
+                let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            },
+            data: file
+        };
+        console.log("fileContentType " + fileContentType);
+        const uploadStartTime = (new Date()).getTime();
+        let storemedia = axios(reqCon)
+            .then(response => {
+                
+                media = response.data.file;
+                //file.pipe(response.data);
                 const uploadEndTime = (new Date()).getTime();
-                console.log("Upload File : " + mediaFileFullPath + " took "
+                console.log("Upload File : " + media + " took around "
                     + (uploadEndTime - uploadStartTime) / 1000 + " Seconds");
-                if (response.status == 200 || response.status == 204) {
+                console.log("File Saved Locally Successfully");
+               
 
-                    let bufferedReader = null;
+                // TODO: check
+                /* let bufferedReader = fs.createReadStream(response.data.file);
+                 console.log("Output from Server ...." + response.status + "\n");
 
-                    try {
-                        // TODO: check
-                        bufferedReader = fs.createReadStream(response.data);
-                    } catch (e) {
-                        //TODO: e.printstacktrace
-                        console.log(e);
-                    }
+                 bufferedReader.on('end', () => {
 
-                    console.log("Output from Server ...."
-                        + response.status + "\n");
+                     const rl = readline.createInterface({
+                         input: bufferedReader
+                     });
 
-                    if (bufferedReader != null) {
-                        const rl = readline.createInterface({
-                            input: bufferedReader,
-                            crlfDelay: Infinity
-                        })
-                        while (rl.on('line', line => true)) {
-                            output = line;
-                            console.log("output " + output);
-                            sb.append(output);
-                        }
-                    } else {
-                        console.log(response.status);
-                    }
+                     rl.on('line', line => {
+                         output = line;
+                         console.log("output " + output);
+                         sb.append(output);
+                     });
 
-                    if (Utils.isNotEmpty(sb)) {
-                        let obj = JSON.parse(sb);
-                        media = (obj.file).toString;
-                    }
+                 });
+                 console.log(response.status);
 
-                    console.log("Uploaded Media File ID is : " + media);
-                }
-            }).catch(e => console.log(e));
-
-        } catch (e) {
-            console.log(new Error().stack);
-            console.log(e);
-        } finally {
-            try {
-                // TODO: close httpclient
-            } catch (e) {
-                console.log(new Error().stack);
-                console.log(e);
-            }
-        }
-
-        return media;
+                 if (Utility.isNotEmpty(sb)) {
+                     let obj = JSON.parse(sb);
+                     media = (obj.file).toString;
+                 } */
+                console.log("Uploaded Media File ID is : " + media);
+                return media;
+            })
+            .catch(e => console.log(e));
+            
+        /* return new Promise((resolve, reject) => {
+            setTimeout(() => resolve(media), 1000);
+        }); */
+        return storemedia;
     }
 }

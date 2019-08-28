@@ -105,12 +105,12 @@ nCallBack.onReceive = incomingMsg => {
                 let firstRow = new Row(buttons, rowOrder);
                 let rows = [];
                 rows.push(firstRow);
-               
+
 
                 let inlineMenu = [];
                 let firstInlineMenu = new Menu(rows, menuRef);
                 inlineMenu.push(firstInlineMenu);
-               
+
                 outmsg.menu_ref = menuRef;
                 outmsg.inline_menu = inlineMenu;
 
@@ -135,7 +135,7 @@ nCallBack.onReceive = incomingMsg => {
                 buttons.push(oneBtn.toJsonObject()); // called toJsonObject to remove null values.
                 buttons.push(secondBtn.toJsonObject());
                 buttons.push(thirdButton.toJsonObject());
-                
+
                 let rowOrder = 1;
                 let firstRow = new Row(buttons, rowOrder);
                 let rows = [];
@@ -160,19 +160,19 @@ nCallBack.onReceive = incomingMsg => {
                 outmsg.echo = 1;
 
                 let menuRef = MAIN_MENU_001;
-                
+
                 let oneBtn = createButton("RSS", "oneBtnCBInWebView", 1, "RED", "White", null, null);
                 oneBtn.button_icon = "ic_mood_bad_24dp";
                 oneBtn.button_icon_bgcolor = "#FFFF44";
-                
+
                 let secondBtn = createButton("Calendar", "secondBtn", 1, "RED", "White", null, null);
                 secondBtn.button_icon = "ic_hourglass_full_24dp";
                 secondBtn.button_icon_bgcolor = "White";
-                
+
                 let thirdButton = createButton("Feed", "thirdBtn", 1, "RED", "White", null, null);
                 thirdButton.button_icon = "ic_credit_card_24dp";
                 thirdButton.button_icon_bgcolor = "Yellow";
-                thirdButton.button_url  = "https://edition.cnn.com/";
+                thirdButton.button_url = "https://edition.cnn.com/";
 
                 let buttons = [];
                 buttons.push(oneBtn);
@@ -182,7 +182,7 @@ nCallBack.onReceive = incomingMsg => {
                 let rowOrder = 1;
                 let firstRow = new Row(buttons, rowOrder);
 
-            
+
                 let rows = [];
                 rows.push(firstRow);
 
@@ -207,10 +207,10 @@ nCallBack.onReceive = incomingMsg => {
                 let menuBtn1 = createButton("Ù…ØµØ±Ø§ÙˆÙŠ", "mainCB", 1, "Gray", "Red", null, null);
                 menuBtn1.button_icon = "ic_smoke_free_24dp";
                 menuBtn1.button_icon_bgcolor = "#00FFFF";
-                
+
                 let menuBtn2 = createButton("Funny", "funnyCB", 1, "Gray", "Red", null, null);
                 menuBtn2.button_icon = "ic_timeline_24dp";
-                
+
                 let menuBtn3 = createButton("Option", "optionCB", 1, "Gray", "Red", null, null);
                 menuBtn3.button_icon = "ic_pregnant_woman_24dp";
                 menuBtn3.button_icon_bgcolor = "orange";
@@ -222,7 +222,7 @@ nCallBack.onReceive = incomingMsg => {
 
                 let rowOrder = 1;
                 let firstRow = new Row(buttons, rowOrder);
-                
+
                 let rows = [];
                 rows.push(firstRow);
 
@@ -354,16 +354,17 @@ let handleIncomingDocumentMsg = incomingMsg => {
 
     api.send(JSON.stringify(documentOutMsg));
 
-    // send Document using sendDocument
 
-    let uploadedDocumentId = (new MediaTransfer()).uploadFile(TOKEN, "./upload/welcome.jpg");
+    MediaTransfer.uploadFile(TOKEN, "./upload/malala.pdf")
+        .then(uploadedDocumentId => {
+            api.sendDocument(incomingMsg.chat.id, uploadedDocumentId,
+                "Document Caption");
+            api.sendDocument(incomingMsg.chat.id, uploadedDocumentId, Id(),
+                "Send doc with ref");
+            api.sendDocument(incomingMsg.chat.id, uploadedDocumentId, Id(), null, null, null,
+                null, "from all option send", null, null, null);
+        })
 
-    api.sendDocument(incomingMsg.chat.id, uploadedDocumentId,
-        "Document Caption");
-    api.sendDocument(incomingMsg.chat.id, uploadedDocumentId, Id(),
-        "Send doc with ref");
-    api.sendDocument(incomingMsg.chat.id, uploadedDocumentId, Id(), null, null, null,
-        null, "from all option send", null, null, null);
     api.sendText(incomingMsg.chat.id,
         "Document size : " + incomingMsg.document.size
         + " , Document File Name is : "
@@ -387,7 +388,6 @@ let handleIncomingContactMsg = incomingMsg => {
 
     api.send(JSON.stringify(contactOutMsg));
 
-    // send contatc using sendContact
     api.sendContact(incomingMsg.chat.id,
         incomingMsg.contact.phoneNumber,
         incomingMsg.contact.name);
@@ -419,13 +419,15 @@ let handleIncomingTextFileMsg = incomingMsg => {
     console.log("incomingMsg.textFile.size: "
         + incomingMsg.textFile.size);
 
-    (new MediaTransfer()).downloadFile(TOKEN, textFileId, "./download", null);
+    MediaTransfer.downloadFile(TOKEN, textFileId, "./download", null);
 
-    let uploadedTextFileId = (new MediaTransfer()).uploadFile(TOKEN, "./download/" + textFileId);
-
-    api.sendDocument(incomingMsg.chat.id, uploadedTextFileId,
-        Id(), null, null, null,
-        null, "Text File Caption", null, null, null);
+    MediaTransfer.uploadFile(TOKEN, "./download/" + textFileId)
+        .then(uploadedTextFileId => {
+            api.sendDocument(incomingMsg.chat.id, uploadedTextFileId,
+                Id(), null, null, null,
+                null, "Text File Caption", null, null, null);
+        })
+        .catch(e => console.log("Upload failed", e));
 
 }
 
@@ -447,8 +449,6 @@ let handleIncomingLocationMsg = incomingMsg => {
     locationOutMsg.caption = "Location From Bot";
 
     api.send(JSON.stringify(locationOutMsg));
-
-    // send location using sendlocation
 
     api.sendlocation(incomingMsg.chat.id,
         incomingMsg.location.latitude,
@@ -478,11 +478,11 @@ let handleIncomingGifMsg = incomingMsg => {
     console.log("incomingMsg.gif.width: " + incomingMsg.gif.width);
     console.log("incomingMsg.gif.height: " + incomingMsg.gif.height);
     console.log("incomingMsg.gif.size: " + incomingMsg.gif.size);
-    console.log("================start of Gif Thumbinil  Object ===================");
+    console.log("================start of Gif Thumbnail  Object ===================");
 
     if (incomingMsg.gif.thumbnail && incomingMsg.gif.id.substr(incomingMsg.gif.id.lastIndexOf('.') + 1) == "gif") {
 
-        console.log("================End of Gif Thumbinil Object ===================");
+        console.log("================End of Gif Thumbnail Object ===================");
         console.log("incomingMsg.gif.thumbnail.id " + incomingMsg.gif.thumbnail.id);
         console.log("incomingMsg.gif.thumbnail.width: " + incomingMsg.gif.thumbnail.width);
         console.log("incomingMsg.gif.thumbnail.height: " + incomingMsg.gif.thumbnail.height);
@@ -495,56 +495,55 @@ let handleIncomingGifMsg = incomingMsg => {
             + " and caption is : " + incomingMsg.caption
             + "\n\n Wait please sending you a Gif ....");
 
-        let uploadedGifPhotoId = (new MediaTransfer()).uploadFile(TOKEN, "./upload/gif_sample.gif");
 
-        if (uploadedGifPhotoId) {
+        MediaTransfer.uploadFile(TOKEN, "./upload/gif_sample.gif")
+            .then(uploadedGifPhotoId => {
+                let gifMsg = new GifOutMessage("Photo", uploadedGifPhotoId);
+                gifMsg.chat_id = incomingMsg.chat.id;
+                gifMsg.reference = Id();
+                gifMsg.caption = "Gif From Bot";
+                gifMsg.echo = 0;
 
-            let gifMsg = new GifOutMessage("Photo")
-            gifMsg.chat_id = incomingMsg.chat.id;
-            gifMsg.reference = Id();
-            gifMsg.gif = uploadedGifPhotoId;
-            gifMsg.caption = "Gif From Bot";
-            gifMsg.echo = 0;
+                api.send(JSON.stringify(gifMsg));
 
-            api.send(JSON.stringify(gifMsg));
+                // send GIF using sendGIF
 
-            // send GIF using sendGIF
-
-            api.sendGIF(incomingMsg.chat.id,
-                "92ff95add24e1c5f9294e5bea733f1629f7636fa081cb6e16d1ec256b792528c.gif",
-                "without ref");
-        }
+                api.sendGIF(incomingMsg.chat.id,
+                    "92ff95add24e1c5f9294e5bea733f1629f7636fa081cb6e16d1ec256b792528c.gif",
+                    "without ref");
+            })
+            .catch(e => {
+                console.log("Upload Failed: ", e);
+            })
 
     } else if (incomingMsg.gif.thumbnail &&
         incomingMsg.gif.id.substr(incomingMsg.gif.id.lastIndexOf('.' + 1)) == "mp4") {
 
-        let uploadedGifVideoId = (new MediaTransfer()).uploadFile(TOKEN,
-            "./upload/CeateGroup.mov");
+        MediaTransfer.uploadFile(TOKEN, "./upload/CeateGroup.mov")
+            .then(uploadedGifVideoId => {
+                let gifMsg = new GifOutMessage("Video");
+                gifMsg.chat_id = incomingMsg.chat.id;
+                gifMsg.reference = Id();
+                gifMsg.gif = uploadedGifVideoId;
+                gifMsg.caption = "Gif From Bot";
+                gifMsg.echo = 0;
 
-        if (uploadedGifVideoId) {
+                api.send(JSON.stringify(gifMsg));
 
-            let gifMsg = new GifOutMessage("Video");
-            gifMsg.chat_id = incomingMsg.chat.id;
-            gifMsg.reference = Id();
-            gifMsg.gif = uploadedGifVideoId;
-            gifMsg.caption = "Gif From Bot";
-            gifMsg.echo = 0;
+                // send GIF using sendGIF
 
-            api.send(JSON.stringify(gifMsg));
-
-            // send GIF using sendGIF
-
-            api.sendGIFVideo(incomingMsg.chat.id, uploadedGifVideoId,
-                "without ref");
-            api.sendGIFVideo(incomingMsg.chat.id, uploadedGifVideoId,
-                Id(),
-                "with ref");
-            api.sendGIFVideo(incomingMsg.chat.id, uploadedGifVideoId,
-                Id(),
-                null, null, null, null, "with option", null);
-        }
+                api.sendGIFVideo(incomingMsg.chat.id, uploadedGifVideoId,
+                    "without ref");
+                api.sendGIFVideo(incomingMsg.chat.id, uploadedGifVideoId,
+                    Id(),
+                    "with ref");
+                api.sendGIFVideo(incomingMsg.chat.id, uploadedGifVideoId,
+                    Id(),
+                    null, null, null, null, "with option", null);
+            })
+            .catch(e => console.log("Upload failed", e));
     } else
-        console.log("================No Thumbinil Object in this Phot ===================");
+        console.log("================No Thumbinil Object in this Photo ===================");
 
 }
 
@@ -617,20 +616,19 @@ let handleIncomingVideoMsg = incomingMsg => {
         console.log("================No Thumbnail Object in this Video ===================");
 
 
-    let uploadedVideoId = (new MediaTransfer()).uploadFile(TOKEN, "./upload/recallTest.mp4");
+    MediaTransfer.uploadFile(TOKEN, "./upload/recallTest.mp4")
+        .then(uploadedVideoId => {
+            let vidoMsg = new VideoOutMessage();
+            vidoMsg.chat_id = incomingMsg.chat.id;
+            vidoMsg.reference = Id();
+            vidoMsg.video = uploadedVideoId;
+            vidoMsg.caption = "Video From Bot";
+            vidoMsg.echo = 0;
 
-    if (uploadedVideoId) {
+            api.send(JSON.stringify(vidoMsg));
 
-        let vidoMsg = new VideoOutMessage();
-        vidoMsg.chat_id = incomingMsg.chat.id;
-        vidoMsg.reference = Id();
-        vidoMsg.video = uploadedVideoId;
-        vidoMsg.caption = "Video From Bot";
-        vidoMsg.echo = 0;
+        }).catch(e => console.log("Upload failed", e));
 
-        api.send(JSON.stringify(vidoMsg));
-
-    }
 
     api.sendText(incomingMsg.chat.id,
         "Video Size is : " + incomingMsg.video.size
@@ -661,7 +659,7 @@ let handleIncomingPhotoMsg = incomingMsg => {
 
     api.generatePermanentUrl(incomingMsg.photo.id, "Any Reference");
 
-    (new MediaTransfer()).downloadFile(TOKEN, incomingMsg.photo.id, "./download", "download.jpeg");
+    MediaTransfer.downloadFile(TOKEN, incomingMsg.photo.id, "./download", "download.jpeg");
 
     api.sendText(incomingMsg.chat.id,
         "Photo Size is : " + incomingMsg.photo.size
@@ -670,17 +668,19 @@ let handleIncomingPhotoMsg = incomingMsg => {
         + " and caption is : " + incomingMsg.caption
         + "\n\n Wait please sending you a photo ....");
 
-    let uploadedPhotId = (new MediaTransfer()).uploadFile(TOKEN, "./upload/welcome.jpg");
-    if (uploadedPhotId) {
-        let photoMsg = new PhotoOutMessage();
-        photoMsg.chat_id = incomingMsg.chat.id;
-        photoMsg.reference = Id();
-        photoMsg.photo = uploadedPhotId;
-        photoMsg.caption = "Photo From Bot";
-        photoMsg.echo = 1;
+    MediaTransfer.uploadFile(TOKEN, "./upload/welcome.jpg")
+        .then(uploadedPhotId => {
+            let photoMsg = new PhotoOutMessage();
+            photoMsg.chat_id = incomingMsg.chat.id;
+            photoMsg.reference = Id();
+            photoMsg.photo = uploadedPhotId;
+            photoMsg.caption = "Photo From Bot";
+            photoMsg.echo = 1;
 
-        api.send(JSON.stringify(photoMsg));
-    }
+            api.send(JSON.stringify(photoMsg));
+
+        }).catch(e => console.log("Upload failed", e));
+
 }
 
 let createButton = (label, callback, order, bgColor, txtColor, buttonQuery, nextMenuRef) => {

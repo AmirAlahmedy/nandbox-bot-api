@@ -8,45 +8,30 @@ import OutMessage from "./OutMessage";
  */
 export default class GifOutMessage extends OutMessage {
 
-    gif;
-    gifType = "Photo";
 
     /**
-     * @param this.gifType
+     * @param gifType
      *            it should be photo or video based on the type of this.Gif need to be
      *            send , its default is photo
+     *  
      */
-    constructor(gifType) {
-        this.gifType = gifType;
-        switch (this.this.gifType) {
-            case "Photo":
-                this.method = "sendPhoto";
-                break;
-            case "Video":
-                this.method = "sendVideo";
-                break;
-            default:
-                this.method = "sendPhoto";
-        }
-    }
-
-    toJsonObject = () => {
-        let obj = super.toJsonObject();
-
-        if (this.gif) {
-            switch (this.gifType) {
+    constructor(gifType, gif) {
+        super();
+        if (gif) {
+            switch (gifType) {
                 case "Photo":
-                    obj.photo = this.gif;
+                    this.method = "sendPhoto";
+                    this.photo = gif;
                     break;
                 case "Video":
-                    obj.video = this.gif;
+                    this.method = "sendVideo";
+                    this.video = gif;
                     break;
                 default:
-                    obj.photo = this.gif;
+                    this.method = "sendPhoto";
+                    this.photo = gif;
             }
         }
 
-
-        return obj;
     }
 }
