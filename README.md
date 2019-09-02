@@ -29,34 +29,37 @@ url:wss://<SERVER>:<PORT>/nandbox/api/
 download:https://<SERVER>:<PORT>/nandbox/download/  
 upload:https://<SERVER>:<PORT>/nandbox/upload/
 ```
-save your token you will use it later and add other data to  `config.json` in the following format :
+save your token you will use it later and add other data to  `config` object just like below :
 ```json
 {
-    "URI": "wss://<SERVER>:<PORT>/nandbox/api/",
-    "DownloadServer": "https://<SERVER>:<PORT>/nandbox/download/",  
-    "UploadServer": "https://<SERVER>:<PORT>/nandbox/upload/"
+    URI: "wss://<SERVER>:<PORT>/nandbox/api/",
+    DownloadServer: "https://<SERVER>:<PORT>/nandbox/download/",  
+    UploadServer: "https://<SERVER>:<PORT>/nandbox/upload/"
 }
 ```
 
-**2.Implement your Main.js file :** To do that please follow the next instructions:
+**2.Implement your main.js file :** To do that please follow the next instructions:
 1- Replace `TOKEN` with your own bot token.
-2- Implement the `nCallBack.onConnect` function.
-3- Implement the rest of the functions as your application requires.
+2- Make sure `config` object is created.
+3- Implement the `nCallBack.onConnect` function.
+4- Implement the rest of the functions as your application requires.
 
 You will find the below code snippet already written in the `main.js`, implement the necessary functions.
 ```js
 "use strict";
-import NandBox from "./src/NandBox";
-import { NandBoxClient } from "./src/NandBoxClient";
+const NandBox = require("nandbox-bot-api/src/NandBox");
+const Nand = require("nandbox-bot-api/src/NandBoxClient");
+const NandBoxClient = Nand.NandBoxClient;
+
+const TOKEN = "90091783927225986:0:ymJORgQkQcboixXrbCqaDVYb5BuHeB";
+const config = {
+    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+}
 
 
-const TOKEN = "90091783927225986:0:PjAudagHdpEDxpIJOGKdNB1X6Og4WA";
-
-
-var client = NandBoxClient.get();
-
-
-
+var client = NandBoxClient.get(config);
 var nandbox = new NandBox();
 var nCallBack = nandbox.Callback;
 var api = null;
