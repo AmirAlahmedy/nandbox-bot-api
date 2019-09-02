@@ -1,24 +1,10 @@
 "use strict";
 
-export default class Button {
+var BUTTON_QUERY_LOCATION = "location";
+var BUTTON_QUERY_CONTACT = "contact";
 
-	static BUTTON_QUERY_LOCATION = "location";
-	static BUTTON_QUERY_CONTACT = "contact";
+module.exports = class Button {
 
-    button_span;
-    button_order;
-    button_textcolor;
-    button_bgcolor;
-    button_callback;
-    button_label;
-    button_url;
-    button_query;
-    next_menu;
-    chat;
-    button_icon;
-    button_icon_bgcolor;
-
-    // TODO: handle multiple constructors
     constructor(obj, option){
         if(option === 1){
             this.button_label = obj;
@@ -40,7 +26,7 @@ export default class Button {
         return;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if(this.button_order) obj.button_order = this.button_order;

@@ -1,15 +1,14 @@
-import OutMessage from "./OutMessage";
-import User from "../data/User";
+const OutMessage = require("./OutMessage");
+const User = require("../data/User");
 
-export default class SetMyProfileOutMessage extends OutMessage {
-    user = new User();
+module.exports = class SetMyProfileOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "setMyProfile";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         obj.user = this.user;

@@ -1,8 +1,4 @@
-export default class MessageAck {
-
-    message_id;
-    date;
-    reference;
+module.exports = class MessageAck {
 
     constructor(jsonObj) {
         let obj = {};
@@ -14,7 +10,7 @@ export default class MessageAck {
         this.date = obj.date;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (date) {

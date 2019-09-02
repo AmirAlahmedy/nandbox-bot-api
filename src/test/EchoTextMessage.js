@@ -1,12 +1,18 @@
 "use strict";
-import NandBoxClient from "../NandBoxClient";
-import NandBox from "../NandBox";
+const Nand = require("../NandBoxClient");
+const NandBoxClient = Nand.NandBoxClient;
+const NandBox = require("../NandBox");
 
 
 const TOKEN = "90091783927225986:0:DVi21J0RFyVv0zZrDMxkYbmN1V74x1"; // replace it with your token
 
 
-var client = NandBoxClient.get();
+const config = {
+    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+}
+var client = NandBoxClient.get(config);
 
 
 

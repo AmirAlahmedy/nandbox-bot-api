@@ -1,15 +1,13 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default  class GeneratePermanentUrl extends OutMessage {
-    file;
-    param1;
+module.exports = class GeneratePermanentUrl extends OutMessage {
 
     constructor() {
         super();
         this.method = "generatePermanentUrl";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.file) obj.file = this.file;

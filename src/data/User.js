@@ -1,18 +1,8 @@
 "use strict";
-import Photo from "./Photo";
+const Photo = require("./Photo");
 
-export default class User {
+module.exports = class User {
 
-    id;
-	name;
-	version;
-	terminal;
-	type;
-	isBot;
-	lastSeen;
-	status;
-	profile;
-    photo;
 
     constructor(jsonobj){
 
@@ -32,7 +22,7 @@ export default class User {
 		this.photo = jsonobj.photo != null ? new Photo(jsonobj.photo) : null;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if(this.id) obj.id = this.id;

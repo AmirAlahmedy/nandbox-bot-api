@@ -1,13 +1,12 @@
 "use strict";
-import Button from "./Button";
 
-export default class Row {
+module.exports = class Row {
 
-    buttons = [];
-    row_order;
+
 
     constructor(buttons, rowOrder = 1) {
         this.row_order = rowOrder;
+        this.buttons = [];
         if (buttons) 
             for (let i = 0; i < buttons.length; i++)
                 this.buttons.push(buttons[i]);
@@ -15,7 +14,7 @@ export default class Row {
         return;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.row_order) obj.row_order = this.row_order;

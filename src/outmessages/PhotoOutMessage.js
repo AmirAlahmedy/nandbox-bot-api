@@ -1,20 +1,19 @@
 "use strict";
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 /**
  * This class represents Output Message used to send Photo file .
  *
  * @author Ahmed A. El-Malatawy @author Amir
  *
  */
-export default class PhotoOutMessage extends OutMessage{
-    photo;
+module.exports = class PhotoOutMessage extends OutMessage{
 
     constructor() {
         super();
         this.method = "sendPhoto";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
         
         if (this.photo) obj.photo = this.photo;

@@ -1,13 +1,11 @@
-import Chat from "../data/Chat";
-import User from "../data/User";
+const Chat = require("../data/Chat");
+const User =  require("../data/User");
 
-export default class ChatAdministrators {
+module.exports = class ChatAdministrators {
     
-    administrators = [];
-    chat;
-
     constructor(jsonObj) {
         let obj = jsonObj.chatAdministrators;
+        this.administrators = [];
         this.chat = obj.chat == null ? null : new Chat( obj.chat);
 
          let adminArrayObj = obj.administrators;
@@ -23,7 +21,7 @@ export default class ChatAdministrators {
         
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
         if (administrators) {
             let adminsArrayObjnew = [];

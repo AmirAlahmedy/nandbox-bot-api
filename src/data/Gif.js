@@ -1,16 +1,11 @@
-import Thumbnail from "../data/Thumbnail";
+const Thumbnail = require("../data/Thumbnail");
 /**
  * This class represents incoming Message used to get Gif Message .
  *
  * @author Ahmed A. El-Malatawy @Amir
  *
  */
-export default class Gif {
-    id;
-    width;
-    height;
-    size;
-    thumbnail;
+module.exports = class Gif {
 
     constructor(obj) {
         this.id = obj.id;
@@ -20,7 +15,7 @@ export default class Gif {
         this.thumbnail = obj.thumbnail ? new Thumbnail(obj.thumbnail) : null;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;

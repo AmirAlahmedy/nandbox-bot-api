@@ -1,14 +1,13 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class RemoveChatMemberOutMessage extends OutMessage {
-    userId;
+module.exports = class RemoveChatMemberOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "removeChatMember";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.chatId) obj.chat_id = this.chatId;

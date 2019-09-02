@@ -4,11 +4,7 @@
  * @author Hossam @author Amir
  *
  */
-export default class Location {
-    longitude;
-    latitude;
-    name;
-    details;
+module.exports = class Location {
 
     constructor(obj) {
         this.name = obj.name;
@@ -17,7 +13,7 @@ export default class Location {
         this.latitude = obj.latitude;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.name) obj.name = this.name;
@@ -28,7 +24,7 @@ export default class Location {
         return obj;
     }
 
-    toString = () => {
+    toString(){
         let outStrBuf = new String();
         outStrBuf += "{\n";
 

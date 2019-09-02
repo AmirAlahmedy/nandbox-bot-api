@@ -1,15 +1,15 @@
 "use strict";
-import User from "../data/User";
-import Chat from "../data/Chat";
-import Photo from "../data/Photo";
-import Contact from "../data/Contact";
-import Location from "../data/Location";
-import Document from "../data/Document";
-import Gif from "../data/Gif";
-import Video from "../data/Video";
-import Voice from "../data/Voice";
-import Audio from "../data/Audio";
-import TextFile from "../data/TextFile";
+const User = require("../data/User");
+const Chat = require("../data/Chat");
+const Photo = require("../data/Photo");
+const Contact = require("../data/Contact");
+const Location = require("../data/Location");
+const Document = require("../data/Document");
+const Gif = require("../data/Gif");
+const Video = require("../data/Video");
+const Voice = require("../data/Voice");
+const Audio = require("../data/Audio");
+const TextFile = require("../data/TextFile");
 /** 
  * it represents Incoming message Object , the incoming message Object is
  * representing Server Messages with method : message
@@ -17,32 +17,7 @@ import TextFile from "../data/TextFile";
  * @author Ahmed A. El-Malatawy @author Amir
  * 
 */
-export default  class IncomingMessage {
-
-    message_id;
-    type;
-    date;
-    reference;
-    from = new User();
-    reply_to_message_id;
-    caption;
-    from_admin;
-    chat = new Chat();
-    text;
-    location;
-    contact;
-    sent_to = new User();
-    photo = new Photo();
-    gif;
-    voice;
-    video;
-    audio;
-    document;
-    sticker;
-    text_file;
-    status;
-    chat_settings;
-    bg_color;
+module.exports = class IncomingMessage {
 
     constructor(jsonObj) {
         let obj = {};
@@ -75,7 +50,7 @@ export default  class IncomingMessage {
         this.bg_color = obj.bg_color;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.type) obj.type = this.type;
@@ -106,18 +81,18 @@ export default  class IncomingMessage {
         return obj;
     }
 
-    isMsgWithType = (msgType) => (msgType == this.type);
+    isMsgWithType(msgType) { return msgType == this.type; }
 
-    isVideoMsg = () => this.isMsgWithType("video");
-    isTextMsg = () => this.isMsgWithType("text");
-    isPhotoMsg = () => this.isMsgWithType("photo");
-    isAudioMsg = () => this.isMsgWithType("audio");
-    isLocationMsg = () => this.isMsgWithType("location");
-    isVoiceMsg = () => this.isMsgWithType("voice");
-    isGifMsg = () => this.isMsgWithType("gif");
-    isStickerMsg = () => this.isMsgWithType("sticker");
-    isTextFileMsg = () => this.isMsgWithType("text_file");
-    isDocumentMsg = () => this.isMsgWithType("document");
-    isContactMsg = () => this.isMsgWithType("contact");
+    isVideoMsg() { return this.isMsgWithType("video");}
+    isTextMsg() { return this.isMsgWithType("text");}
+    isPhotoMsg() { return this.isMsgWithType("photo");}
+    isAudioMsg() { return this.isMsgWithType("audio");}
+    isLocationMsg() {return this.isMsgWithType("location");}
+    isVoiceMsg() { return this.isMsgWithType("voice");}
+    isGifMsg() { return this.isMsgWithType("gif");}
+    isStickerMsg() { return this.isMsgWithType("sticker");}
+    isTextFileMsg() { return this.isMsgWithType("text_file");}
+    isDocumentMsg() { return this.isMsgWithType("document");}
+    isContactMsg() {return  this.isMsgWithType("contact")};
 
 }

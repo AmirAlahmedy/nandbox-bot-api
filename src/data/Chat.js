@@ -1,20 +1,6 @@
 "use strict";
-import Photo from "./Photo";
 
-export default class Chat {
-
-    id;
-    title;
-    name;
-    type;
-    version;
-    languageCode;
-    regions;
-    description;
-    photo = new Photo();
-    category;
-    memberCount;
-    inviteLink;
+module.exports = class Chat {
 
     constructor(obj) {
 
@@ -34,7 +20,7 @@ export default class Chat {
 
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;

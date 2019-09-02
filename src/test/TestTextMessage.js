@@ -1,18 +1,20 @@
-import OutMessage from "../outmessages/OutMessage";
-import { NandBoxClient } from "../NandBoxClient";
-import NandBox from "../NandBox";
-import { Utility, Id } from "../util/Utility";
-import setChatMenuOutMessage from "../outmessages/setChatMenuOutMessage";
-import Row from "../data/Row";
-import Button from "../data/Button";
-import Menu from "../data/Menu";
-import TextOutMessage from "../outmessages/TextOutMessage";
-import PhotoOutMessage from "../outmessages/PhotoOutMessage";
-import InlineSearchAnswer from "../outmessages/InlineSearchAnswer";
-import Result from "../data/Result";
-import RecallOutMessage from "../outmessages/RecallOutMessage";
-import User from "../data/User";
-import Photo from "../data/Photo";
+const OutMessage = require("../outmessages/OutMessage");
+const NandBoxClient = require("../NandBoxClient");
+const NandBox = require("../NandBox");
+const Utils = require("../util/Utility");
+const Id = Utils.Id;
+const Utility = Utils.Utility;
+const setChatMenuOutMessage = require("../outmessages/setChatMenuOutMessage");
+const Row = require("../data/Row");
+const Button = require("../data/Button");
+const Menu = require("../data/Menu");
+const TextOutMessage = require("../outmessages/TextOutMessage");
+const PhotoOutMessage = require("../outmessages/PhotoOutMessage");
+const InlineSearchAnswer = require("../outmessages/InlineSearchAnswer");
+const Result = require("../data/Result");
+const RecallOutMessage = require("../outmessages/RecallOutMessage");
+const User = require("../data/User");
+const Photo = require("../data/Photo");
 
 
 const TOKEN = "90091784169275314:0:MPgzj802RbiMZ3RL7GHpwuDp9QxVTq"; // you can put your own bot token
@@ -20,7 +22,12 @@ const MAIN_MENU_001 = "MAIN_MENU_001";
 
 let outMsgsListener = new Map();
 
-var client = NandBoxClient.get();
+const config = {
+    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+}
+var client = NandBoxClient.get(config);
 var nandbox = new NandBox();
 var nCallBack = nandbox.Callback;
 var api = null;

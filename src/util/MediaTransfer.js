@@ -1,14 +1,13 @@
-import { getConfigs } from "../NandBoxClient";
-import fs from "fs";
-import axios from "axios";
-import path, { resolve } from 'path';
-import readline from 'readline';
-import { Utility } from "./Utility";
-import mime from "mime";
-import { Stream } from "stream";
+"use strict";
+const fs = require("fs");
+const axios = require("axios");
+const path = require('path');
+const mime = require("mime");
 
-export default class MediaTransfer {
+
+module.exports = class MediaTransfer {
     constructor() {
+        console.log(getConfigs);
         // TODO: throw new illegalStateException("utility class");
     }
 
@@ -29,12 +28,11 @@ export default class MediaTransfer {
      *            used to save the downloaded media .
      * @return 0 in success case , -1: if failed to download the media
      */
-    static downloadFile(token, mediaFileId, savingDirPath, savingFileName) {
+    static downloadFile(token, mediaFileId, savingDirPath, savingFileName, downloadServerURL) {
         var result = -1;
 
         try {
 
-            const downloadServerURL = getConfigs().DownloadServer;
             const downloadStartTime = (new Date()).getTime();
             savingDirPath = savingDirPath != null ? savingDirPath : "./"; // If savingDirPath is null , assuming current Directory
             const mediaFileFullPath = savingDirPath + '/' + savingFileName;
@@ -84,13 +82,12 @@ export default class MediaTransfer {
     *            local directory path to upload the file
     * @return Upload File it will return Attachment as string
     */
-    static uploadFile = (token, mediaFileFullPath) => {
+    static uploadFile(token, mediaFileFullPath, uploadServerURL) {
         let media = null;
-    
+
         const file = fs.createReadStream(mediaFileFullPath);
         const { size } = fs.statSync(mediaFileFullPath);
         const fileContentType = mime.getType(mediaFileFullPath);
-        const uploadServerURL = getConfigs().UploadServer;
         const reqCon = {
             url: uploadServerURL + path.basename(mediaFileFullPath),
             method: 'PUT',
@@ -116,7 +113,7 @@ export default class MediaTransfer {
         const uploadStartTime = (new Date()).getTime();
         let storemedia = axios(reqCon)
             .then(response => {
-                
+
                 media = response.data.file;
                 const uploadEndTime = (new Date()).getTime();
                 console.log("Upload File : " + media + " took around "
@@ -127,7 +124,7 @@ export default class MediaTransfer {
 
             })
             .catch(e => console.log(e));
-            
+
         return storemedia;
     }
 }

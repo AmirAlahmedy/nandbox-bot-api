@@ -1,15 +1,14 @@
-import OutMessage from "./OutMessage";
-import Chat from "../data/Chat";
+const OutMessage = require("./OutMessage");
+const Chat = require("../data/Chat");
 
-export default class SetChatOutMessage extends OutMessage {
-    chat = new Chat();
+module.exports = class SetChatOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "setChat";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         obj.chat = this.chat;

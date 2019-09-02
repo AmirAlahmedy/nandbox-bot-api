@@ -1,14 +1,8 @@
 "use strict";
-import Thumbnail from "./Thumbnail";
+const Thumbnail = require("./Thumbnail");
 
-export default class Photo {
+module.exports = class Photo {
  
-    id;
-    width;
-    height;
-    size;
-    thumbnail;
-
     constructor(obj) {
 
         if(!obj)
@@ -21,7 +15,7 @@ export default class Photo {
 
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;
@@ -33,16 +27,5 @@ export default class Photo {
         return obj;
 
     }
-
-/*  getId = () => this.id;
-    setID = id => { this.id = id; }
-    getWidth = () => this.width;
-    setWidth = width => { this.width; }
-    getHeight = () => this.height;
-    setHeight = height => { this.height = height; }
-    getSize = () => this.size;
-    setSize = size => { this.size = size; }
-    getThumbnail = () => this.thumbnail;
-    setThumbnail = thumbnail => { this.thumbnail = thumbnail; } */
 
 }

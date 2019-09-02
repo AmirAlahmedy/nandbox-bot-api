@@ -1,16 +1,15 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class UnbanChatMember extends OutMessage {
-    userId;
+module.exports = class UnbanChatMember extends OutMessage {
 
     constructor() {
         super();
         this.method = "unbanChatMember";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.chatId) obj.chat_id = this.chatId;

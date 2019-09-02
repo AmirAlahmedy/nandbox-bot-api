@@ -1,16 +1,14 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class RecallOutMessage extends OutMessage {
+module.exports = class RecallOutMessage extends OutMessage {
 
-    messageId;
-    fromUserId;
 
     constructor() {
         super();
         this.method = "recallMessage";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.messageId) obj.message_id = this.messageId;

@@ -1,10 +1,6 @@
 "use strict";
-import Row from "./Row";
 
-export default class Menu {
-
-   menu_ref;
-   rows = [];
+module.exports = class Menu {
 
    constructor(rows, menuRef) {
       if (rows && menuRef) {   
@@ -14,7 +10,7 @@ export default class Menu {
       return;
    }
 
-   toJsonObject = () => {
+   toJsonObject(){
       let obj = {};
 
       if (this.menu_ref) obj.menu_ref = this.menu_ref;

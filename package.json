@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "nand": "node index",
-    "test": "node test",
-    "debug": "node --inspect test.js"
+    "test": "node test"
   },
   "keywords": [
     "Nandbox",

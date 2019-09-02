@@ -1,15 +1,7 @@
-import User from "../data/User";
-import Chat from "../data/Chat";
+const User = require("../data/User");
+const Chat = require("../data/Chat");
 
-export default class InlineSearch {
-
-    date;
-    method;
-    from;
-    chat;
-    search_id;
-    offset;
-    keywords;
+module.exports = class InlineSearch {
 
     constructor(jsonObj) {
         console.log("json " + jsonObj);
@@ -25,7 +17,7 @@ export default class InlineSearch {
         this.keywords = obj.keywords;		
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (date) obj.date =  date;

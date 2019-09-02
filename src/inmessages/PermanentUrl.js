@@ -5,11 +5,7 @@
  * @author Ahmed A. El-Malatawy, Amir
  *
  */
-export default class PermanentUrl {
-
-    file;
-    url;
-    param1;
+module.exports = class PermanentUrl {
 
     constructor(jsonObj) {
         this.url = jsonObj.url;
@@ -17,7 +13,7 @@ export default class PermanentUrl {
         this.param1 = jsonObj.param1;	
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (url)obj.url =  url;

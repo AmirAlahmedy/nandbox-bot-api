@@ -1,13 +1,11 @@
-export default class TextFile {
-    size;
-    id;
-
+module.exports = class TextFile {
+  
     constructor(obj) {
         this.size = obj.size;
         this.id = obj.id;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.size) obj.size = this.size;

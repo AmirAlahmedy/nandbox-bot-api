@@ -4,13 +4,8 @@
  * @author Ahmed A. El-Malatawy @author Amir
  *
  */
-export default class Audio {
-    id;
-    title;
-    performer;
-    size;
-    duration;
-
+module.exports = class Audio {
+   
     constructor(obj) {
         this.id = obj.id;
         this.title = obj.title;
@@ -19,7 +14,7 @@ export default class Audio {
         this.duration = obj.duration;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;

@@ -1,11 +1,5 @@
-export default class ChatMember {
+module.exports = class ChatMember {
 
- user;
- chat;
- type;
- member_since;
- status;
- 
     constructor(jsonObj) {
         let obj = jsonObj.chatMember;
         this.user = obj.user == null ? null : new User(obj.user);
@@ -16,7 +10,7 @@ export default class ChatMember {
         this.status = obj.status;
     }
     
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (user) obj.user = user.toJsonObject();

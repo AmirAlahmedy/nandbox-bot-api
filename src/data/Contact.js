@@ -4,17 +4,14 @@
  * @author Hossam @author Amir
  * 
  */
-export default class Contact {
-
-    name;
-    phoneNumber;
+module.exports = class Contact {
 
     constructor(obj) {
         this.name = obj.name;
         this.phoneNumber = obj.phone_number;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.name) obj.name = this.name;
@@ -23,7 +20,7 @@ export default class Contact {
         return obj;
     }
 
-    toString = () => {
+    toString(){
         let outStrBuf = new String();
         outStrBuf += "{\n";
 

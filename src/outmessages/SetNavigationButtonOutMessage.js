@@ -1,17 +1,15 @@
 "use strict";
-import OutMessage from "./OutMessage";
-import Button from "../data/Button";
+const OutMessage = require("./OutMessage");
+const Button = require("../data/Button");
 
-export default class SetNavigationButtonOutMessage extends OutMessage {
-
-    navigation_button = new Button();
+module.exports = class SetNavigationButtonOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "setNavigationButton";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
         if (navigation_button)
             obj.navigation_button= navigation_button.toJsonObject();

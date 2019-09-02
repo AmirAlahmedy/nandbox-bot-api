@@ -1,17 +1,8 @@
-import ButtonQueryResult from "../data/ButtonQueryResult";
-import User from "../data/User";
-import Chat from "../data/Chat";
+const ButtonQueryResult = require("../data/ButtonQueryResult");
+const User =  require("../data/User");
+const Chat = require("../data/Chat");
 
-export default class ChatMenuCallback {
-
-    date;
-    next_menu;
-    method;
-    from;
-    chat;
-    button_callback;
-    menu_ref;
-    button_query_result;
+module.exports = class ChatMenuCallback {
 
     constructor(jsonObj) {
        console.log("json " + JSON.stringify(jsonObj));
@@ -30,7 +21,7 @@ export default class ChatMenuCallback {
         this.date = obj.date;
     }
 
-     toJsonObject = () => {
+     toJsonObject(){
 
         let obj;
 

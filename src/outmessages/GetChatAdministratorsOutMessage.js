@@ -1,8 +1,8 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class GetChatAdministratorsOutMessage extends OutMessage {
+module.exports = class GetChatAdministratorsOutMessage extends OutMessage {
     constructor() {
         super();
         this.method = "getChatAdministrators";

@@ -1,8 +1,5 @@
 "use strict";
-export default class Thumbnail {
-	id;
-	width;
-	height;
+module.exports = class Thumbnail {
 
     constructor(obj){
         this.id = obj.id;
@@ -10,7 +7,7 @@ export default class Thumbnail {
         this.height = obj.height;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if(this.id) obj.id = this.id;

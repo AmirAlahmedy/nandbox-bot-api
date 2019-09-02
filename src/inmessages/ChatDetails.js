@@ -1,13 +1,12 @@
-import Chat from "../data/Chat";
+const Chat = require("../data/Chat");
 
-export default class ChatDetails {
-    chat;
+module.exports = class ChatDetails {
 
     constructor(obj) {
         this.chat = new Chat(obj.chat);
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (chat) obj.chat = chat.toJsonObject();

@@ -1,4 +1,4 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 /**
  * This class represents Output Message used to send this.Gif file either its in this.Gif
  * image format or this.Gif video format .
@@ -6,7 +6,7 @@ import OutMessage from "./OutMessage";
  * @author Ahmed A. El-Malatawy, Amir
  *
  */
-export default class GifOutMessage extends OutMessage {
+module.exports = class GifOutMessage extends OutMessage {
 
 
     /**

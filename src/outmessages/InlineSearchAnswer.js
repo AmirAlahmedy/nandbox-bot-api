@@ -1,16 +1,12 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class InlineSearchAnswer extends OutMessage{
-
-    results = [];
-    searchId;
-    nextOffset;
+module.exports = class InlineSearchAnswer extends OutMessage{
 
     constructor() {
         this.method = "inlineSearchAnswer";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (results) {

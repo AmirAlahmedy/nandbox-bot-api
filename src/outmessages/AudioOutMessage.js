@@ -1,23 +1,20 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 /**
  * This class represents Output Message used to send Audio file .
  *
  * @author Ahmed A. El-Malatawy
  *
  */
-export default class AudioOutMessage extends OutMessage {
-    audio;
-    performer;
-    title;
+module.exports = class AudioOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "sendAudio";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.audio) obj.audio = this.audio;

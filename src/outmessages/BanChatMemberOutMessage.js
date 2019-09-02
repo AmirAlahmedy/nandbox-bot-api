@@ -1,16 +1,16 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class BanChatMemberOutMessage extends OutMessage {
-    userId;
+module.exports = class BanChatMemberOutMessage extends OutMessage {
+    
 
     constructor() {
         super();
         this.method = "banChatMember";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.userId) obj.user_id = this.userId;

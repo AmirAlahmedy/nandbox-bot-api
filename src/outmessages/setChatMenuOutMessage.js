@@ -1,4 +1,4 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
 /**
  *
@@ -7,16 +7,15 @@ import OutMessage from "./OutMessage";
  * @author Hossam Mohamed, Amir
  *
  */
-export default class SetChatMenuOutMessage extends OutMessage {
+module.exports = class SetChatMenuOutMessage extends OutMessage {
 
-    menus = [];
 
     constructor() {
         super();
         this.method = "setChatMenu";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
         if (menus) {
             let menusArrayObj = [];

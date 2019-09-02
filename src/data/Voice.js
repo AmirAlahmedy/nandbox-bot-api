@@ -4,10 +4,7 @@
  * @author Ahmed A. El-Malatawy @author Amir
  *
  */
-export default class Voice {
-    id;
-    duration;
-    size;
+module.exports = class Voice {
 
     constructor(obj) {
         this.id = obj.id;
@@ -15,7 +12,7 @@ export default class Voice {
         this.size = obj.size;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;

@@ -1,8 +1,5 @@
-export default class ButtonQueryResult {
+module.exports = class ButtonQueryResult {
 
-    latitude;
-    longitude;
-    contact;
 
     constructor(obj) {
         this.latitude = obj.latitude;
@@ -10,7 +7,7 @@ export default class ButtonQueryResult {
         this.contact = obj.contact;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (latitude) obj.latitude  = latitude;

@@ -1,28 +1,15 @@
 "use strict";
-import Menu from "../data/Menu";
+const Menu = require("../data/Menu");
 
-export default class OutMessage {
+module.exports = class OutMessage {
 
-    static WEB_PREVIEW_DISABLE = 1;
-    static WEB_PREVIEW_HIDE_LINK = 2;
-    static WEB_PREVIEW_INSTANCE_VIEW = 3;
-    static WEB_PREVIEW_INSTANCE_WITHOUT_LINK = 4;
-    
+    static WEB_PREVIEW_DISABLE() { return 1; }
+    static WEB_PREVIEW_HIDE_LINK() { return 2; }
+    static WEB_PREVIEW_INSTANCE_VIEW() { return 3; }
+    static WEB_PREVIEW_INSTANCE_WITHOUT_LINK() { return 4; }
 
-    method;
-    chat_id;
-    reference;
-    to_user_id;
-    reply_to_message_id;
-    web_page_preview;
-    disable_notification;
-    caption;
-    echo;
-    menu_ref;
-    inline_menu;
-    chat_settings;
 
-    toJsonObject = () => {
+    toJsonObject() {
         let obj = {};
 
         if (this.method) obj.method = this.method;

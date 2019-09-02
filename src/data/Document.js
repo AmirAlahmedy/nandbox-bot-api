@@ -4,10 +4,7 @@
  * @author Hossam @author Amir
  *
  */
-export default class Doc {
-    id;
-    name;
-    size;
+module.exports = class Doc {
 
     constructor(obj) {
         this.id = obj.id;
@@ -15,7 +12,7 @@ export default class Doc {
         this.size = obj.size;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.name) obj.name = this.name;
@@ -25,7 +22,7 @@ export default class Doc {
         return obj;
     }
 
-    toString = () => {
+    toString(){
         let outStrBuf = new String();
         outStrBuf += "{\n";
 

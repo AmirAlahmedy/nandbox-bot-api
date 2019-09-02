@@ -1,15 +1,15 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class GetChatOutMessage extends OutMessage {
+module.exports = class GetChatOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "getChat";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.chatId) obj.chat_id = this.chatId;

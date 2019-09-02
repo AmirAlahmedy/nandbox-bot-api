@@ -1,15 +1,9 @@
-import Thumbnail from "../data/Thumbnail";
+const Thumbnail = require("../data/Thumbnail");
 /**
  * @author Hossam @author Amir
  *
  */
-export default class Sticker {
-    id;
-    width;
-    height;
-    size;
-    thumbnail;
-
+module.exports = class Sticker {
     constructor(obj) {
         this.id = obj.id;
         // TODO: check
@@ -22,7 +16,7 @@ export default class Sticker {
         this.thumbnail = obj.thumbnail ? new Thumbnail(obj.thumbnail) : null;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;

@@ -1,23 +1,21 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 /**
  * This class represents Output Message used to send Document file .
  *
  * @author Ahmed A. El-Malatawy @author Amir
  *
  */
-export default class DocumentOutMessage extends OutMessage {
-    _document;
-    name;
-    size;
+module.exports = class DocumentOutMessage extends OutMessage {
+   
 
     constructor() {
         super();
         this.method = "sendDocument";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this._document) obj.document = this._document;

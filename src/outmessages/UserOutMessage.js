@@ -1,6 +1,6 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class UserOutMessage extends OutMessage {
+module.exports = class UserOutMessage extends OutMessage {
     constructor() {
         this.method = "sendMessage";
     }

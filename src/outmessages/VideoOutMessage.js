@@ -1,14 +1,13 @@
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class VideoOutMessage extends OutMessage {
-    video;
+module.exports = class VideoOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "sendVideo";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
         if (video != null) {
             obj.video = video;

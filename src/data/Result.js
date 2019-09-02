@@ -1,14 +1,4 @@
-export default class Result {
-
-    id;
-    caption;
-    title;
-    description;
-    url;
-    thumbUrl;
-    type;
-    width;
-    height;
+module.exports = class Result {
 
     constructor(obj) {
         if (!obj) return;
@@ -25,7 +15,7 @@ export default class Result {
         this.height = obj.height;		
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (id) obj.id =  id;

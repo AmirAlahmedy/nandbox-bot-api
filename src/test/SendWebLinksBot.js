@@ -1,5 +1,6 @@
-import NandBox from "../NandBox";
-import { NandBoxClient } from "../NandBoxClient";
+const NandBox = require("../NandBox");
+const Nand = require("../NandBoxClient");
+const NandBoxClient = Nand.NandBoxClient;
 
 let TOKEN = "90091784656342996:0:90eH09mTSJ4ME9A77AuDJjhEzDCqHF";// you can put your own bot token
 let CHAT_SETTINGS = 1;
@@ -7,7 +8,12 @@ let FROM_ADMIN = 1;
 let TEXT = "text";
 let CONTACT = "Contact";
 
-var client = NandBoxClient.get();
+const config = {
+    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+}
+var client = NandBoxClient.get(config);
 var nandbox = new NandBox();
 var nCallBack = nandbox.Callback;
 var api = null;

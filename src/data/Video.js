@@ -1,17 +1,11 @@
-import Thumbnail from "../data/Thumbnail";
+const Thumbnail = require("../data/Thumbnail");
 /**
  * This class represents incoming Message used to get Video Message .
  *
  * @author Ahmed A. El-Malatawy @author Amir
  *
  */
-export default class Video {
-    id;
-    width;
-    height;
-    size;
-    thumbnail;
-    duration;
+module.exports = class Video {
 
     constructor(obj) {
         this.id = obj.id;
@@ -22,7 +16,7 @@ export default class Video {
         this.duration = obj.duration;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = {};
 
         if (this.id) obj.id = this.id;

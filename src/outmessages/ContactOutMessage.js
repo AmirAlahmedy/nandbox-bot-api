@@ -1,6 +1,6 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
 /**
  *
@@ -9,16 +9,15 @@ import OutMessage from "./OutMessage";
  * @author Ahmed A. El-Malatawy @author Amir
  *
  */
-export default class ContactOutMessage extends OutMessage {
-    name;
-    phoneNumber;
+module.exports = class ContactOutMessage extends OutMessage {
+    
 
     constructor() {
         super();
         this.method = "sendContact";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.name) obj.name = this.name;

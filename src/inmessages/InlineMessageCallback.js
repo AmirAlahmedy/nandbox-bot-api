@@ -1,16 +1,8 @@
-import User from "../data/User";
-import Chat from "../data/Chat";
+const User = require("../data/User");
+const Chat = require("../data/Chat");
 
-export default class InlineMessageCallback {
+module.exports = class InlineMessageCallback {
 
-    message_id;
-    menu_ref;
-    date;
-    reference;
-    from;
-    chat;
-    button_callback;
-    button_query_result;
 
     constructor(jsonObj) {
         let obj = jsonObj.inlineMessageCallback;
@@ -28,7 +20,7 @@ export default class InlineMessageCallback {
         this.date = obj.date;
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj;
 
         if (date) obj.date = date;

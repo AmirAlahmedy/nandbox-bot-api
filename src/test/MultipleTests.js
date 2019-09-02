@@ -1,30 +1,34 @@
 "use strict";
-import NandBox from "../NandBox";
-import { NandBoxClient } from "../NandBoxClient";
-import TextOutMessage from "../outmessages/TextOutMessage";
-import { Id, Utility } from "../util/Utility";
-import OutMessage from "../outmessages/OutMessage";
-import Menu from "../data/Menu";
-import Row from "../data/Row";
-import SetChatMenuOutMessage from "../outmessages/setChatMenuOutMessage";
-import DocumentOutMessage from "../outmessages/DocumentOutMessage";
-import MediaTransfer from "../util/MediaTransfer";
-import ContactOutMessage from "../outmessages/ContactOutMessage";
-import LocationOutMessage from "../outmessages/LocationOutMessage";
-import GifOutMessage from "../outmessages/GifOutMessage";
-import AudioOutMessage from "../outmessages/AudioOutMessage";
-import VoiceOutMessage from "../outmessages/VoiceOutMessage";
-import VideoOutMessage from "../outmessages/VideoOutMessage";
-import PhotoOutMessage from "../outmessages/PhotoOutMessage";
-import Button from "../data/Button";
+const NandBox = require("../NandBox");
+const Nand = require("../NandBoxClient");
+const NandBoxClient = Nand.NandBoxClient;
+const TextOutMessage = require("../outmessages/TextOutMessage");
+const Utils = require("../util/Utility");
+const Id = Utils.Id;
+const OutMessage = require("../outmessages/OutMessage");
+const Menu = require("../data/Menu");
+const Row = require("../data/Row");
+const SetChatMenuOutMessage = require("../outmessages/setChatMenuOutMessage");
+const DocumentOutMessage = require("../outmessages/DocumentOutMessage");
+const MediaTransfer = require("../util/MediaTransfer");
+const ContactOutMessage = require("../outmessages/ContactOutMessage");
+const LocationOutMessage = require("../outmessages/LocationOutMessage");
+const GifOutMessage = require("../outmessages/GifOutMessage");
+const AudioOutMessage = require("../outmessages/AudioOutMessage");
+const VoiceOutMessage = require("../outmessages/VoiceOutMessage");
+const VideoOutMessage = require("../outmessages/VideoOutMessage");
+const PhotoOutMessage = require("../outmessages/PhotoOutMessage");
+const Button = require("../data/Button");
 
 let TOKEN = "90091783927225986:0:ymJORgQkQcboixXrbCqaDVYb5BuHeB"; // you can put your own bot token
 let MAIN_MENU_001 = "MAIN_MENU_001";
 let outMsgsListener = new Map();
-
-var client = NandBoxClient.get();
-
-
+const config = {
+    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+}
+var client = NandBoxClient.get(config);
 
 var nandbox = new NandBox();
 var nCallBack = nandbox.Callback;
@@ -314,7 +318,8 @@ nCallBack.onChatAdministrators = chatAdministrators => {
 nCallBack.onChatMenuCallBack = chatMenuCallback => {
     if (chatMenuCallback.button_label == 'Funny') {
 
-        MediaTransfer.uploadFile(TOKEN, "./upload/giphy.gif")
+        MediaTransfer.uploadFile(TOKEN, "./upload/giphy.gif", config.UploadServer)
+        
             .then(gifId => {
                 let gifMsg = new GifOutMessage("Photo", gifId);
                 gifMsg.chat_id = chatMenuCallback.chat.id;
@@ -370,7 +375,7 @@ let handleIncomingDocumentMsg = incomingMsg => {
     api.send(JSON.stringify(documentOutMsg));
 
 
-    MediaTransfer.uploadFile(TOKEN, "./upload/malala.pdf")
+    MediaTransfer.uploadFile(TOKEN, "./upload/malala.pdf", config.UploadServer)
         .then(uploadedDocumentId => {
             api.sendDocument(incomingMsg.chat.id, uploadedDocumentId,
                 "Document Caption");
@@ -432,9 +437,9 @@ let handleIncomingTextFileMsg = incomingMsg => {
     console.log("incomingMsg.textFile.size: "
         + incomingMsg.textFile.size);
 
-    MediaTransfer.downloadFile(TOKEN, textFileId, "./download", null);
+    MediaTransfer.downloadFile(TOKEN, textFileId, "./download", null, config.DownloadServer);
 
-    MediaTransfer.uploadFile(TOKEN, "./download/" + textFileId)
+    MediaTransfer.uploadFile(TOKEN, "./download/" + textFileId, config.UploadServer)
         .then(uploadedTextFileId => {
             api.sendDocument(incomingMsg.chat.id, uploadedTextFileId,
                 Id(), null, null, null,
@@ -509,7 +514,7 @@ let handleIncomingGifMsg = incomingMsg => {
             + "\n\n Wait please sending you a Gif ....");
 
 
-        MediaTransfer.uploadFile(TOKEN, "./upload/gif_sample.gif")
+        MediaTransfer.uploadFile(TOKEN, "./upload/gif_sample.gif", config.UploadServer)
             .then(uploadedGifPhotoId => {
                 let gifMsg = new GifOutMessage("Photo", uploadedGifPhotoId);
                 gifMsg.chat_id = incomingMsg.chat.id;
@@ -530,7 +535,7 @@ let handleIncomingGifMsg = incomingMsg => {
     } else if (incomingMsg.gif.thumbnail &&
         incomingMsg.gif.id.substr(incomingMsg.gif.id.lastIndexOf('.' + 1)) == "mp4") {
 
-        MediaTransfer.uploadFile(TOKEN, "./upload/CeateGroup.mov")
+        MediaTransfer.uploadFile(TOKEN, "./upload/CeateGroup.mov", config.UploadServer)
             .then(uploadedGifVideoId => {
                 let gifMsg = new GifOutMessage("Video");
                 gifMsg.chat_id = incomingMsg.chat.id;
@@ -625,7 +630,7 @@ let handleIncomingVideoMsg = incomingMsg => {
         console.log("================No Thumbnail Object in this Video ===================");
 
 
-    MediaTransfer.uploadFile(TOKEN, "./upload/recallTest.mp4")
+    MediaTransfer.uploadFile(TOKEN, "./upload/recallTest.mp4", config.UploadServer)
         .then(uploadedVideoId => {
             let vidoMsg = new VideoOutMessage();
             vidoMsg.chat_id = incomingMsg.chat.id;
@@ -668,7 +673,7 @@ let handleIncomingPhotoMsg = incomingMsg => {
 
     api.generatePermanentUrl(incomingMsg.photo.id, "Any Reference");
 
-    MediaTransfer.downloadFile(TOKEN, incomingMsg.photo.id, "./download", incomingMsg.photo.id + ".jpeg");
+    MediaTransfer.downloadFile(TOKEN, incomingMsg.photo.id, "./download", incomingMsg.photo.id + ".jpeg", config.DownloadServer);
 
     api.sendText(incomingMsg.chat.id,
         "Photo Size is : " + incomingMsg.photo.size
@@ -677,7 +682,7 @@ let handleIncomingPhotoMsg = incomingMsg => {
         + " and caption is : " + incomingMsg.caption
         + "\n\n Wait please sending you a photo ....");
 
-    MediaTransfer.uploadFile(TOKEN, "./upload/welcome.jpg")
+    MediaTransfer.uploadFile(TOKEN, "./upload/welcome.jpg", config.UploadServer)
         .then(uploadedPhotoId => {
             let photoMsg = new PhotoOutMessage();
             photoMsg.chat_id = incomingMsg.chat.id;

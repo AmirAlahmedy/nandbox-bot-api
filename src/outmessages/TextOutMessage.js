@@ -1,17 +1,14 @@
 "use strict";
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class TextOutMessage extends OutMessage {
-
-    text;
-    bg_color;
+module.exports = class TextOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "sendMessage"; 
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
         if (this.text)
             obj.text = this.text;

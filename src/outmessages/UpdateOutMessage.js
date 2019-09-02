@@ -1,17 +1,14 @@
 "use strict";
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class UpdateOutMessage extends OutMessage {
-    messageId;
-    text;
-
+module.exports = class UpdateOutMessage extends OutMessage {
     constructor() {
         super();
         this.method = "updateMessage";
     }
 
-    toJsonObject = () => {
+    toJsonObject(){
         let obj = super.toJsonObject();
 
         if (this.messageId) obj.messageId = this.messageId;

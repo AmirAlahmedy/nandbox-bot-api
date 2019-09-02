@@ -1,19 +1,15 @@
 "use strict"
 
-import OutMessage from "./OutMessage";
+const OutMessage = require("./OutMessage");
 
-export default class LocationOutMessage extends OutMessage {
-    longitude;
-    latitude;
-    name;
-    details;
+module.exports = class LocationOutMessage extends OutMessage {
 
     constructor() {
         super();
         this.method = "sendLocation";
     }
 
-    toJsonObject = () => {
+    toJsonObject() {
         let obj = super.toJsonObject();
 
         if (this.name) obj.name = this.name;
