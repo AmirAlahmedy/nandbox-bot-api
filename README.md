@@ -104,7 +104,6 @@ client.connect(TOKEN, nCallBack);
 
 ____Have a look at the [test](./src/test) folder, you might find useful examples.____
 
---
 ## License 
 MIT License
 
