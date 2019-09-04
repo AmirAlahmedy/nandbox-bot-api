@@ -6,10 +6,7 @@ Node.js library to interact with official Nandbox Bot API. A bot token is **requ
 ## Install
 After you download the library, just run the following commands in your CLI.
 ```bash
-npm install
-```
-```bash
-npm run nand
+_$_ npm install
 ```
 
 ## Build your first bot
@@ -85,7 +82,6 @@ nCallBack.onReceive = incomingMsg => {
 
 // implement other nandbox.Callback() as per your bot need
 nCallBack.onReceiveObj = obj => console.log("received object: ", obj);
-
 nCallBack.onClose = () => console.log("ONCLOSE");
 nCallBack.onError = () => console.log("ONERROR");
 nCallBack.onChatMenuCallBack = chatMenuCallback => { }
@@ -105,6 +101,9 @@ nCallBack.onInlineSearh = inlineSearch => { }
 
 client.connect(TOKEN, nCallBack);
 ```
+
+____Have a look at the [test](./src/test) folder, you might find useful examples.____
+
 --
 ## License 
 MIT License

@@ -23,7 +23,6 @@ nCallBack.onConnect = (_api) => {
 }
 
 
-
 nCallBack.onReceive = incomingMsg => {
     console.log("Message Received");
 
