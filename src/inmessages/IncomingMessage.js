@@ -10,6 +10,7 @@ const Video = require("../data/Video");
 const Voice = require("../data/Voice");
 const Audio = require("../data/Audio");
 const TextFile = require("../data/TextFile");
+const Article = require("../data/Article");
 /** 
  * it represents Incoming message Object , the incoming message Object is
  * representing Server Messages with method : message
@@ -48,6 +49,8 @@ module.exports = class IncomingMessage {
         this.status = obj.status;
         this.chat_settings = obj.chat_settings;
         this.bg_color = obj.bg_color;
+        this.article = obj.article ? new Article(obj.article) : null;
+        this.url = obj.url;
     }
 
     toJsonObject(){
@@ -76,6 +79,8 @@ module.exports = class IncomingMessage {
         if (this.sticker) obj.sticker = this.sticker.toJsonObject();
         if (this.text_file) obj.text_file = text_file.toJsonObject();
         if (this.bg_color) obj.bg_color = this.bg_color;
+        if (this.article) obj.article = this.article.toJsonObject();
+        if (this.url) obj.url = this.url;
 
         console.log("to " + JSON.stringify(obj));
         return obj;
