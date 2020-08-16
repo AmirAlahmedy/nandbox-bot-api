@@ -13,15 +13,9 @@ module.exports = class MessageAck {
     toJsonObject(){
         let obj = {};
 
-        if (date) {
-            obj.date = this.date
-        }
-        if (message_id) {
-
-            obj.message_id = this.message_id;
-        }
-        if (reference)
-            obj.reference = this.reference;
+        if (this.date) obj.date = this.date
+        if (this.message_id) obj.message_id = this.message_id;
+        if (this.reference) obj.reference = this.reference;
 
         console.log("to " + JSON.stringify(obj));
         return obj;

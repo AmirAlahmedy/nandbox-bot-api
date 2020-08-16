@@ -13,11 +13,11 @@ module.exports = class ChatMember {
     toJsonObject(){
         let obj;
 
-        if (user) obj.user = user.toJsonObject();
-        if (chat) obj.chat = chat.toJsonObject();
-        if (type) obj.type = type;
-        if (member_since) obj.member_since = member_since;
-        if (status) obj.status = status;
+        if (this.user) obj.user = user.toJsonObject();
+        if (this.chat) obj.chat = chat.toJsonObject();
+        if (this.type) obj.type = type;
+        if (this.member_since) obj.member_since = member_since;
+        if (this.status) obj.status = status;
 
         return obj;
     }

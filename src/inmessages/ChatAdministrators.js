@@ -23,14 +23,14 @@ module.exports = class ChatAdministrators {
 
     toJsonObject(){
         let obj;
-        if (administrators) {
+        if (this.administrators) {
             let adminsArrayObjnew = [];
             for (let i = 0; i < administrators.length; i++)
                 adminsArrayObjnew.push(administrators[i].toJsonObject());
             obj.administrators = adminsArrayObjnew;
         }
 
-        if (chat) {
+        if (this.chat) {
             obj.chat =  chat.toJsonObject();
         }
 

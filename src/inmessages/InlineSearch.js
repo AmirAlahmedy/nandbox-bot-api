@@ -20,14 +20,14 @@ module.exports = class InlineSearch {
     toJsonObject(){
         let obj;
 
-        if (date) obj.date =  date;
+        if (this.date) obj.date =  date;
 
-        if (from) obj.from =  from.toJsonObject();
-        if (chat) obj.chat =  chat.toJsonObject();
-        if (method) obj.method =  method;
-        if (search_id) obj.search_id =  search_id;
-        if (offset) obj.offset =  offset;
-        if (keywords) obj.keywords =  keywords;
+        if (this.from) obj.from =  from.toJsonObject();
+        if (this.chat) obj.chat =  chat.toJsonObject();
+        if (this.method) obj.method =  method;
+        if (this.search_id) obj.search_id =  search_id;
+        if (this.offset) obj.offset =  offset;
+        if (this.keywords) obj.keywords =  keywords;
 
         console.log("to " + obj)
         return obj;

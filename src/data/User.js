@@ -40,25 +40,4 @@ module.exports = class User {
         
     }
 
-/*  getId = () => this.id;
-    setId = id => {this.id = id;}
-    getName = () => this.name;
-    setName = name => {this.name = name}
-    getVersion = () => this.version;
-    setVersion = version => {this.version = version;}
-    getLastSeen = () => this.lastSeen;
-    setLastSeen = lastSeen => {this.lastSeen = lastSeen;}
-    getStatus = () => this.status;
-    setStatus = status => {this.status = status;}
-    getIsBot = () => this.isBot;
-    setIsBot = isBot => {this.isBot = isBot}
-    getPhoto = () => this.getPhoto;
-    setPhoto = photo => {this.photo = photo}
-    getTerminal = () => this.terminal;
-    setTerminal = terminal => {this.terminal = terminal}
-    getProfile = () => this.profile;
-    setProfile = profile => {this.profile;}
-    getType = () => this.type;
-    setType = type => {this.type = type;} */
-
 }

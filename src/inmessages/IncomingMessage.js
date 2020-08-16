@@ -70,11 +70,11 @@ module.exports = class IncomingMessage {
         if (this.document) obj.document = this.document;
         if (this.photo) obj.photo = this.photo.toJsonObject();
         if (this.gif) obj.gif = this.gif.toJsonObject();
-        if (voice) obj.voice = voice.toJsonObject();
+        if (this.voice) obj.voice = voice.toJsonObject();
         if (this.video) obj.video = this.video.toJsonObject();
-        if (audio) obj.audio = audio.toJsonObject();
+        if (this.audio) obj.audio = audio.toJsonObject();
         if (this.sticker) obj.sticker = this.sticker.toJsonObject();
-        if (text_file) obj.text_file = text_file.toJsonObject();
+        if (this.text_file) obj.text_file = text_file.toJsonObject();
         if (this.bg_color) obj.bg_color = this.bg_color;
 
         console.log("to " + JSON.stringify(obj));

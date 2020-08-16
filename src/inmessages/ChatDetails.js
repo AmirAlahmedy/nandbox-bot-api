@@ -9,7 +9,7 @@ module.exports = class ChatDetails {
     toJsonObject(){
         let obj;
 
-        if (chat) obj.chat = chat.toJsonObject();
+        if (this.chat) obj.chat = chat.toJsonObject();
 
         return obj;
     }

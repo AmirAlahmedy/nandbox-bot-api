@@ -14,7 +14,7 @@ module.exports = class Menu {
       let obj = {};
 
       if (this.menu_ref) obj.menu_ref = this.menu_ref;
-      if(rows){
+      if (this.rows){
          let rowsArrayObj = [];
          for (let i = 0; i < rows.length; i++) {
 				rowsArrayObj[i] = rows[i].toJsonObject();

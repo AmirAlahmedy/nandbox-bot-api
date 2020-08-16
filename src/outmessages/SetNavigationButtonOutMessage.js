@@ -11,7 +11,7 @@ module.exports = class SetNavigationButtonOutMessage extends OutMessage {
 
     toJsonObject(){
         let obj = super.toJsonObject();
-        if (navigation_button)
+        if (this.navigation_button)
             obj.navigation_button= navigation_button.toJsonObject();
 
         return obj;

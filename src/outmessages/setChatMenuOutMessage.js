@@ -17,7 +17,7 @@ module.exports = class SetChatMenuOutMessage extends OutMessage {
 
     toJsonObject(){
         let obj = super.toJsonObject();
-        if (menus) {
+        if (this.menus) {
             let menusArrayObj = [];
             for (let i = 0; i < menus.length; ++i)
                 menusArrayObj[i] = menus[i].toJsonObject();

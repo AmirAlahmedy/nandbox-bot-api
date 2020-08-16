@@ -25,14 +25,14 @@ module.exports = class ChatMenuCallback {
 
         let obj;
 
-        if (date) obj.date = date;
-        if (from) obj.from = from.toJsonObject();
-        if (chat) obj.chat = chat.toJsonObject();
-        if (method) obj.method = method;
-        if (menuRef) obj.menu_ref = menu_ref;
-         if (buttonCallback) obj.button_callback = button_callback;
-         if (buttonQueryResult) obj.button_query_result = button_query_result;
-        if (nextMenu) obj.next_menu = next_menu;
+        if (this.date) obj.date = date;
+        if (this.from) obj.from = from.toJsonObject();
+        if (this.chat) obj.chat = chat.toJsonObject();
+        if (this.method) obj.method = method;
+        if (this.menuRef) obj.menu_ref = menu_ref;
+        if (this.buttonCallback) obj.button_callback = button_callback;
+        if (this.buttonQueryResult) obj.button_query_result = button_query_result;
+        if (this.nextMenu) obj.next_menu = next_menu;
 
         console.log("to " + JSON.stringify(obj));
         return obj;
