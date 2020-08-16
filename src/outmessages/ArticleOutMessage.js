@@ -1,7 +1,4 @@
-package com.nandbox.bots.api.outmessages;
-
-import net.minidev.json.JSONObject;
-
+const OutMessage = require('../outmessages/OutMessage');
 /**
  * This class represents Output Message used to send Voice file .
  * 
@@ -9,7 +6,7 @@ import net.minidev.json.JSONObject;
  *
  */
 
-public class ArticleOutMessage extends OutMessage {
+export default class ArticleOutMessage extends OutMessage {
 
 
 	constructor() {

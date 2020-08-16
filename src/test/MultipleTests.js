@@ -19,6 +19,12 @@ const VoiceOutMessage = require("../outmessages/VoiceOutMessage");
 const VideoOutMessage = require("../outmessages/VideoOutMessage");
 const PhotoOutMessage = require("../outmessages/PhotoOutMessage");
 const Button = require("../data/Button");
+const Data = require('../data/Data');
+const WhiteListUser = require('../data/WhiteListUser');
+const BlackList = require('../inmessages/BlackList');
+const GifOutMessage = require('../outmessages/GifOutMessage');
+const SetChatMenuOutMessage = require('../outmessages/setChatMenuOutMessage');
+
 
 let TOKEN = "90091783927225986:0:ymJORgQkQcboixXrbCqaDVYb5BuHeB"; // you can put your own bot token
 let MAIN_MENU_001 = "MAIN_MENU_001";
@@ -52,6 +58,88 @@ nCallBack.onReceive = incomingMsg => {
             }
             else if (incomingMsg.text.toLowerCase() == "getChat".toLowerCase()) {
                 api.getChat(incomingMsg.chat.id);
+            }
+            else if (incomingMsg.text.toLocaleLowerCase() == "getBlackList".toLowerCase()){
+                api.getBlackList(incomingMsg.chat.id);
+            }
+            else if (incomingMsg.text.toLocaleLowerCase() == "addBlackListPatterns".toLowerCase()){
+                
+                let dataList = [];
+
+                let data = new Data();
+                data.pattern = "44444*";
+                data.example = "44444444"
+
+                dataList.push(data);
+
+                let data2 = new Data();
+                data2.pattern = "222*";
+                data2.example = "222222222";
+
+                dataList.push(data2);
+
+                api.addBlackListPatterns(incomingMsg.chat.id, dataList);
+            }
+            else if(incomingMsg.text.toLocaleLowerCase() == "addWhitelistPatterns".toLowerCase()){
+                let dataList = [];
+
+                let data = new Data();
+                data.pattern = "4444*";
+                data.example = "444444";
+
+                dataList.push(data);
+
+                api.addWhitelistPatterns(incomingMsg.chat.id, dataList);
+            }
+            else if(incomingMsg.text.toLocaleLowerCase() == "getWhiteList".toLowerCase()){
+                api.getWhiteList(incomingMsg.chat.id);
+            }
+            else if(incomingMsg.text.toLocaleLowerCase() == "addBlackList".toLowerCase()){
+                let users = [];
+
+                users.push("111133");
+                users.push("222223");
+
+                api.addBlackList(incomingMsg.chat.id, users);
+            }
+            else if(incomingMsg.text.toLocaleLowerCase() == "addWhiteList".toLowerCase()){
+                let tagsList = [];
+                tagsList.push("1");
+                tagsList.push("2");
+
+                let whiteListUsersArray = [];
+                let whiteListUser = new WhiteListUser();
+                whiteListUser.signup_user = "3636526";
+                whiteListUser.tags = tagsList;
+
+                whiteListUsersArray.push(WhiteListUser);
+
+                api.addWhiteList(incomingMsg.chat.id, whiteListUsersArray);
+            }
+            else if(incomingMsg.text.toLocaleLowerCase() == "deleteBlackList".toLowerCase()){
+                let users = [];
+                users.push("111133");
+
+                api.deleteBlackList(incomingMsg.chat.id, users);
+            }
+            else if(incomingMsg.text.toLocaleLowerCase() == "deleteWhitelist".toLowerCase()){
+                let users = [];
+                users.push("111133");
+
+                api.deleteWhiteList(incomingMsg.getChat().getId(), users);
+            }
+            else if (incomingMsg.text.toLocaleLowerCase() == "deleteBlacklistPatterns".toLowerCase()) {
+
+                let pattern = [];
+                pattern.push("222*");
+                api.deleteBlackListPatterns(incomingMsg.chat.id, pattern);
+
+            } 
+            else if (incomingMsg.text.toLowerCase() == "deleteWhitelistPatterns".toLocaleLowerCase()) {
+
+                let pattern = [];
+                pattern.push("5555*");
+                api.deleteWhiteListPatterns(incomingMsg.chat.id, pattern);
             }
             else if (incomingMsg.text.toLowerCase() == "BigText".toLowerCase()) {
                 api.sendTextWithBackground(incomingMsg.chat.id, "Hi From Bot", "#EE82EE");
@@ -271,6 +359,9 @@ nCallBack.onReceive = incomingMsg => {
         // Incoming Document Message
         else if (incomingMsg.isDocumentMsg()) handleIncomingDocumentMsg(incomingMsg);
 
+        // Incoming Article Message
+        else if(incomingMsg.isArticleMsg()) handleIncomingArticleMsg(incomingMsg);
+
     }
 
 }
@@ -356,6 +447,19 @@ nCallBack.permanentUrl = permenantUrl => {
 
 }
 
+nCallBack.onWhiteList = whiteList => {
+
+    for (let i = 0; i < whiteList.users.length(); i++) {
+        console.log("whiteList.id=" + whiteList.users()[i].id);
+        console.log("whiteList.signup_user=" + whiteList.users[i].signup_user);
+    }
+
+    console.log("eop=" + whiteList.eop);
+    console.log("chat.id=" + whiteList.chat.id);
+
+}
+
+
 client.connect(TOKEN, nCallBack);
 
 let handleIncomingDocumentMsg = incomingMsg => {
@@ -390,6 +494,19 @@ let handleIncomingDocumentMsg = incomingMsg => {
         + incomingMsg.document.name + " , Document File ID is : "
         + incomingMsg.document.id);
 
+}
+
+let  handleIncomingArticleMsg = incomingMsg => {
+    console.log("================start of Article Object ===================");
+    console.log("incomingMsg.article.url : " + incomingMsg.url);
+    console.log("================start of Article  Object ===================");
+
+    let articleOutMessage = new ArticleOutMessage();
+    articleOutMessage.chat_id = incomingMsg.chat.id;
+    articleOutMessage.reference = Id();
+    articleOutMessage.url  = incomingMsg.url;
+
+    api.send(articleOutMessage);
 }
 
 let handleIncomingContactMsg = incomingMsg => {

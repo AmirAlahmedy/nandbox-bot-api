@@ -4,6 +4,8 @@ const NandBoxClient = Nand.NandBoxClient;
 const NandBox = require("../NandBox");
 
 
+const WhiteList = require("../data/WhiteList");
+
 const TOKEN = "90091783927225986:0:DVi21J0RFyVv0zZrDMxkYbmN1V74x1"; // replace it with your token
 
 
@@ -46,85 +48,23 @@ nCallBack.onReceiveObj = obj => {
     console.log("received object: ", obj);
 }
 
-nCallBack.onClose = () => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onError = () => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatMenuCallBack = chatMenuCallback => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onInlineMessageCallback = inlineMsgCallback => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onMessagAckCallback = msgAck => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onUserJoinedBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatMember = chatMember => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatAdministrators = chatAdministrators => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.userStartedBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onMyProfile = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onUserDetails = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.userStoppedBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.userLeftBot = user => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.permanentUrl = permenantUrl => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onChatDetails = chat => {
-    // TODO Auto-generated method stub
-
-}
-
-nCallBack.onInlineSearh = inlineSearch => {
-    // TODO Auto-generated method stub
-
-}
-
+nCallBack.onClose = () => {}
+nCallBack.onError = () => {}
+nCallBack.onChatMenuCallBack = chatMenuCallback => {}
+nCallBack.onInlineMessageCallback = inlineMsgCallback => {}
+nCallBack.onMessagAckCallback = msgAck => {}
+nCallBack.onUserJoinedBot = user => {}
+nCallBack.onChatMember = chatMember => {}
+nCallBack.onChatAdministrators = chatAdministrators => {}
+nCallBack.userStartedBot = user => {}
+nCallBack.onMyProfile = user => {}
+nCallBack.onUserDetails = user => {}
+nCallBack.userStoppedBot = user => {}
+nCallBack.userLeftBot = user => {}
+nCallBack.permanentUrl = permenantUrl => {}
+nCallBack.onChatDetails = chat => {}
+nCallBack.onInlineSearh = inlineSearch => {}
+nCallBack.onBlackList = blackList => {}
+nCallBack.onWhiteList = whiteList => {}
 
 client.connect(TOKEN, nCallBack);
