@@ -666,7 +666,8 @@ onUserJoinedBot = user => console.log("User ID =" + user.getId());
 userStartedBot = user => console.log("User ID = " + user.getId());
 userStoppedBot = user => console.log("User ID =" + user.getId());
 userLeftBot = user => console.log("User ID =" + user.getId());
-
+onBlackList = blackList => {}
+onWhiteList = whiteList => {}
 permanentUrl = permenantUrl => { }
 onChatDetails = chat => { }
 onInlineSearh = inlineSearch => { }

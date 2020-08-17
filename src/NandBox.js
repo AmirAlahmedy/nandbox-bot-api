@@ -616,6 +616,28 @@ module.exports =  class NandBox {
          * @param param1 Generic parameter to set any local reference for the permanent  file
          */
         generatePermanentUrl = (file, param1) => { };
+
+        getBlackList = (chatId) => {};
+
+		getWhiteList = (chatId) => {};
+
+		addBlackList = (chatId, users) => {};
+
+		deleteBlackList = (chatId, users) => {};
+
+		deleteWhiteList = (chatId, users) => {};
+
+		addBlacklistPatterns = (chatId, data) => {};
+		
+		addWhitelistPatterns = (chatId, data) => {};
+
+		deleteBlackListPatterns = (chatId, pattern) => {};
+
+		deleteWhiteListPatterns = (chatId, pattern) => {};
+
+
+		addWhiteList = (chatId, whiteListUsers) => {};
+
     }
 }
 

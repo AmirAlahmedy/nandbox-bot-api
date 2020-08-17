@@ -31,6 +31,20 @@ const GetMyProfiles = require("./outmessages/GetMyProfiles");
 const GeneratePermanentUrl = require("./outmessages/GeneratePermanentUrl");
 const Utils = require("./util/Utility");
 const Id = Utils.Id;
+const Data = require('./data/Data');
+const WhiteListUser = require('./data/WhiteListUser');
+const BlackList = require('./inmessages/BlackList');
+const WhiteList = require('./inmessages/WhiteList');
+const AddBlackListOutMessage = require('./outmessages/AddBlackListOutMessage');
+const AddBlackListPatternsOutMessage = require('./outmessages/AddBlackListPatternsOutMessage');
+const AddWhiteListOutMessage = require('./outmessages/AddWhiteListOutMessage');
+const AddWhiteListPatternsOutMessage = require('./outmessages/AddWhiteListPatternsOutMessage');
+const DeleteBlackListOutMessage = require('./outmessages/DeleteBlackListOutMessage');
+const DeleteBlackListPatternsOutMessage = require('./outmessages/DeleteBlackListPatternsOutMessage');
+const DeleteWhiteListOutMessage = require('./outmessages/DeleteWhiteListOutMessage');
+const DeleteWhiteListPatternsOutMessage = require('./outmessages/DeleteWhiteListPatternsOutMessage');
+const GetBlackListOutMessage = require('./outmessages/GetBlackListOutMessage');
+const GetWhiteListOutMessage = require('./outmessages/GetWhiteListOutMessage');
 const IncomingMessage = require("./inmessages/IncomingMessage");
 const MessageAck = require("./inmessages/MessageAck");
 require("@babel/polyfill");
@@ -453,6 +467,77 @@ class InternalWebSocket {
                 banChatMemberOutMessage.user_id = userId;
                 api.send(JSON.stringify(banChatMemberOutMessage));
             }
+            api.addBlackList = (chatId, users) => {
+
+                let addBlackListOutMessage = new AddBlackListOutMessage();
+                addBlackListOutMessage.chat_id = chatId;
+                addBlackListOutMessage.users = users;
+
+                api.send(JSON.stringify(addBlackListOutMessage));
+            }
+
+            api.addWhiteList = (chatId, whiteListUsers) => {
+
+                let addWhiteistOutMessage = new AddWhiteListOutMessage();
+                
+                addWhiteistOutMessage.chat_id = chatId;
+                addWhiteistOutMessage.users = whiteListUsers;
+
+                api.send(JSON.stringify(addWhiteistOutMessage));
+            }
+
+            api.deleteBlackList = (chatId, users) => {
+
+                let deleteBlackListOutMessage = new DeleteBlackListOutMessage();
+                deleteBlackListOutMessage.chat_id = chatId;
+                deleteBlackListOutMessage.users = users;
+
+                api.send(JSON.stringify(deleteBlackListOutMessage));
+            }
+
+            api.deleteWhiteList = (chatId, users) => {
+
+                let deleteWhiteListOutMessage = new DeleteWhiteListOutMessage();
+                deleteWhiteListOutMessage.chat_id = chatId;
+                deleteWhiteListOutMessage.users = users;
+
+                api.send(JSON.stringify(deleteWhiteListOutMessage));
+            }
+
+            api.deleteBlackListPatterns = (chatId, pattern) => {
+
+                let deleteBlackListPatterns = new DeleteBlackListPatternsOutMessage();
+                deleteBlackListPatterns.chat_id = chatId;
+                deleteBlackListPatterns.pattern = pattern;
+
+                api.send(JSON.stringify(deleteBlackListPatterns));
+            }
+            
+            api.deleteWhiteListPatterns = (chatId, pattern) => {
+
+                let deleteWhiteListPatterns = new DeleteWhiteListPatternsOutMessage();
+                deleteWhiteListPatterns.chat_id = chatId;
+                deleteWhiteListPatterns.pattern = pattern;
+
+                api.send(JSON.stringify(deleteWhiteListPatterns));
+            }
+
+            api.addBlacklistPatterns = (chatId, data) => {
+
+                let addBlacklistPatternsOutMessage = new AddBlacklistPatternsOutMessage();
+                addBlacklistPatternsOutMessage.chat_id = chatId;
+                addBlacklistPatternsOutMessage.data = data;
+
+                api.send(JSON.stringify(addBlacklistPatternsOutMessage));
+            }
+            api.addWhitelistPatterns = (chatId, data) => {
+
+                let addWhitelistPatternsOutMessage = new AddWhitelistPatternsOutMessage();
+                addWhitelistPatternsOutMessage.chat_id = chatId;
+                addWhitelistPatternsOutMessage.data = data;
+
+                api.send(JSON.stringify(addWhitelistPatternsOutMessage));
+            }
 
             api.unbanChatMember = (chatId, userId) => {
                 let unbanChatMember = new UnbanChatMember();
@@ -499,6 +584,21 @@ class InternalWebSocket {
                 generatePermanentUrl.file = file;
                 generatePermanentUrl.param1 = param1;
                 api.send(JSON.stringify(generatePermanentUrl));
+            }
+
+            api.getBlackList = (chatId) => {
+                let getBlackListOutMessage = new GetBlackListOutMessage();
+                getBlackListOutMessage.chat_id = chatId;
+
+                api.send(JSON.stringify(getBlackListOutMessage));
+            }
+
+
+            api.getWhiteList = (chatId) => {
+                let getWhiteListOutMessage = new GetWhiteListOutMessage();
+                getWhiteListOutMessage.chat_id = chatId;
+
+                api.send(JSON.stringify(getWhiteListOutMessage));
             }
 
 
@@ -593,6 +693,14 @@ class InternalWebSocket {
                         let permenantURL = new PermanentUrl(obj);
                         this.callback.permanentUrl(permenantURL);
                         return;
+                    case "blacklist":
+                            let blackList = new BlackList(obj);
+                            this.callback.onBlackList(blackList);
+                            return;
+                    case "whitelist":
+                            let whiteList = new WhiteList(obj);
+                            this.callback.onWhiteList(whiteList);
+                            return;
                     default:
                         this.callback.onReceiveObj(obj);
                         return;

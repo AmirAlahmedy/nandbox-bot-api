@@ -109,6 +109,9 @@ nCallBack.onChatDetails = chat => { }
 nCallBack.onInlineSearh = inlineSearch => { }
 
 
+nCallBack.onBlackList = blackList => {}
+nCallBack.onWhiteList = whiteList => {}
+
 client.connect(TOKEN, nCallBack);
 
 getRandomColorString = () => {
