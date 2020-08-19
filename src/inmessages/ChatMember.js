@@ -9,6 +9,8 @@ module.exports = class ChatMember {
         this.member_since = obj.member_since;
         this.status = obj.status;
         this.tags = obj.tags;
+        this.account_type = obj.account_type;
+        this.msisdn = obj.msisdn;
     }
     
     toJsonObject(){
@@ -20,7 +22,8 @@ module.exports = class ChatMember {
         if (this.member_since) obj.member_since = this.member_since;
         if (this.status) obj.status = this.status;
         if (this.tags) obj.tags =  this.tags;
-
+        if ( this.account_type) obj.account_type = this.account_type;
+        if (this.msisdn) obj.msisdn = this.msisdn;
         return obj;
     }
 
