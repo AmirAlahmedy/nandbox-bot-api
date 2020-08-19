@@ -140,6 +140,18 @@ module.exports =  class NandBox {
 		 * @param inlineSearch inline search object that contain inline search info
 		 */
         onInlineSearh = inlineSearch => { };
+        onBlackList =  blackList => { };
+		
+		onWhiteList = whiteList => { };
+		
+		/**
+		 * This event should be used to handle incoming schedule message from server
+		 * 
+		 * @param incomingScheduleMsg
+		 *           incoming Schedule message from server
+		 */
+		onScheduleMessage = incomingScheduleMsg => { };
+
 
     }
     /**
@@ -616,26 +628,15 @@ module.exports =  class NandBox {
          * @param param1 Generic parameter to set any local reference for the permanent  file
          */
         generatePermanentUrl = (file, param1) => { };
-
         getBlackList = (chatId) => {};
-
 		getWhiteList = (chatId) => {};
-
 		addBlackList = (chatId, users) => {};
-
 		deleteBlackList = (chatId, users) => {};
-
 		deleteWhiteList = (chatId, users) => {};
-
 		addBlacklistPatterns = (chatId, data) => {};
-		
 		addWhitelistPatterns = (chatId, data) => {};
-
 		deleteBlackListPatterns = (chatId, pattern) => {};
-
 		deleteWhiteListPatterns = (chatId, pattern) => {};
-
-
 		addWhiteList = (chatId, whiteListUsers) => {};
 
     }

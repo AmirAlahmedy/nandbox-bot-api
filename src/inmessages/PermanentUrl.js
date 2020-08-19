@@ -16,9 +16,9 @@ module.exports = class PermanentUrl {
     toJsonObject(){
         let obj;
 
-        if (this.url)obj.url =  url;
-        if (this.file)obj.file =  file;
-        if (this.param1)obj.param1 =  param1;
+        if (this.url)obj.url =  this.url;
+        if (this.file)obj.file =  this.file;
+        if (this.param1)obj.param1 =  this.param1;
         
         return obj;
     }

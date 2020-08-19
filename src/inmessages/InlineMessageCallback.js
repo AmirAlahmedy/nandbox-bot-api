@@ -23,14 +23,14 @@ module.exports = class InlineMessageCallback {
     toJsonObject(){
         let obj;
 
-        if (this.date) obj.date = date;
-        if (this.from) obj.from = from.toJsonObject();
-        if (this.chat) obj.chat = chat.toJsonObject();
-        if (this.message_id) obj.message_id = message_id;
-        if (this.menu_ref) obj.menu_ref = menu_ref;
-        if (this.reference) obj.reference = reference;
-        if (this.button_callback) obj.button_callback =  button_callback;
-        if (this.button_query_result) obj.button_query_result = button_query_result;
+        if (this.date) obj.date = this.date;
+        if (this.from) obj.from = this.from.toJsonObject();
+        if (this.chat) obj.chat = this.chat.toJsonObject();
+        if (this.message_id) obj.message_id = this.message_id;
+        if (this.menu_ref) obj.menu_ref = this.menu_ref;
+        if (this.reference) obj.reference = this.reference;
+        if (this.button_callback) obj.button_callback =  this.button_callback;
+        if (this.button_query_result) obj.button_query_result = this.button_query_result;
 
         return obj;
 

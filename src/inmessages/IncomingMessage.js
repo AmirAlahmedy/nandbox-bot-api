@@ -87,6 +87,8 @@ module.exports = class IncomingMessage {
         if (this.url) obj.url = this.url;
         if (this.users) obj.users = this.users;
         if (this.tagsDefinition) obj.tagsDefinition = this.tagsDefinition;
+        if (this.schedule_date) obj.schedule_date = this.schedule_date
+
 
         console.log("to " + JSON.stringify(obj));
         return obj;

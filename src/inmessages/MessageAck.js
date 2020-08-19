@@ -6,7 +6,6 @@ module.exports = class MessageAck {
         obj = jsonObj.ack;
         this.message_id = obj.message_id;
         this.reference = obj.reference;
-        //TODO:  Utils.getLong(obj.date)
         this.date = obj.date;
     }
 
