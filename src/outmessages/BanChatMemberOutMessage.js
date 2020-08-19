@@ -13,7 +13,7 @@ module.exports = class BanChatMemberOutMessage extends OutMessage {
     toJsonObject(){
         let obj = super.toJsonObject();
 
-        if (this.userId) obj.user_id = this.userId;
+        if (this.user_id) obj.user_id = this.user_id;
 
         return obj;
     }

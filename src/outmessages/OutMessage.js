@@ -31,6 +31,7 @@ module.exports = class OutMessage {
             obj.inline_menu = this.inline_menu;
         }
         if (this.chat_settings) obj.chat_settings = this.chat_settings;
+        if (this.schedule_date) obj.schedule_date = this.schedule_date;
 
         return obj;
     }

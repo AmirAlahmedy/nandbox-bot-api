@@ -21,7 +21,7 @@ module.exports = class ContactOutMessage extends OutMessage {
         let obj = super.toJsonObject();
 
         if (this.name) obj.name = this.name;
-        if (this.phoneNumber) obj.phoneNumber = this.phoneNumber;
+        if (this.phone_number) obj.phone_number = this.phone_number;
 
         return obj;
     }

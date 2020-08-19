@@ -12,7 +12,7 @@ module.exports = class GetChatOutMessage extends OutMessage {
     toJsonObject(){
         let obj = super.toJsonObject();
 
-        if (this.chatId) obj.chat_id = this.chatId;
+        if (this.chat_id) obj.chat_id = this.chat_id;
 
         return obj;
     }

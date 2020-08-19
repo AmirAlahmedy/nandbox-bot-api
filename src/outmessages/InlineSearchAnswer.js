@@ -17,8 +17,8 @@ module.exports = class InlineSearchAnswer extends OutMessage{
             obj.results = resultArrayObj;
         }
 
-        if (this.searchId) obj.search_id = searchId;
-        if (this.nextOffset) obj.next_offset = nextOffset;
+        if (this.search_id) obj.search_id = search_id;
+        if (this.next_offset) obj.next_offset = next_offset;
 
         return obj;
     }
