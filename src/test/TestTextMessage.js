@@ -85,8 +85,7 @@ let handleIncomingTextMsg = incomingMsg => {
     if ("3m" == incomingMsg.text.toLowerCase()) {
         let chatId = incomingMsg.chat.id;
 
-        let utility = new Utility;
-        utility.setNavigationButton(chatId, "mainMenu", api);
+        Utility.setNavigationButton(chatId, "mainMenu", api);
 
         let menuBtn1 = createButton("Main", "mainCB", 1, "Gray", "Red", null, null);
         let menuBtn2 = createButton("Funny", "funnyCB", 1, "Gray", "Red", null,

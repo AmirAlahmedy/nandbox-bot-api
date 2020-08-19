@@ -17,7 +17,7 @@ class Utils {
         return durationInMinsAndSeconds;
     }
 
-    setNavigationButton(chatId, nextMenu, api){
+    static setNavigationButton(chatId, nextMenu, api){
         let fb = new Button();
         fb.next_menu = nextMenu;
         let navMsg = new SetNavigationButtonOutMessage();
@@ -38,7 +38,7 @@ class Utils {
         return ab;
     }
     
-    setAdminNavigationButton(chatId, nextMenu, api) {
+    static setAdminNavigationButton(chatId, nextMenu, api) {
 
 		let fb = new Button();
 		fb.next_menu = nextMenu;
