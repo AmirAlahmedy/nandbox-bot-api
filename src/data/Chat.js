@@ -17,6 +17,7 @@ module.exports = class Chat {
         this.category = obj.category;
         this.memberCount = obj.member_count;
         this.inviteLink = obj.invite_link;
+        this.tagsDefinition = obj.tagsDefinition;
 
     }
 
@@ -35,6 +36,7 @@ module.exports = class Chat {
         if (this.memberCount) obj.member_count = this.memberCount;
         if (this.inviteLink) obj.invite_link = this.inviteLink;
         if (this.photo) obj.KEY_PHOTO = this.photo;
+        if (this.tagsDefinition) obj.tagsDefinition = this.tagsDefinition;
 
         return obj;
     }

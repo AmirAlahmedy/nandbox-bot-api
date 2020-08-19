@@ -12,6 +12,7 @@ const Audio = require("../data/Audio");
 const TextFile = require("../data/TextFile");
 const Article = require("../data/Article");
 const WhiteListUser = require("../data/WhiteListUser");
+const TagDefinition = require("../data/TagDefinition");
 /** 
  * it represents Incoming message Object , the incoming message Object is
  * representing Server Messages with method : message
@@ -52,7 +53,8 @@ module.exports = class IncomingMessage {
         this.bg_color = obj.bg_color;
         this.article = obj.article ? new Article(obj.article) : null;
         this.url = obj.url;
-        this.users = obj.users == null ? null : new WhiteListUser(obj.users);
+        this.users = obj.users ? new WhiteListUser(obj.users) : null;
+        this.tagsDefinition = obj.tagsDefinition ? new TagDefinition(obj.tagsDefinition) : null;
     }
 
     toJsonObject(){
@@ -84,6 +86,7 @@ module.exports = class IncomingMessage {
         if (this.article) obj.article = this.article.toJsonObject();
         if (this.url) obj.url = this.url;
         if (this.users) obj.users = this.users;
+        if (this.tagsDefinition) obj.tagsDefinition = this.tagsDefinition;
 
         console.log("to " + JSON.stringify(obj));
         return obj;

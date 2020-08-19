@@ -8,16 +8,18 @@ module.exports = class ChatMember {
         this.type = obj.type;
         this.member_since = obj.member_since;
         this.status = obj.status;
+        this.tags = obj.tags;
     }
     
     toJsonObject(){
         let obj;
 
-        if (this.user) obj.user = user.toJsonObject();
-        if (this.chat) obj.chat = chat.toJsonObject();
-        if (this.type) obj.type = type;
-        if (this.member_since) obj.member_since = member_since;
-        if (this.status) obj.status = status;
+        if (this.user) obj.user = this.user.toJsonObject();
+        if (this.chat) obj.chat = this.chat.toJsonObject();
+        if (this.type) obj.type = this.type;
+        if (this.member_since) obj.member_since = this.member_since;
+        if (this.status) obj.status = this.status;
+        if (this.tags) obj.tags =  this.tags;
 
         return obj;
     }
