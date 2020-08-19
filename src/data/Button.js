@@ -41,6 +41,7 @@ module.exports = class Button {
         if(this.chat) obj.chat = this.chat;
         if(this.button_icon) obj.button_icon = this.button_icon;
         if(this.button_bgcolor) obj.button_bgcolor = this.button_bgcolor;
+        if(this.nav_type) obj.nav_type = this.nav_type;
 
         return obj;
     }
