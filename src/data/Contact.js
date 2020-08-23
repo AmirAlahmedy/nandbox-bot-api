@@ -8,14 +8,14 @@ module.exports = class Contact {
 
     constructor(obj) {
         this.name = obj.name;
-        this.phoneNumber = obj.phone_number;
+        this.phone_number = obj.phone_number;
     }
 
     toJsonObject(){
         let obj = {};
 
         if (this.name) obj.name = this.name;
-        if (this.phoneNumber) obj.phone_number = this.phoneNumber;
+        if (this.phone_number) obj.phone_number = this.phone_number;
 
         return obj;
     }
@@ -25,7 +25,7 @@ module.exports = class Contact {
         outStrBuf += "{\n";
 
         if (this.name) outStrBuf += "\"" + "name" + "\":\"" + this.name + "\n";
-        if (this.phoneNumber) outStrBuf += "\"" + "phone_number" + "\":\"" + this.phoneNumber + "\n";
+        if (this.phone_number) outStrBuf += "\"" + "phone_number" + "\":\"" + this.phone_number + "\n";
 
         outStrBuf += "}";
         return outStrBuf.toString();

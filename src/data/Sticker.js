@@ -6,10 +6,6 @@ const Thumbnail = require("../data/Thumbnail");
 module.exports = class Sticker {
     constructor(obj) {
         this.id = obj.id;
-        // TODO: check
-        /* this.width = Utils.getInteger(obj.get(KEY_WIDTH));
-        this.height = Utils.getInteger(obj.get(KEY_HEIGHT));
-        this.size = Utils.getLong(obj.get(KEY_SIZE)); */
         this.width = obj.width;
         this.height = obj.height;
         this.size = obj.size;
