@@ -1,3 +1,5 @@
+import OutMessage from '../outmessages/OutMessage';
+
 /**
  * @author Hossam
  *

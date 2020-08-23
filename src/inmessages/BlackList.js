@@ -4,9 +4,9 @@ const SignupUser = require('../data/SignupUser');
 export default class BlackList {
 
 
-	constructor(obj) {
+	constructor(jsonObj) {
 
-        let obj = this.blacklist;
+        let obj = jsonObj.blacklist;
         
 		this.eop = obj.eop;
 

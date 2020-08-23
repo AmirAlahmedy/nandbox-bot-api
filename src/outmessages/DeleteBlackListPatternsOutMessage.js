@@ -1,3 +1,5 @@
+import OutMessage from '../outmessages/OutMessage';
+
 export default class DeleteBlackListPatternsOutMessage extends OutMessage {
 
 	constructor() {
