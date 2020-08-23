@@ -5,9 +5,9 @@ const NandBoxClient = Nand.NandBoxClient;
 
 const TOKEN = "90092049883065839:0:2Y7AO8KLnpmdCWWKeilM3nn9NVOJL3";
 const config = {
-    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
-    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
-    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+    URI: "wss://w1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://w1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://w1.nandbox.net:5020/nandbox/upload/"
 }
 
 
