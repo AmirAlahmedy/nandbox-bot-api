@@ -22,7 +22,8 @@ class Utils {
         fb.next_menu = nextMenu;
         let navMsg = new SetNavigationButtonOutMessage();
         navMsg.chat_id = chatId;
-        navMsg.navigation_button = fb;
+        navMsg.navigation_buttons = []
+        navMsg.navigation_buttons.push(fb);
 
         api.send(JSON.stringify(navMsg));
     }
