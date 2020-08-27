@@ -9,7 +9,7 @@ module.exports = class Result {
         this.description = obj.description;
         this.url = obj.url;
         this.type = obj.type;
-        this.thumbUrl = obj.thumbUrl;
+        this.thumb_url = obj.thumb_url;
         
         this.width = obj.width;
         this.height = obj.height;		
