@@ -24,22 +24,22 @@ nCallBack.onConnect = (_api) => {
 }
 nCallBack.onReceive = incomingMsg => {
     try {
-        if (incomingMsg.chat.type  == CONTACT || CHAT_SETTINGS == incomingMsg.chatSettings
-                && FROM_ADMIN == incomingMsg.fromAdmin ) {
+        if (incomingMsg.chat.type == CONTACT || CHAT_SETTINGS == incomingMsg.chatSettings
+            && FROM_ADMIN == incomingMsg.fromAdmin) {
             let chatId = incomingMsg.chat.id;
             let incomingText = incomingMsg.text;
             if (TEXT == incomingMsg.type) {
 
                 if (!incomingText.includes("&") || !incomingText.includes("=")) {
 
-                    api.sendText(chatId,"Invalid command , command format : webview=<WEB_VIEW_FLAG from 1 to 4>&link=<ANY WEB LINK>");
+                    api.sendText(chatId, "Invalid command , command format : webview=<WEB_VIEW_FLAG from 1 to 4>&link=<ANY WEB LINK>");
 
                 } else {
                     let data = incomingText.split("&");
                     let msgsCount = data[0].split("=")[1];
                     let format = data[1].split("=")[1];
 
-                    if ("larg" =- format.toLowerCase()) {
+                    if ("larg" == format.toLowerCase()) {
                         for (let i = 0; i < msgsCount; i++) {
                             api.sendText(chatId, i + 1, Id(), null, null, null, null, null, getRandomColorString());
                             //TODO: sleep
@@ -64,7 +64,7 @@ nCallBack.onReceive = incomingMsg => {
 nCallBack.onReceiveObj = obj => { }
 nCallBack.onClose = () => console.log("ONCLOSE");
 nCallBack.onError = () => console.log("ONERROR");
-nCallBack.onChatMenuCallBack = chatMenuCallback => { 
+nCallBack.onChatMenuCallBack = chatMenuCallback => {
     console.log("ChatMenuCB : " + chatMenuCallback.toJsonObject());
 
     let chatId = chatMenuCallback.getChat().id;
@@ -72,7 +72,7 @@ nCallBack.onChatMenuCallBack = chatMenuCallback => {
     if (chatMenuCallback.buttonCallback == "optionCB") api.sendText(chatId, "Coming soon");
     if (chatMenuCallback.buttonCallback == "mainCB") api.sendText(chatId, "Main menu");
     if (chatMenuCallback.buttonCallback == "funnyCB") api.sendText(chatId, "Why are frogs always so happy? They eat what ever bugs them");
-    
+
 }
 nCallBack.onInlineMessageCallback = inlineMsgCallback => { }
 nCallBack.onMessagAckCallback = msgAck => { }
@@ -88,7 +88,7 @@ nCallBack.onChatAdministrators = chatAdministrators => {
 
     for (let i = 0; i < chatAdministrators.administrators.length; i++) {
         console.log("admin user id number" + (1 + i) + " >>>"
-        + chatAdministrators.administrators()[i].id);
+            + chatAdministrators.administrators()[i].id);
     }
 }
 nCallBack.onMyProfile = user => {
@@ -109,15 +109,15 @@ nCallBack.onChatDetails = chat => { }
 nCallBack.onInlineSearh = inlineSearch => { }
 
 
-nCallBack.onBlackList = blackList => {}
-nCallBack.onWhiteList = whiteList => {}
+nCallBack.onBlackList = blackList => { }
+nCallBack.onWhiteList = whiteList => { }
 
 client.connect(TOKEN, nCallBack);
 
 getRandomColorString = () => {
     let letters = '0123456789ABCDEF';
     let color = '#';
-    for (let i = 0; i < 6; i++) 
+    for (let i = 0; i < 6; i++)
         color += letters[Math.floor(Math.random() * 16)];
     return color;
 }
