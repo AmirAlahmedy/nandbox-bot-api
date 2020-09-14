@@ -62,7 +62,7 @@ class NandBoxClient {
 
     constructor(URI) {
         this.uri = URI;
-        connection = new WebSocket.Server({ port: 8080 });
+        // connection = new WebSocket.Server({ port: 8080 });
     }
 
     static get(config){
