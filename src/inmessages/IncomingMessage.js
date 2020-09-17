@@ -107,5 +107,6 @@ module.exports = class IncomingMessage {
     isTextFileMsg() { return this.isMsgWithType("text_file");}
     isDocumentMsg() { return this.isMsgWithType("document");}
     isContactMsg() {return  this.isMsgWithType("contact")};
+    isArticleMsg() {return  this.isMsgWithType("article")};
 
 }
