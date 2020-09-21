@@ -630,7 +630,7 @@ class InternalWebSocket {
                         console.log("====> Your Bot Id is : " + BOT_ID);
                         console.log("====> Your Bot Name is : " + obj.name);
 
-                        this.callback.onConnect(api);
+                        this.callback.onConnect(api, obj);
 
                         return;
                     case "message":
