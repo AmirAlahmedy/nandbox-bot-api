@@ -1,13 +1,16 @@
 const winston = require('winston');
+const path = require('path')
+const error_file = path.join(__dirname, '../logs/error.log');
+const info_file = path.join(__dirname, '../logs/info.log');
 
-module.exports = Logger = () =>  {
+module.exports = class Logger {
    
-    const logger = winston.createLogger({
+    static logger = winston.createLogger({
         level: 'info',
         transports: [
             // new winston.transports.Console(),
-            new winston.transports.File({filename:'../logs/error.log', level:'error'}),
-            new winston.transports.File({filename:'./info.log'})
+            new winston.transports.File({filename:error_file, level:'error'}),
+            new winston.transports.File({filename:info_file})
         ]
     });
     
