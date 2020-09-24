@@ -40,7 +40,7 @@ nCallBack.onReceive = incomingMsg => {
 // implement other nandbox.Callback() as per your bot need
 nCallBack.onReceiveObj = obj => {
     console.log("received object: ", obj);
-    Logger.logger.info("received object: " + obj);
+    Logger.logger.info("received object: " + JSON.stringify(obj));
 }
 
 nCallBack.onClose = () => {

@@ -3,3 +3,4 @@
 /.cache
 /dist
 /src/test/test.json
+/logs

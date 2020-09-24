@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\admin\\Desktop\\temp\\nandboxbotsapi-js\\src\\logs\\.595c4e78dbc04664371ac90adcd422d4297fede0-audit.json",
+    "files": [
+        {
+            "date": 1600940156489,
+            "name": "C:\\Users\\admin\\Desktop\\temp\\nandboxbotsapi-js\\src\\logs\\info.log.2020-09-24",
+            "hash": "48445281cd4a64095ae841242fe8f942"
+        }
+    ]
+}
