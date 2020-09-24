@@ -3,7 +3,7 @@ const NandBox = require("./src/NandBox");
 const Nand = require("./src/NandBoxClient");
 const NandBoxClient = Nand.NandBoxClient;
 
-const TOKEN = "90091903321704167:0:wCkZKxzcFzqsAt1SxPMI13Fh3ha8w3";
+const TOKEN = "90091903321704167:0:TJi3Glqx2dU4TVawR3SqiDu34j6d4s";
 const config = {
     URI: "wss://w1.nandbox.net:5020/nandbox/api/",
     DownloadServer: "https://w1.nandbox.net:5020/nandbox/download/",

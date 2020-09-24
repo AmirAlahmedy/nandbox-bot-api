@@ -49,6 +49,7 @@ const IncomingMessage = require("./inmessages/IncomingMessage");
 const MessageAck = require("./inmessages/MessageAck");
 require("@babel/polyfill");
 const WebSocket = require("ws");
+const Logger = require('./util/Logger');
 
 var sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -97,6 +98,9 @@ class InternalWebSocket {
             console.log("INTERNAL: ONCLOSE");
             console.log("StatusCode = " + status.code);
             console.log("Reason : " + status.reason);
+            Logger.logger.info('INTERNAL: ONCLOSE');
+            Logger.logger.info("StatusCode = " + status.code);
+            Logger.logger.info("Reason : " + status.reason);
 
             let current_datetime = new Date();
             let formatted_date = current_datetime.getFullYear() + "/" + (current_datetime.getMonth() + 1) + "/" +
