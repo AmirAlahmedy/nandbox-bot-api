@@ -5,7 +5,7 @@ const error_file = path.join(__dirname, '../logs/error.log');
 const info_file = path.join(__dirname, '../logs/info.log');
 const DailyRotateFile = require('winston-daily-rotate-file');
 
-myFormat = printf(({ timestamp, message}) => {
+let myFormat = printf(({ timestamp, message}) => {
     return `${timestamp}: ${message}`;
   });
 

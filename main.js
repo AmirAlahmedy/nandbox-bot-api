@@ -4,12 +4,7 @@ const Nand = require("./src/NandBoxClient");
 const NandBoxClient = Nand.NandBoxClient;
 const Logger = require('./src/util/Logger');
 
-const TOKEN = "90091903321704167:0:p48ih4IYx70dMvSH7rqYsPTY71sR7n";
-const config = {
-    URI: "wss://w1.nandbox.net:5020/nandbox/api/",
-    DownloadServer: "https://w1.nandbox.net:5020/nandbox/download/",
-    UploadServer: "https://w1.nandbox.net:5020/nandbox/upload/"
-}
+const config = require("./config.json");
 
 
 var client = NandBoxClient.get(config);
@@ -44,11 +39,9 @@ nCallBack.onReceiveObj = obj => {
 }
 
 nCallBack.onClose = () => {
-    console.log("ONCLOSE");
     Logger.logger.info("ONCLOSE");
 }
-nCallBack.onError = () => {
-    console.log("ONERROR");   
+nCallBack.onError = () => {  
     Logger.logger.error("ONERROR");   
 }
 nCallBack.onChatMenuCallBack = chatMenuCallback => { }
@@ -66,4 +59,4 @@ nCallBack.permanentUrl = permenantUrl => { }
 nCallBack.onChatDetails = chat => { }
 nCallBack.onInlineSearh = inlineSearch => { }
 
-client.connect(TOKEN, nCallBack);
+client.connect(config.Token, nCallBack);
