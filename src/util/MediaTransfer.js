@@ -47,7 +47,12 @@ module.exports = class MediaTransfer {
                     'Content-Type': 'application/json',
                     'X-TOKEN': token,
                     //'Authorization': 'Bearer ' + token
-                }
+                },
+                // `maxContentLength` defines the max size of the http response content in bytes allowed in node.js
+                maxContentLength: Infinity,
+
+                // `maxBodyLength` (Node only option) defines the max size of the http request content in bytes allowed
+                maxBodyLength: Infinity,
             }).then(response => {
 
                 response.data.pipe(file);
@@ -107,7 +112,12 @@ module.exports = class MediaTransfer {
             onUploadProgress: progressEvent => {
                 let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             },
-            data: file
+            data: file,
+            // `maxContentLength` defines the max size of the http response content in bytes allowed in node.js
+            maxContentLength: Infinity,
+
+            // `maxBodyLength` (Node only option) defines the max size of the http request content in bytes allowed
+            maxBodyLength: Infinity,
         };
         console.log("fileContentType " + fileContentType);
         const uploadStartTime = (new Date()).getTime();
