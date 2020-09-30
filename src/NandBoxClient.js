@@ -94,9 +94,6 @@ class InternalWebSocket {
     this.closingCounter = 0;
     this.on = {
       close: async (status) => {
-        console.log("INTERNAL: ONCLOSE");
-        console.log("StatusCode = " + status.code);
-        console.log("Reason : " + status.reason);
         Logger.logger.info("INTERNAL: ONCLOSE");
         Logger.logger.info("StatusCode = " + status.code);
         Logger.logger.info("Reason : " + status.reason);
@@ -115,7 +112,6 @@ class InternalWebSocket {
           ":" +
           current_datetime.getSeconds();
 
-        console.log(formatted_date);
         Logger.logger.info(formatted_date);
 
         this.authenticated = false;
@@ -130,15 +126,12 @@ class InternalWebSocket {
           closingCounter < this.NO_OF_RETRIES_IF_CONN_CLOSED
         ) {
           try {
-            console.log("Please wait 10 seconds for Reconnecting ");
             Logger.logger.info("Please wait 10 seconds for Reconnecting");
             await sleep(10000);
 
             closingCounter++;
-            console.log("Conenction Closing counter is: " + closingCounter);
             Logger.logger.info("Conenction Closing counter is: " + closingCounter);
           } catch (e1) {
-            console.log(e1);
             Logger.logger.error(e1);
           }
 
@@ -146,18 +139,15 @@ class InternalWebSocket {
           try {
             this.reconnectWebSocketClient();
           } catch (e) {
-            console.log(e);
             Logger.logger.error(e);
           }
         } else {
-          console.log("End nandbox client");
           Logger.logger.info("End nandbox client");
           // TODO:
           // System.exit(0)
         }
       },
       open: () => {
-        console.log("INTERNAL: ONCONNECT");
         Logger.logger.info("INTERNAL: ONCONNECT");
 
         let authObject = {};
@@ -165,40 +155,36 @@ class InternalWebSocket {
         authObject.token = this.token;
         authObject.rem = true;
         let strAuthObj = JSON.stringify(authObject);
-        console.log(strAuthObj);
+
         Logger.logger.info(strAuthObj);
         this.send(strAuthObj);
         setApiMethods(this, api);
       },
       error: (error) => {
-        console.log("ONERROR: ", error);
         Logger.logger.error("ONERROR: " + error);
       },
       message: (msg) => {
         let user;
         this.lastMessage = new Date().getUTCMilliseconds();
-        console.log("INTERNAL: ONMESSAGE");
         Logger.logger.info("INTERNAL: ONMESSAGE");
         let obj = msg.data;
-        console.log(new Date() + " >>>>>>>>> Update Obj : ", obj);
         Logger.logger.info(new Date() + " >>>>>>>>> Update Obj : " + obj);
         obj = JSON.parse(obj);
         let method = obj.method;
-        console.log(obj);
         Logger.logger.info(obj);
         if (method) {
-          console.log("method: " + method);
           Logger.logger.info("method: " + method);
+          console.log("method: " + method);
           switch (method) {
             case "TOKEN_AUTH_OK":
-              console.log("authentocated!");
               Logger.logger.info("authentocated!");
+              console.log("authentocated!");
               this.authenticated = true;
               BOT_ID = obj.ID;
-              console.log("====> Your Bot Id is : " + BOT_ID);
-              console.log("====> Your Bot Name is : " + obj.name);
               Logger.logger.info("====> Your Bot Id is : " + BOT_ID);
               Logger.logger.info("====> Your Bot Name is : " + obj.name);
+              console.log("====> Your Bot Id is : " + BOT_ID);
+              console.log("====> Your Bot Name is : " + obj.name);
 
               this.callback.onConnect(api, obj);
 
@@ -277,7 +263,6 @@ class InternalWebSocket {
           }
         } else {
           let error = obj.error;
-          console.log("Error: " + error);
           Logger.logger.error("Error: " + error);
         }
       },
@@ -293,11 +278,9 @@ class InternalWebSocket {
   }
 
   reconnectWebSocketClient() {
-    console.log("Creating new webSocketClient");
     Logger.logger.info("Creating new webSocketClient");
     this.ws = new WebSocket(this.uri);
     this.setWSCallbacks();
-    console.log("webSocketClient started");
     Logger.logger.info("webSocketClient started");
   }
 
@@ -307,7 +290,6 @@ class InternalWebSocket {
     authObject.token = token;
     authObject.rem = true;
     let strAuthObj = JSON.stringify(authObject);
-    console.log(strAuthObj);
     Logger.logger.info(strAuthObj);
     this.send(strAuthObj);
   }
@@ -318,20 +300,16 @@ class InternalWebSocket {
         // clearInterval(this.pingpong);
       }
     } catch (e) {
-      console.log(new Error().stack);
-      console.log(e);
       Logger.logger.error(new Error().stack);
       Logger.logger.error(e);
     }
   }
 
   stopWebSocketClient() {
-    console.log("Stopping Websocket");
     Logger.logger.info("Stopping Websocket");
     try {
       if (this) connection.close();
     } catch (e) {
-      console.log("Exception: " + e + " while closing websocket");
       Logger.logger.error("Exception: " + e + " while closing websocket");
     }
   }
@@ -361,7 +339,6 @@ let init = (config) => {
 
 function setApiMethods(internalWS, api) {
   api.send = (message) => {
-    console.log(new Date() + ">>>>>> Sending Message :", message);
     Logger.logger.info(new Date() + ">>>>>> Sending Message :" + message);
     internalWS.send(message);
   };

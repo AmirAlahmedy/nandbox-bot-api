@@ -1,5 +1,6 @@
 const OutMessage = require("../outmessages/OutMessage");
-const NandBoxClient = require("../NandBoxClient");
+const Nand = require("../NandBoxClient");
+const NandBoxClient = Nand.NandBoxClient;
 const NandBox = require("../NandBox");
 const Utils = require("../util/Utility");
 const Id = Utils.Id;
@@ -72,6 +73,8 @@ nCallBack.onReceive = incomingMsg => {
         handleIncomingTextMsg(incomingMsg);
 
 }
+
+client.connect(TOKEN, nCallBack);
 
 /**
 * Handle incoming Text messages
