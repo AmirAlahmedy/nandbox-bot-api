@@ -111,6 +111,7 @@ module.exports = class MediaTransfer {
             }],
             onUploadProgress: progressEvent => {
                 let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                console.log("Upload: " + percentCompleted);
             },
             data: file,
             // `maxContentLength` defines the max size of the http response content in bytes allowed in node.js
