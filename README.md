@@ -26,7 +26,7 @@ url:wss://<SERVER>:<PORT>/nandbox/api/
 download:https://<SERVER>:<PORT>/nandbox/download/  
 upload:https://<SERVER>:<PORT>/nandbox/upload/
 ```
-ADD your token and the other data to  `config.json` file just like below :
+Add your token and the other data to  `config.json` file just like below :
 ```json
 {
     "Token": "<your token>",
