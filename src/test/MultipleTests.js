@@ -5,6 +5,7 @@ const NandBoxClient = Nand.NandBoxClient;
 const TextOutMessage = require("../outmessages/TextOutMessage");
 const Utils = require("../util/Utility");
 const Id = Utils.Id;
+const Utility = Utils.Utility;
 const OutMessage = require("../outmessages/OutMessage");
 const Menu = require("../data/Menu");
 const Row = require("../data/Row");
@@ -25,13 +26,13 @@ const BlackList = require('../inmessages/BlackList');
 
 
 
-let TOKEN = "90091783927225986:0:iqnW9n18atSQF1vsq8fIwYIyK6GrBz"; // you can put your own bot token
+let TOKEN = "90091905646805157:0:u6rJ3qopQXIGPCLYpH7LfcuFNKAkXa"; // you can put your own bot token
 let MAIN_MENU_001 = "MAIN_MENU_001";
 let outMsgsListener = new Map();
 const config = {
-    URI: "wss://d1.nandbox.net:5020/nandbox/api/",
-    DownloadServer: "https://d1.nandbox.net:5020/nandbox/download/",
-    UploadServer: "https://d1.nandbox.net:5020/nandbox/upload/"
+    URI: "wss://w1.nandbox.net:5020/nandbox/api/",
+    DownloadServer: "https://w1.nandbox.net:5020/nandbox/download/",
+    UploadServer: "https://w1.nandbox.net:5020/nandbox/upload/"
 }
 var client = NandBoxClient.get(config);
 

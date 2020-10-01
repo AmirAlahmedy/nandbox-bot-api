@@ -1,11 +1,9 @@
 const NandBox = require("../NandBox");
 const Nand = require("../NandBoxClient");
 const NandBoxClient = Nand.NandBoxClient;
-const TextOutMessage = require("../outmessages/TextOutMessage");
 const Utils = require("../util/Utility");
 const Id = Utils.Id;
 const Utility = Utils.Utility;
-const OutMessage = require("../outmessages/OutMessage");
 const Menu = require("../data/Menu");
 const Row = require("../data/Row");
 const SetChatMenuOutMessage = require("../outmessages/setChatMenuOutMessage");
@@ -18,10 +16,10 @@ const AudioOutMessage = require("../outmessages/AudioOutMessage");
 const VideoOutMessage = require("../outmessages/VideoOutMessage");
 const PhotoOutMessage = require("../outmessages/PhotoOutMessage");
 const Button = require("../data/Button");
-const Data = require('../data/Data');
-const WhiteListUser = require('../data/WhiteListUser');
-const BlackList = require('../inmessages/BlackList');
-let TOKEN = "90091903321704167:0:hLgEbY39KztnOqAjiKGYqq4UGbyA0F"; // you can put your own bot token
+const UpdateOutMessage = require("../outmessages/UpdateOutMessage");
+const VoiceOutMessage = require("../outmessages/VoiceOutMessage");
+
+let TOKEN = "90091905646805157:0:u6rJ3qopQXIGPCLYpH7LfcuFNKAkXa"; // you can put your own bot token
 const config = {
     URI: "wss://w1.nandbox.net:5020/nandbox/api/",
     DownloadServer: "https://w1.nandbox.net:5020/nandbox/download/",
@@ -167,7 +165,34 @@ nCallBack.onReceive = incomingMsg => {
             outmsg.menus = menus;
 
             api.send(JSON.stringify(outmsg));
+
+        }else if(incomingMsg.text.toLowerCase() == "update") {
+            const newMsg = new UpdateOutMessage();
+            newMsg.message_id = incomingMsg.message_id;
+            newMsg.text = "new edits";
+            newMsg.reference = incomingMsg.reference;
+            newMsg.to_user_id = incomingMsg.from.id;
+            newMsg.chat_id = incomingMsg.chat.id;
+            api.send(JSON.stringify(newMsg));        
+        }else if (incomingMsg.text.toLowerCase() == "getChatMember".toLowerCase()) {
+            api.getChatMember(incomingMsg.chat.id, incomingMsg.from.id);
         }
+        else if (incomingMsg.text == "getAdmins") {
+            api.getChatAdministrators(incomingMsg.chat.id);
+        }else if (incomingMsg.text.toLowerCase() == "getChat".toLowerCase()) {
+            api.getChat(incomingMsg.chat.id);
+        } else if (incomingMsg.text.toLowerCase() == "getUser".toLowerCase()) {
+            api.getUser(incomingMsg.from.id);
+        } 
+    }else if(incomingMsg.isVoiceMsg()){
+        let voiceOutMsg = new VoiceOutMessage();
+        voiceOutMsg.chat_id = incomingMsg.chat.id;
+        voiceOutMsg.reference = Id();
+        voiceOutMsg.voice = incomingMsg.voice.id;
+        voiceOutMsg.size = 700;
+        voiceOutMsg.caption = "Vocie From Bot";
+
+        api.send(JSON.stringify(voiceOutMsg));
     }
 }
 

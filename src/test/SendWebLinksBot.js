@@ -43,7 +43,6 @@ nCallBack.onReceive = incomingMsg => {
                         for (let i = 0; i < msgsCount; i++) {
                             api.sendText(chatId, i + 1, Id(), null, null, null, null, null, getRandomColorString());
                             //TODO: sleep
-                            //Thread.sleep(500);
                         }
                     }
                     else {
