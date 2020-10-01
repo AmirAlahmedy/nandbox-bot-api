@@ -94,7 +94,7 @@ nCallBack.permanentUrl = permenantUrl => { }
 nCallBack.onChatDetails = chat => { }
 nCallBack.onInlineSearh = inlineSearch => { }
 
-client.connect(TOKEN, nCallBack);
+client.connect(config.Token, nCallBack);
 ```
 
 ____Have a look at the [test](./src/test) folder, you might find useful examples.____
