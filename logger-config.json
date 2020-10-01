@@ -1,0 +1,5 @@
+{
+    "maxSize": "5m",
+    "maxFiles": "5d",
+    "path": "./Logs"
+}
