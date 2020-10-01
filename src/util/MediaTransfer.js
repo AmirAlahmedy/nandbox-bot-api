@@ -41,7 +41,7 @@ module.exports = class MediaTransfer {
             axios({
                 url: downloadServerURL + mediaFileId,
                 method: 'GET',
-                timeout: 40000,
+                timeout: 300000,
                 responseType: 'stream',
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ module.exports = class MediaTransfer {
         const reqCon = {
             url: uploadServerURL + path.basename(mediaFileFullPath),
             method: 'PUT',
-            timeout: 40000,
+            timeout: 300000,
             // TODO: socket timeout?
             headers: {
                 'Content-Type': fileContentType,
