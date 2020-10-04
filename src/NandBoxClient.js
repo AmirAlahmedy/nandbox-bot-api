@@ -161,7 +161,7 @@ class InternalWebSocket {
         setApiMethods(this, api);
       },
       error: (error) => {
-        Logger.logger.error("ONERROR: " + error);
+        Logger.logger.error("ONERROR: " + JSON.stringify(error));
       },
       message: (msg) => {
         let user;
@@ -171,7 +171,7 @@ class InternalWebSocket {
         Logger.logger.info(new Date() + " >>>>>>>>> Update Obj : " + obj);
         obj = JSON.parse(obj);
         let method = obj.method;
-        Logger.logger.info(obj);
+        Logger.logger.info(JSON.stringify(obj));
         if (method) {
           Logger.logger.info("method: " + method);
           console.log("method: " + method);
