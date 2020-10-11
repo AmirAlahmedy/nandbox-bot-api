@@ -56,7 +56,7 @@ var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 var nandboxClient = null;
 var BOT_ID = null;
 let uri = null;
-
+let closingCounter = 0
 class NandBoxClient {
   constructor(URI) {
     uri = URI;
@@ -89,7 +89,6 @@ class InternalWebSocket {
     this.token = token;
     this.callback = callback;
     this.NO_OF_RETRIES_IF_CONN_CLOSED = 20;
-    this.closingCounter = 0;
     this.on = {
       close: async (status) => {
         console.log("INTERNAL: ONCLOSE");
@@ -128,7 +127,7 @@ class InternalWebSocket {
           closingCounter < this.NO_OF_RETRIES_IF_CONN_CLOSED
         ) {
           try {
-            console.log("Please wait 10 seconds for Reconnecting ");
+            console.log("Please wait 30 seconds for Reconnecting ");
             Logger.logger.info("Please wait 30 seconds for Reconnecting");
             await sleep(30000);
 
@@ -200,7 +199,7 @@ class InternalWebSocket {
 
               this.callback.onConnect(api, obj);
 
-              this.closingCounter = 0;
+              closingCounter = 0;
 
               return;
             case "message":
