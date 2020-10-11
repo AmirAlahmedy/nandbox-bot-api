@@ -54,9 +54,7 @@ const Logger = require("./util/Logger");
 var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 var nandboxClient = null;
-var connection = null;
 var BOT_ID = null;
-var closingCounter = 0;
 let uri = null;
 
 class NandBoxClient {
@@ -131,8 +129,8 @@ class InternalWebSocket {
         ) {
           try {
             console.log("Please wait 10 seconds for Reconnecting ");
-            Logger.logger.info("Please wait 10 seconds for Reconnecting");
-            await sleep(10000);
+            Logger.logger.info("Please wait 30 seconds for Reconnecting");
+            await sleep(30000);
 
             closingCounter++;
             console.log("Conenction Closing counter is: " + closingCounter);
@@ -201,6 +199,8 @@ class InternalWebSocket {
               Logger.logger.info("====> Your Bot Name is : " + obj.name);
 
               this.callback.onConnect(api, obj);
+
+              this.closingCounter = 0;
 
               return;
             case "message":
@@ -329,7 +329,7 @@ class InternalWebSocket {
     console.log("Stopping Websocket");
     Logger.logger.info("Stopping Websocket");
     try {
-      if (this) connection.close();
+      this.ws.close();
     } catch (e) {
       console.log("Exception: " + e + " while closing websocket");
       Logger.logger.error("Exception: " + e + " while closing websocket");
