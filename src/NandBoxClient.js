@@ -123,14 +123,9 @@ class InternalWebSocket {
           closingCounter < this.NO_OF_RETRIES_IF_CONN_CLOSED
         ) {
           try {
-<<<<<<< HEAD
-            Logger.logger.info("Please wait 10 seconds for Reconnecting");
-            await sleep(10000);
-=======
             console.log("Please wait 30 seconds for Reconnecting ");
             Logger.logger.info("Please wait 30 seconds for Reconnecting");
             await sleep(30000);
->>>>>>> 24e1122d91341a8bdc63a34c6a72b1373ae76d4f
 
             closingCounter++;
             Logger.logger.info("Conenction Closing counter is: " + closingCounter);
