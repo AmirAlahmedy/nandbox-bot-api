@@ -54,11 +54,9 @@ const Logger = require("./util/Logger");
 var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 var nandboxClient = null;
-var connection = null;
 var BOT_ID = null;
-var closingCounter = 0;
 let uri = null;
-
+let closingCounter = 0
 class NandBoxClient {
   constructor(URI) {
     uri = URI;
@@ -91,7 +89,6 @@ class InternalWebSocket {
     this.token = token;
     this.callback = callback;
     this.NO_OF_RETRIES_IF_CONN_CLOSED = 20;
-    this.closingCounter = 0;
     this.on = {
       close: async (status) => {
         Logger.logger.info("INTERNAL: ONCLOSE");
@@ -126,8 +123,14 @@ class InternalWebSocket {
           closingCounter < this.NO_OF_RETRIES_IF_CONN_CLOSED
         ) {
           try {
+<<<<<<< HEAD
             Logger.logger.info("Please wait 10 seconds for Reconnecting");
             await sleep(10000);
+=======
+            console.log("Please wait 30 seconds for Reconnecting ");
+            Logger.logger.info("Please wait 30 seconds for Reconnecting");
+            await sleep(30000);
+>>>>>>> 24e1122d91341a8bdc63a34c6a72b1373ae76d4f
 
             closingCounter++;
             Logger.logger.info("Conenction Closing counter is: " + closingCounter);
@@ -187,6 +190,8 @@ class InternalWebSocket {
               console.log("====> Your Bot Name is : " + obj.name);
 
               this.callback.onConnect(api, obj);
+
+              closingCounter = 0;
 
               return;
             case "message":
@@ -308,7 +313,7 @@ class InternalWebSocket {
   stopWebSocketClient() {
     Logger.logger.info("Stopping Websocket");
     try {
-      if (this) connection.close();
+      this.ws.close();
     } catch (e) {
       Logger.logger.error("Exception: " + e + " while closing websocket");
     }
