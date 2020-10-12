@@ -13,6 +13,7 @@ const TextFile = require("../data/TextFile");
 const Article = require("../data/Article");
 const WhiteListUser = require("../data/WhiteListUser");
 const TagDefinition = require("../data/TagDefinition");
+const Sticker = require('../data/Sticker');
 /** 
  * it represents Incoming message Object , the incoming message Object is
  * representing Server Messages with method : message
