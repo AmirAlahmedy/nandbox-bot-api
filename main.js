@@ -2,7 +2,11 @@
 const NandBox = require("./src/NandBox");
 const Nand = require("./src/NandBoxClient");
 const NandBoxClient = Nand.NandBoxClient;
-const Logger = require('./src/util/Logger');
+
+let Logger = require('./src/util/Logger');
+new Logger(info", "5d", "5m");
+
+
 
 const config = require("./config.json");
 
@@ -58,5 +62,7 @@ nCallBack.userLeftBot = user => { }
 nCallBack.permanentUrl = permenantUrl => { }
 nCallBack.onChatDetails = chat => { }
 nCallBack.onInlineSearh = inlineSearch => { }
+
+
 
 client.connect(config.Token, nCallBack);
