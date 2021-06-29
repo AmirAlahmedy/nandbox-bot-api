@@ -3,8 +3,7 @@ const NandBox = require("./src/NandBox");
 const Nand = require("./src/NandBoxClient");
 const NandBoxClient = Nand.NandBoxClient;
 
-let Logger = require('./src/util/Logger');
-new Logger(info", "5d", "5m");
+const Logger = require('./src/util/Logger');
 
 
 

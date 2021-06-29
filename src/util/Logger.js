@@ -6,6 +6,8 @@ let error_file = path.join("./", logger_config.path+"/error.log");
 let info_file = path.join("./", logger_config.path+"/info.log");
 const DailyRotateFile = require('winston-daily-rotate-file');
 
+console.log(info_file);
+
 let myFormat = printf(({ timestamp, message}) => {
     return `${timestamp}: ${message}`;
   });
@@ -27,13 +29,13 @@ module.exports = class Logger {
           ),
         transports: [
             new transports.DailyRotateFile({
-              filename: "../../../../logs/error.log", 
+              filename: error_file, 
               level:'error', 
               maxSize: this.maxSize ? this.maxSize:logger_config.maxSize, 
               maxFiles: this.maxFiles ? this.maxFiles:logger_config.maxFiles
             }),
             new transports.DailyRotateFile({
-              filename: "../../../../logs/info.log",  
+              filename: info_file,  
               maxSize: this.maxSize ? this.maxSize:logger_config.maxSize, 
               maxFiles: this.maxFiles ? this.maxFiles:logger_config.maxFiles
             })
